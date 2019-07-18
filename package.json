@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@google/maps": "^0.5.5",
     "core-js": "^2.6.5",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
@@ -27,6 +28,9 @@
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
+    "globals": {
+      "google": true
+    },
     "root": true,
     "env": {
       "node": true
