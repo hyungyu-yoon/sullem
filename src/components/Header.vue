@@ -6,11 +6,11 @@
        <v-toolbar-title>Traveler</v-toolbar-title>
        <v-spacer></v-spacer>
        <v-toolbar-items class="hidden-sm-and-down">
-         <v-btn @click="dialog=true" flat>로그인</v-btn>
+         <v-btn @click="dialog=true" flat>로그인{{dialog}}</v-btn>
          <v-btn flat>로그아웃</v-btn>
          <v-btn flat>마이 페이지</v-btn>
        </v-toolbar-items>
-       <LoginPage dialog=false></LoginPage>
+       <!-- <LoginPage dialog=dialog></LoginPage> -->
      </v-toolbar>
    </v-app>
   </div>
