@@ -13,13 +13,11 @@
 <script>
 import Header from './components/Header'
 import Home from './views/Home'
-import LoginPage from './views/LoginPage'
 
 export default {
   components:{
     Header,
-    Home,
-    LoginPage
+    Home
   }
 }
 </script>
