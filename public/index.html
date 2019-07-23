@@ -1,17 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>webmobile-project</title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but webmobile-project doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+<html>
+
+<head>
+
+This is the head of your page.
+
+<title>Example HTML page</title>
+
+</head>
+
+<body>
+
+This is the body of your page.
+
+<script>
+
+  (function(d, s, id) {
+
+      var js, fjs = d.getElementsByTagName(s)[0];
+
+      js = d.createElement(s); js.id = id;
+
+      js.src = "https://widgets.moovit.com/wtp/en";
+
+      fjs.parentNode.insertBefore(js, fjs);
+
+  }(document, 'script', 'moovit-jsw'));
+
+</script>
+
+
+
+<div class="mv-wtp"
+
+   data-metro="121"
+
+   data-lang="en"
+
+   data-from="Times Sq"
+   data-from-lat-long="40.75581_-73.986389"
+
+   data-to="Central Park"
+   data-to-lat-long="40.78392_-73.96584" style="height:1500px">
+
+</div>
+
+
+
+</body>
+
 </html>
