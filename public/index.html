@@ -1,51 +1,41 @@
-<html>
-
-<head>
-
-This is the head of your page.
-
-<title>Example HTML page</title>
-
-</head>
-
-<body>
-
-This is the body of your page.
-
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>Happy Hacking</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
+    <link rel="stylesheet" href="custom.css" />
+    <script src="js/jquery-3.4.1.min.js"></script>
 <script>
+  var userAgent = window.navigator.userAgent;
+  var isChrome = userAgent.indexOf('Chrome');
+  var isChromeMobile = userAgent.indexOf('Mobile');
+  var isEdge = userAgent.indexOf('Edge');
 
-  (function(d, s, id) {
-
-      var js, fjs = d.getElementsByTagName(s)[0];
-
-      js = d.createElement(s); js.id = id;
-
-      js.src = "https://widgets.moovit.com/wtp/en";
-
-      fjs.parentNode.insertBefore(js, fjs);
-
-  }(document, 'script', 'moovit-jsw'));
+  if(isChrome > -1){
+  }
+  else if(isEdge > -1){
+    alert("이 사이트는 크롬에 최적화되어있습니다.");
+  }
+  else if(isChromeMobile < 0 ){
+    alert("이 사이트는 크롬에 최적화되어있습니다.");
+  }
+  else if(isChrome < 0){
+    alert("이 사이트는 크롬에 최적화되어있습니다.");
+  }
 
 </script>
-
-
-
-<div class="mv-wtp"
-
-   data-metro="121"
-
-   data-lang="en"
-
-   data-from="Times Sq"
-   data-from-lat-long="40.75581_-73.986389"
-
-   data-to="Central Park"
-   data-to-lat-long="40.78392_-73.96584" style="height:1500px">
-
-</div>
-
-
-
-</body>
-
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but ssafy doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+  
+    <script src="custom.js"></script>
+  </body>
 </html>
