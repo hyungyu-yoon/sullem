@@ -28,7 +28,7 @@
             <v-btn color="blue darken-1" flat @click="cancel">Cancel</v-btn>
             <v-btn color="blue darken-1" flat @click="showAccount">Account</v-btn>
             <v-btn
-              color="blue darken-1" flat @click="loginWithEmail">Login</v-btn>
+              color="blue darken-1" flat @click="login">Login</v-btn>
           </v-card-actions>
         </v-card>
 
@@ -53,17 +53,22 @@ export default {
     cancel () {
       this.$store.state.Login = false
     },
+    async login () {
+      var user = await this.loginWithEmail();
+      // console.log(user)
+      if(user != null && user.data != "") {
+        this.$store.state.user = user.data;
+        this.$session.start();
+        this.$session.set('user', this.$store.state.user);
+        alert(this.$session.get('user').name + '님 로그인에 성공하셨습니다.');
+        this.cancel();
+      } else {
+        alert("회원정보가 일치하지 않습니다.");
+      }
+    },
     async loginWithEmail () {
-      axios
+      return axios
         .post('http://localhost:8399/member/login/' + this.email + '/' + this.password)
-        .then(response => (
-          this.$store.state.user = response.data,
-          this.$session.start(),
-          this.$session.set('user', this.$store.state.user),
-          alert(this.$session.get('user').name + '님 로그인에 성공하셨습니다.'),
-          this.cancel()
-          )
-        )
         .catch(error => {
           console.log(error)
           this.errored = true
