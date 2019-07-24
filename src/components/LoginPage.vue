@@ -36,38 +36,38 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 export default {
   name: 'Login',
   data () {
     return {
-      email:null,
-      password:null
+      email: null,
+      password: null
     }
   },
   methods: {
-    async showAccount (){
-      this.$store.state.Login=false;
-      this.$store.state.Account=true;
+    async showAccount () {
+      this.$store.state.Login = false
+      this.$store.state.Account = true
     },
-    cancel (){
-      this.$store.state.Login=false;
+    cancel () {
+      this.$store.state.Login = false
     },
     async loginWithEmail () {
-      axios.get('http://localhost:8399/member/login/'+this.email+'/'+this.password)
-			.then(response => (
-        this.$store.state.user = response.data,
-        this.$session.start(),
-        this.$session.set("user",this.$store.state.user),
-        alert(this.$session.get("user").name+"님 로그인에 성공하셨습니다."),
-        this.cancel()
-				)
-			)
-			.catch(error => {
-				console.log(error)
-				this.errored = true
-			})
-			.finally(() => this.loading = false);
+      axios.get('http://localhost:8399/member/login/' + this.email + '/' + this.password)
+        .then(response => (
+          this.$store.state.user = response.data,
+          this.$session.start(),
+          this.$session.set('user', this.$store.state.user),
+          alert(this.$session.get('user').name + '님 로그인에 성공하셨습니다.'),
+          this.cancel()
+          )
+        )
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
+        .finally(() => this.loading = false)
     }
   }
 }

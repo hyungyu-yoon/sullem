@@ -34,17 +34,17 @@ export default {
     }
   },
   mounted () {
-    this.$store.state.user = this.$session.get('user');
+    this.$store.state.user = this.$session.get('user')
   },
   methods: {
     showLogin () {
-      this.$store.state.Login = true;
+      this.$store.state.Login = true
     },
     async logout () {
-      alert("logout")
-      this.$session.destroy();
-      this.$store.state.user = null;
-      this.$router.push("/");
+      alert('logout')
+      this.$session.destroy()
+      this.$store.state.user = null
+      this.$router.push('/')
     }
 
   }

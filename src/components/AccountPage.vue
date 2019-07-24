@@ -32,16 +32,16 @@
 <script>
 export default {
   name: 'AccountPage',
-  data (){
+  data () {
     return {
-      name:null,
-      email:null,
-      password:null
+      name: null,
+      email: null,
+      password: null
     }
   },
-  methods : {
+  methods: {
     cancel () {
-      this.$store.state.Account=false;
+      this.$store.state.Account = false
     }
   }
 }
