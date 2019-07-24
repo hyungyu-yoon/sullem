@@ -1,27 +1,17 @@
 <template>
   <div>
     <Header></Header>
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/> -->
   </div>
 </template>
 
-
 <script>
 import Header from './components/Header'
-import Home from './views/Home'
 
 export default {
-  components:{
-    Header,
-    Home
-  }
+  components: {
+    Header }
 }
 </script>
-
 
 <style lang="scss">
 #app {
