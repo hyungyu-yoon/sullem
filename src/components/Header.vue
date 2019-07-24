@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <v-app id="inspire">
+  <v-layout>
      <v-toolbar>
        <v-toolbar-side-icon></v-toolbar-side-icon>
        <v-toolbar-title>Traveler</v-toolbar-title>
@@ -16,8 +15,7 @@
        <LoginPage></LoginPage>
        <AccountPage></AccountPage>
      </v-toolbar>
-   </v-app>
-  </div>
+  </v-layout>
 </template>
 
 <script>
