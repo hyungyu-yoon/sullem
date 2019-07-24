@@ -49,9 +49,9 @@ export default {
       email: null,
       password: null,
       name: null,
-      age:null,
-      gender:null,
-      phone:null
+      age: null,
+      gender: null,
+      phone: null
     }
   },
   methods: {
@@ -61,17 +61,17 @@ export default {
     signUp () {
       axios
         .post('http://localhost:8399/member/insert/', {
-          id:this.email,
-          password:this.password,
-          name:this.name,
-          age:this.age,
-          gender:this.gender,
-          phone:this.phone
+          id: this.email,
+          password: this.password,
+          name: this.name,
+          age: this.age,
+          gender: this.gender,
+          phone: this.phone
         })
         .then(response => (
-          alert("회원가입을 축하합니다 ^^"),
+          alert('회원가입을 축하합니다 ^^'),
           this.cancel()
-          )
+        )
         )
         .catch(error => {
           console.log(error)
