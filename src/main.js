@@ -6,7 +6,10 @@ import Vuetify from 'vuetify'
 import VueSession from 'vue-session'
 import 'vuetify/dist/vuetify.min.css'
 
+import axios from 'axios'
+
 Vue.config.productionTip = false
+Vue.prototype.$http = axios
 
 Vue.use(VueSession)
 Vue.use(Vuetify, {

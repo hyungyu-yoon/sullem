@@ -1,8 +1,8 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="600px">
+  <v-dialog v-model="this.$store.state.Login" persistent max-width="600px">
         <v-card>
           <v-card-title>
-            <span class="headline">{{dialog}}</span>
+            <span class="headline">Login</span>
           </v-card-title>
           <v-card-text>
             <v-container grid-list-md>
@@ -17,42 +17,58 @@
             </v-container>
             <small>*indicates required field</small>
           </v-card-text>
-          <!-- Google login  -->
-          <v-btn round dark v-on:click="loginWithGoogle">
+          <!-- <v-btn round dark v-on:click="loginWithGoogle">
             <v-icon size="25" class="mr-2">fa-google</v-icon>Google 로그인
           </v-btn>
-          <!-- Facebook login -->
           <v-btn color="primary" round dark v-on:click="loginWithFacebook">
             <v-icon size="25" class="mr-2">fa-facebook</v-icon>Facebook 로그인
-          </v-btn>
+          </v-btn> -->
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="dialog = false">Cancel</v-btn>
-            <v-btn color="blue darken-1" flat @click="showRegister">Account</v-btn>
+            <v-btn color="blue darken-1" flat @click="cancel">Cancel</v-btn>
+            <v-btn color="blue darken-1" flat @click="showAccount">Account</v-btn>
             <v-btn
-              color="blue darken-1"
-              flat
-              @click="loginWithMail"
-              @keyup.enter="loginWithMail"
-            >Login</v-btn>
-            <!-- <v-btn color="blue darken-1" flat @click="logout">logout</v-btn> -->
-            <!-- <v-btn color="blue darken-1" flat @click="loginCheck">check</v-btn> -->
+              color="blue darken-1" flat @click="loginWithEmail">Login</v-btn>
           </v-card-actions>
         </v-card>
+
       </v-dialog>
 </template>
 
 <script>
-
+import axios from 'axios';
 export default {
-  name : "Login",
+  name: 'Login',
   data () {
     return {
-
+      email:null,
+      password:null
     }
   },
-  props : {
-  	dialog: {type: Boolean, default: false},
+  methods: {
+    async showAccount (){
+      this.$store.state.Login=false;
+      this.$store.state.Account=true;
+    },
+    cancel (){
+      this.$store.state.Login=false;
+    },
+    async loginWithEmail () {
+      axios.get('http://localhost:8399/member/login/'+this.email+'/'+this.password)
+			.then(response => (
+        this.$store.state.user = response.data,
+        this.$session.start(),
+        this.$session.set("user",this.$store.state.user),
+        alert(this.$session.get("user").name+"님 로그인에 성공하셨습니다."),
+        this.cancel()
+				)
+			)
+			.catch(error => {
+				console.log(error)
+				this.errored = true
+			})
+			.finally(() => this.loading = false);
+    }
   }
 }
 </script>
