@@ -6,7 +6,8 @@
        <v-toolbar-title>Traveler</v-toolbar-title>
        <v-spacer></v-spacer>
        <v-toolbar-title v-if="this.$store.state.user !=null"> {{ this.$store.state.user.name}}</v-toolbar-title>
-       <v-toolbar-items class="hidden-sm-and-down">
+       <v-toolbar-items>
+       <!-- <v-toolbar-items class="hidden-sm-and-down"> -->
          <v-btn v-if="this.$store.state.user == null" @click="showLogin" flat>로그인{{this.$store.state.Login}}</v-btn>
          <v-btn v-if="this.$store.state.user !=null" @click="logout" flat>로그아웃</v-btn>
          <v-btn flat>마이 페이지</v-btn>

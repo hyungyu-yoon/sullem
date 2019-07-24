@@ -54,7 +54,8 @@ export default {
       this.$store.state.Login = false
     },
     async loginWithEmail () {
-      axios.get('http://localhost:8399/member/login/' + this.email + '/' + this.password)
+      axios
+        .post('http://localhost:8399/member/login/' + this.email + '/' + this.password)
         .then(response => (
           this.$store.state.user = response.data,
           this.$session.start(),
