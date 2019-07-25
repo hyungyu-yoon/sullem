@@ -7,6 +7,8 @@ import VueSession from 'vue-session'
 import 'vuetify/dist/vuetify.min.css'
 
 import axios from 'axios'
+import vuetify from './plugins/vuetify'
+import '@babel/polyfill'
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
@@ -24,5 +26,6 @@ Vue.use(Vuetify, {
 new Vue({
   router,
   store,
+  vuetify,
   render: h => h(App)
 }).$mount('#app')
