@@ -25,10 +25,9 @@
           </v-btn> -->
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="cancel">Cancel</v-btn>
-            <v-btn color="blue darken-1" flat @click="showAccount">Account</v-btn>
-            <v-btn
-              color="blue darken-1" flat @click="login">Login</v-btn>
+            <v-btn  flat @click="cancel">Cancel</v-btn>
+            <v-btn  flat @click="showAccount">Account</v-btn>
+            <v-btn  flat @click="login">Login</v-btn>
           </v-card-actions>
         </v-card>
 
