@@ -1,58 +1,72 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div>
+    <v-layout wrap justify-space-around>
+      <v-switch v-model="multiple" label="Multiple"></v-switch>
+      <v-switch v-model="mandatory" label="Mandatory"></v-switch>
+      <v-switch v-model="showArrows" label="Show arrows"></v-switch>
+      <v-switch v-model="prevIcon" label="Custom prev icon"></v-switch>
+      <v-switch v-model="nextIcon" label="Custom next icon"></v-switch>
+      <v-switch v-model="centerActive" label="Center active item"></v-switch>
+    </v-layout>
+
+    <v-sheet
+      class="mx-auto"
+      elevation="8"
+      max-width="800"
+    >
+      <v-slide-group
+        v-model="model"
+        class="pa-4"
+        :prev-icon="prevIcon ? 'fa-angle-left' : undefined"
+        :next-icon="nextIcon ? 'mdi-plus' : undefined"
+        :multiple="multiple"
+        :mandatory="mandatory"
+        :show-arrows="showArrows"
+        :center-active="centerActive"
+      >
+        <v-slide-item
+          v-for="n in 15"
+          :key="n"
+          v-slot:default="{ active, toggle }"
+        >
+          <v-card
+            :color="active ? 'primary' : 'grey lighten-1'"
+            class="ma-4"
+            height="200"
+            width="100"
+            @click="toggle"
+          >
+            <v-layout
+              align-center
+              fill-height
+              justify-center
+            >
+              <v-scale-transition>
+                <v-icon
+                  v-if="active"
+                  color="white"
+                  size="48"
+                  v-text="'mdi-close-circle-outline'"
+                ></v-icon>
+              </v-scale-transition>
+            </v-layout>
+          </v-card>
+        </v-slide-item>
+      </v-slide-group>
+    </v-sheet>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
+  data: () => ({
+    model: null,
+    multiple: false,
+    mandatory: false,
+    showArrows: true,
+    prevIcon: true,
+    nextIcon: true,
+    centerActive: false
+  })
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
