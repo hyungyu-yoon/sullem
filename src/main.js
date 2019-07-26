@@ -5,10 +5,10 @@ import store from './store'
 import Vuetify from 'vuetify'
 import VueSession from 'vue-session'
 import 'vuetify/dist/vuetify.min.css'
-
 import axios from 'axios'
 import vuetify from './plugins/vuetify'
 import '@babel/polyfill'
+
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
@@ -23,6 +23,7 @@ Vue.use(Vuetify, {
     error: '#b71c1c'
   }
 })
+
 new Vue({
   router,
   store,

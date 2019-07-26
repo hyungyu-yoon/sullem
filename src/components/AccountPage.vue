@@ -33,8 +33,8 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="cancel">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click="signUp">Register</v-btn>
+            <v-btn color="blue darken-1" text @click="cancel">Close</v-btn>
+            <v-btn color="blue darken-1" text @click="signUp">Register</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
