@@ -1,13 +1,123 @@
+<style>
+*{
+  box-sizing: border-box;
+}
+
+body{
+  margin:0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size:1rem;
+  font-weight:normal;
+  line-height:1.5;
+  overflow-x:hidden;
+}
+
+.v-header{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  color: black;
+}
+
+.container{
+  max-width:960px;
+  padding-left:1rem;
+  padding-right:1rem;
+  margin:auto;
+  text-align:center;
+}
+
+.fullscreen-video-wrap{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100vh;
+  z-index: 2;
+  overflow:hidden;
+}
+
+.fullscreen-video-wrap video{
+  min-height:100%;
+  min-width:100%;
+}
+
+.header-overlay{
+  height:100vh;
+  position: absolute;
+  top:0;
+  left:0;
+  width:100vw;
+  z-index:1;
+  /* background:#225470; */
+  opacity:0.85;
+}
+
+.header-content{
+  z-index:2;
+}
+
+.header-content h1{
+  font-size:50px;
+  margin-bottom:0;
+}
+
+.header-content p{
+  font-size:1.5rem;
+  display:block;
+  padding-bottom:2rem;
+}
+
+.btn{
+  background: #34b3a0;
+  color:#fff;
+  font-size:1.2rem;
+  padding: 1rem 2rem;
+  text-decoration: none;
+}
+
+.section{
+  padding:20px 0;
+}
+
+.section-b{
+  background:#333;
+  color:#fff;
+}
+
+@media(max-width:960px){
+  .container{
+    padding-right:3rem;
+    padding-left:3rem;
+  }
+}
+.v-app-bar{
+  /* display: none; */
+  /* visibility: hidden; */
+}
+</style>
+
 <template>
-  <HelloWorld />
+  <header class="v-header container">
+      <div @click="vdclick" class="fullscreen-video-wrap">
+          <video playsinline autoplay muted loop>
+           <source src="seoul.mp4" type='video/mp4'>
+          </video>
+      </div>
+      <div class="header-overlay"></div>
+      <div class="header-content text-md-center">
+      </div>
+    </header>
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld'
+import router from '@/router'
 
 export default {
-  components: {
-    HelloWorld
+  methods: {
+    vdclick: function () {
+      router.push({ path: 'about' })
+    }
   }
 }
 </script>
