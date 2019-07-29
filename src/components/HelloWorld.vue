@@ -1,72 +1,142 @@
 <template>
-  <div>
-    <v-layout wrap justify-space-around>
-      <v-switch v-model="multiple" label="Multiple"></v-switch>
-      <v-switch v-model="mandatory" label="Mandatory"></v-switch>
-      <v-switch v-model="showArrows" label="Show arrows"></v-switch>
-      <v-switch v-model="prevIcon" label="Custom prev icon"></v-switch>
-      <v-switch v-model="nextIcon" label="Custom next icon"></v-switch>
-      <v-switch v-model="centerActive" label="Center active item"></v-switch>
-    </v-layout>
-
-    <v-sheet
-      class="mx-auto"
-      elevation="8"
-      max-width="800"
+  <v-container>
+    <v-layout
+      text-center
+      wrap
     >
-      <v-slide-group
-        v-model="model"
-        class="pa-4"
-        :prev-icon="prevIcon ? 'fa-angle-left' : undefined"
-        :next-icon="nextIcon ? 'mdi-plus' : undefined"
-        :multiple="multiple"
-        :mandatory="mandatory"
-        :show-arrows="showArrows"
-        :center-active="centerActive"
+      <v-flex xs12>
+        <v-img
+          :src="require('../assets/logo.svg')"
+          class="my-3"
+          contain
+          height="200"
+        ></v-img>
+      </v-flex>
+
+      <v-flex mb-4>
+        <h1 class="display-2 font-weight-bold mb-3">
+          Welcome to Vuetify
+        </h1>
+        <p class="subheading font-weight-regular">
+          For help and collaboration with other Vuetify developers,
+          <br>please join our online
+          <a href="https://community.vuetifyjs.com" target="_blank">Discord Community</a>
+        </p>
+      </v-flex>
+
+      <v-flex
+        mb-5
+        xs12
       >
-        <v-slide-item
-          v-for="n in 15"
-          :key="n"
-          v-slot:default="{ active, toggle }"
-        >
-          <v-card
-            :color="active ? 'primary' : 'grey lighten-1'"
-            class="ma-4"
-            height="200"
-            width="100"
-            @click="toggle"
+        <h2 class="headline font-weight-bold mb-3">What's next?</h2>
+
+        <v-layout justify-center>
+          <a
+            v-for="(next, i) in whatsNext"
+            :key="i"
+            :href="next.href"
+            class="subheading mx-3"
+            target="_blank"
           >
-            <v-layout
-              align-center
-              fill-height
-              justify-center
-            >
-              <v-scale-transition>
-                <v-icon
-                  v-if="active"
-                  color="white"
-                  size="48"
-                  v-text="'mdi-close-circle-outline'"
-                ></v-icon>
-              </v-scale-transition>
-            </v-layout>
-          </v-card>
-        </v-slide-item>
-      </v-slide-group>
-    </v-sheet>
-  </div>
+            {{ next.text }}
+          </a>
+        </v-layout>
+      </v-flex>
+
+      <v-flex
+        xs12
+        mb-5
+      >
+        <h2 class="headline font-weight-bold mb-3">Important Links</h2>
+
+        <v-layout justify-center>
+          <a
+            v-for="(link, i) in importantLinks"
+            :key="i"
+            :href="link.href"
+            class="subheading mx-3"
+            target="_blank"
+          >
+            {{ link.text }}
+          </a>
+        </v-layout>
+      </v-flex>
+
+      <v-flex
+        xs12
+        mb-5
+      >
+        <h2 class="headline font-weight-bold mb-3">Ecosystem</h2>
+
+        <v-layout justify-center>
+          <a
+            v-for="(eco, i) in ecosystem"
+            :key="i"
+            :href="eco.href"
+            class="subheading mx-3"
+            target="_blank"
+          >
+            {{ eco.text }}
+          </a>
+        </v-layout>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
 export default {
   data: () => ({
-    model: null,
-    multiple: false,
-    mandatory: false,
-    showArrows: true,
-    prevIcon: true,
-    nextIcon: true,
-    centerActive: false
+    ecosystem: [
+      {
+        text: 'vuetify-loader',
+        href: 'https://github.com/vuetifyjs/vuetify-loader'
+      },
+      {
+        text: 'github',
+        href: 'https://github.com/vuetifyjs/vuetify'
+      },
+      {
+        text: 'awesome-vuetify',
+        href: 'https://github.com/vuetifyjs/awesome-vuetify'
+      }
+    ],
+    importantLinks: [
+      {
+        text: 'Documentation',
+        href: 'https://vuetifyjs.com'
+      },
+      {
+        text: 'Chat',
+        href: 'https://community.vuetifyjs.com'
+      },
+      {
+        text: 'Made with Vuetify',
+        href: 'https://madewithvuejs.com/vuetify'
+      },
+      {
+        text: 'Twitter',
+        href: 'https://twitter.com/vuetifyjs'
+      },
+      {
+        text: 'Articles',
+        href: 'https://medium.com/vuetify'
+      }
+    ],
+    whatsNext: [
+      {
+        text: 'Explore components',
+        href: 'https://vuetifyjs.com/components/api-explorer'
+      },
+      {
+        text: 'Select a layout',
+        href: 'https://vuetifyjs.com/layout/pre-defined'
+      },
+      {
+        text: 'Frequently Asked Questions',
+        href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions'
+      }
+    ]
   })
 }
 </script>
