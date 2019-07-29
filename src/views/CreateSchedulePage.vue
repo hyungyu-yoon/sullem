@@ -1,16 +1,27 @@
 <template>
   <div>
     <ScheduleImage :coverImage="coverimageUrl"/>
-    <h1>This is create page.</h1>
+    <v-container>
+      <v-layout>
+        <GoogleMap/>
+      </v-layout>
+      <v-layout>
+        <TimeTable/>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
 <script>
 import ScheduleImage from '../components/ScheduleImageCover.vue'
+import GoogleMap from '../components/GoogleMap.vue'
+import TimeTable from '../components/TimeTable.vue'
 export default {
   name: 'CreateSchedulePage',
   components: {
-    ScheduleImage
+    ScheduleImage,
+    GoogleMap,
+    TimeTable
   },
   data () {
     return {
