@@ -3,6 +3,7 @@
    <v-app-bar app>
       <v-toolbar-title class="headline text-uppercase">
         <span>Sullem</span>
+        <span class="font-weight-light">설렘이 함께하는 당신의 여행</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
         <v-toolbar-items>
