@@ -10,18 +10,16 @@
   </section>
 </template>
 
-
 <script>
-  export default {
-    name: 'index',
-    data () {
-      return {
-        videoRatio: null
-      }
+export default {
+  name: 'index',
+  data () {
+    return {
+      videoRatio: null
     }
   }
+}
 </script>
-
 
 <style>
   .VideoBg {

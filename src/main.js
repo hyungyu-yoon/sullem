@@ -9,7 +9,6 @@ import axios from 'axios'
 import vuetify from './plugins/vuetify'
 import '@babel/polyfill'
 
-
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 
