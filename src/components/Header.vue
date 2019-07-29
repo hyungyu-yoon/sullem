@@ -1,5 +1,5 @@
 <template>
-  <v-layout>
+  <div>
    <v-app-bar app>
       <v-toolbar-title class="headline text-uppercase">
         <span>Sullem</span>
@@ -8,6 +8,8 @@
         <v-toolbar-items>
           <!-- <v-toolbar-items class="hidden-sm-and-down"> -->
           <!-- <v-toolbar-title v-if="this.$store.state.user != null">{{this.$store.state.user}}</v-toolbar-title> -->
+          <v-btn text>여행일정</v-btn>
+          <v-btn text>여행후기</v-btn>
           <v-btn v-if="this.$store.state.user == null" @click="showLogin" text>로그인</v-btn>
           <v-btn v-if="this.$store.state.user !=null" @click="logout" text>로그아웃</v-btn>
           <v-btn v-if="this.$store.state.user !=null" text>마이 페이지</v-btn>
@@ -16,7 +18,7 @@
     </v-app-bar>
     <LoginPage></LoginPage>
     <AccountPage></AccountPage>
-  </v-layout>
+  </div>
 </template>
 
 <script>
