@@ -1,52 +1,69 @@
 <template>
-    <div class='place'>
-        <div id='map'></div>
+  <v-container>
+    <div id='map'></div>
+      <v-sheet class="mx-auto ma-10" elevation="5">
+<v-container grid-list-md text-center>
+    <v-layout wrap>
+      <v-flex xs12>
+        <v-btn @click="activeBtn = 'attraction'"><v-icon :color="activeBtn === 'attraction' ? '#1DE9B6' : ''">fa-camera</v-icon></v-btn>&nbsp;
+        <v-btn @click="activeBtn = 'loddging'"><v-icon :color="activeBtn === 'loddging' ? '#1DE9B6' : ''">fa-bed</v-icon></v-btn>&nbsp;
+        <v-btn @click="activeBtn = 'restaurant'"><v-icon :color="activeBtn === 'restaurant' ? '#1DE9B6' : ''">fa-utensils</v-icon></v-btn>
+      </v-flex>
+      <v-flex xs2></v-flex>
+      <v-flex xs4>
+          <v-text-field
+            solo
+            label="지역 입력"
+            prepend-inner-icon="fa-globe"
+            id="pac-input"
+            placeholder=""
+          ></v-text-field>
+      </v-flex>
+      <v-flex xs4>
+          <v-text-field
+            solo
+            label="장소 입력"
+            prepend-inner-icon="fa-search"
+            placeholder=""
+          ></v-text-field>
+      </v-flex>
+      <v-flex xs2></v-flex>
 
-        <v-sheet
-    class="mx-auto"
-    elevation="8"
-
-  >
-    <v-slide-group
-      v-model="model"
-      class="pa-4"
-      prev-icon="fa-angle-left"
-      next-icon="fa-angle-right"
-      show-arrows
-    >
-      <v-slide-item
-        v-for="n in 10"
-        :key="n"
-        v-slot:default="{ active, toggle }"
+    </v-layout>
+<v-divider></v-divider>
+  </v-container>
+      <v-slide-group
+        v-model="model"
+        class="pa-0"
+        prev-icon="fa-angle-left"
+        next-icon="fa-angle-right"
+        show-arrows
       >
+        <v-slide-item v-for="result in results"
+          v-slot:default="{ active, toggle }">
 
-      <v-card
-    class="ma-6"
-    width="400"
+          <v-card
+          class="ml-2 mr-2 mb-2"
+          width="250"
+          >
+            <v-img
+              class="white--text"
+              height="150px"
+              :src="result.photos[0].getUrl(100,100)"
+            >
+              <v-card-title class="align-end fill-height text-wrap">{{result.name}}</v-card-title>
+            </v-img>
 
-  >
-    <v-img
-      class="white--text"
-      height="200px"
-      src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-    >
-      <v-card-title class="align-end fill-height">장소 이름</v-card-title>
-    </v-img>
-
-    <v-card-text>
-      <span>요약</span><br>
-      <span class="text--primary">
-        <span>Whitehaven Beach</span><br>
-        <span>Whitsunday Island, Whitsunday Islands</span>
-      </span>
-    </v-card-text>
-
-  </v-card>
-
-      </v-slide-item>
-    </v-slide-group>
-  </v-sheet>
-    </div>
+            <!-- <v-card-text>
+                <div class="text-wrap">
+                {{result.name}}
+              </div>
+            </v-card-text> -->
+          </v-card>
+        </v-slide-item>
+      </v-slide-group>
+    </v-sheet>
+  </v-container>
 </template>
 
 <script>
@@ -55,8 +72,10 @@ export default {
   data () {
     return {
       map: null,
-      result: null,
-      model: null
+      autocomplete: null,
+      results: [],
+      model: false,
+      activeBtn: 'attraction'
     }
   },
   mounted () {
@@ -69,32 +88,54 @@ export default {
         zoom: 15
       })
 
-      // Search for Google's office in Australia.
+      this.autocomplete = new google.maps.places.Autocomplete(
+        /** @type {!HTMLInputElement} */ (
+          document.getElementById('pac-input')), {
+          types: ['(cities)']
+        })
+
+      this.autocomplete.addListener('place_changed', this.attractionSearch)
+    },
+    attractionSearch () {
+      this.model = false
+      var place = this.autocomplete.getPlace()
+      if (!place.geometry) {
+        window.alert("No details available for input: '" + place.name + "'")
+        return
+      }
+      this.map.fitBounds(place.geometry.viewport)
+
+      var query = ''
+      if (this.activeBtn === 'attraction') {
+        query = 'tourlist attraction in ' + place.name
+      } else if (this.activeBtn === 'loddging') {
+        query = 'best hotel in ' + place.name
+      } else {
+        query = 'best restaurant in ' + place.name
+      }
+
       var request = {
-        location: this.map.getCenter(),
+        location: place.geometry.location,
         radius: '500',
-        query: '123+main+street'
+        query: query,
+        language: 'ko'
       }
 
       var service = new google.maps.places.PlacesService(this.map)
       service.textSearch(request, this.callback)
     },
     callback (results, status) {
-      if (status == google.maps.places.PlacesServiceStatus.OK) {
-        this.result = results
-        for (var i = 0; i < results.length; i++) {
-          var x = results[i].photos[0].getUrl(300, 300)
-          console.log(x)
-          var marker = new google.maps.Marker({
-            map: this.map,
-            place: {
-              placeId: results[i].place_id,
-              location: results[i].geometry.location
-            }
-          })
-        }
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        this.results = results
+        this.model = true
       }
     }
   }
 }
 </script>
+
+<style>
+.v-text-field__details{
+  display:none;
+}
+</style>
