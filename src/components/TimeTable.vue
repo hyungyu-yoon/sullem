@@ -1,97 +1,63 @@
 <template>
-  <v-layout>
-    <v-flex>
-      <v-sheet height="400">
-        <v-calendar
-          ref="calendar"
-          :now="today"
-          :value="today"
-          :events="events"
-          color="primary"
-          type="week"
-        >
-          <!-- the events at the top (all-day) -->
-          <template v-slot:day-header="{ date }">
-            <template v-for="event in eventsMap[date]">
-              <!-- all day events don't have time -->
-              <div
-                v-if="!event.time"
-                :key="event.title"
-                class="my-event"
-                @click="open(event)"
-                v-html="event.title"
-              ></div>
-            </template>
-          </template>
-          <!-- the events at the bottom (timed) -->
-          <template v-slot:day-body="{ date, timeToY, minutesToPixels }">
-            <template v-for="event in eventsMap[date]">
-              <!-- timed events -->
-              <div
-                v-if="event.time"
-                :key="event.title"
-                :style="{ top: timeToY(event.time) + 'px', height: minutesToPixels(event.duration) + 'px' }"
-                class="my-event with-time"
-                @click="open(event)"
-                v-html="event.title"
-              ></div>
-            </template>
-          </template>
-        </v-calendar>
-      </v-sheet>
-    </v-flex>
-  </v-layout>
+  <table>
+    <thead>
+      <tr>
+        <th>ALL</th>
+        <th>DAY 1</th>
+        <th>DAY 2</th>
+        <th>DAY 3</th>
+      </tr>
+    </thead>
+    <tbody>
+      <template v-for="(value, index) in 24">
+        <tr :key="value">
+          <td id='time' rowspan="2" >{{ index }}:00</td>
+          <!-- dd-hh-mm -->
+          <td :id="'0-' + index + '-0'">1</td>
+          <td :id="'1-' + index + '-0'">2</td>
+          <td :id="'2-' + index + '-0'">3</td>
+        </tr>
+        <tr :key="value">
+          <td :id="'0-' + index + '-1'">1</td>
+          <td :id="'1-' + index + '-1'">2</td>
+          <td :id="'2-' + index + '-1'">3</td>
+        </tr>
+      </template>
+    </tbody>
+  </table>
 </template>
 
 <script>
 export default {
-  name: 'TimeTable',
-  data: () => ({
-    today: '2019-01-08',
-    events: [
-      {
-        name: 'Weekly Meeting',
-        start: '2019-01-07 09:00',
-        end: '2019-01-07 10:00'
-      },
-      {
-        name: 'Thomas\' Birthday',
-        start: '2019-01-10'
-      },
-      {
-        name: 'Mash Potatoes',
-        start: '2019-01-09 12:30',
-        end: '2019-01-09 15:30'
-      }
-    ]
-  }),
-  mounted () {
-    this.$refs.calendar.scrollToTime('08:00')
+  data () {
+    return {
+      1: {},
+      2: {},
+      3: {}
+    }
   }
 }
 </script>
 
-<style scoped>
-.my-event {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  border-radius: 2px;
-  background-color: #1867c0;
-  color: #ffffff;
-  border: 1px solid #1867c0;
-  font-size: 12px;
-  padding: 3px;
-  cursor: pointer;
-  margin-bottom: 1px;
-  left: 4px;
-  margin-right: 8px;
-  position: relative;
-}
-
-.my-event.with-time {
-  position: absolute;
-  right: 4px;
-  margin-right: 0px;
-}
+<style>
+  table {
+    width: 100%;
+    border: 1px solid;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  th, td {
+    border: 1px solid;
+  }
+  tbody {
+    display: block;
+    overflow: auto;
+    height: 400px;
+    width: 100%;
+  }
+  #time {
+    vertical-align: top;
+    width: 90px;
+    text-align: right;
+  }
 </style>
