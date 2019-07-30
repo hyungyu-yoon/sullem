@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app>
+    <v-app-bar app v-if="this.$store.state.val">
       <v-toolbar-title class="headline text-uppercase">
         <span>Vuetify</span>
         <span class="font-weight-light">MATERIAL DESIGN</span>
@@ -23,11 +23,13 @@
 </template>
 
 <script>
+// import Home from '@/views/Home';
 
 export default {
   name: 'App',
-  data: () => ({
-    //
-  })
+  data: function () {
+    return {
+    }
+  }
 }
 </script>
