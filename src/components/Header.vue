@@ -32,65 +32,65 @@ export default {
     return {
       data:
         {
-          title:"신종이 여행",
-          date:"2018-10-01~2019-11-03",
+          title: '신종이 여행',
+          date: '2018-10-01~2019-11-03',
           days:
           [
             {
-              day:1,
+              day: 1,
               route: [
                 {
-                  origin : "place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE",
-                  destination : "place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU",
-                  travelMode : "TRANSIT",
-                  start_time : "09:30",
-                  end_time : "11:30",
-                  comment : "여권 챙기기!"
+                  origin: 'place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE',
+                  destination: 'place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU',
+                  travelMode: 'TRANSIT',
+                  start_time: '09:30',
+                  end_time: '11:30',
+                  comment: '여권 챙기기!'
                 },
                 {
-                  origin : "place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE",
-                  destination : "place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU",
-                  travelMode : "TRANSIT",
-                  start_time : "09:30",
-                  end_time : "11:30",
-                  comment : "여권 챙기기!"
+                  origin: 'place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE',
+                  destination: 'place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU',
+                  travelMode: 'TRANSIT',
+                  start_time: '09:30',
+                  end_time: '11:30',
+                  comment: '여권 챙기기!'
                 },
                 {
-                  origin : "place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE",
-                  destination : "place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU",
-                  travelMode : "TRANSIT",
-                  start_time : "09:30",
-                  end_time : "11:30",
-                  comment : "여권 챙기기!"
+                  origin: 'place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE',
+                  destination: 'place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU',
+                  travelMode: 'TRANSIT',
+                  start_time: '09:30',
+                  end_time: '11:30',
+                  comment: '여권 챙기기!'
                 }
               ]
             },
             {
-              day:2,
+              day: 2,
               route: [
                 {
-                  origin : "place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE",
-                  destination : "place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU",
-                  travelMode : "TRANSIT",
-                  start_time : "09:30",
-                  end_time : "11:30",
-                  comment : "여권 챙기기!"
+                  origin: 'place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE',
+                  destination: 'place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU',
+                  travelMode: 'TRANSIT',
+                  start_time: '09:30',
+                  end_time: '11:30',
+                  comment: '여권 챙기기!'
                 },
                 {
-                  origin : "place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE",
-                  destination : "place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU",
-                  travelMode : "TRANSIT",
-                  start_time : "09:30",
-                  end_time : "11:30",
-                  comment : "여권 챙기기!"
+                  origin: 'place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE',
+                  destination: 'place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU',
+                  travelMode: 'TRANSIT',
+                  start_time: '09:30',
+                  end_time: '11:30',
+                  comment: '여권 챙기기!'
                 },
                 {
-                  origin : "place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE",
-                  destination : "place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU",
-                  travelMode : "TRANSIT",
-                  start_time : "09:30",
-                  end_time : "11:30",
-                  comment : "여권 챙기기!"
+                  origin: 'place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE',
+                  destination: 'place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU',
+                  travelMode: 'TRANSIT',
+                  start_time: '09:30',
+                  end_time: '11:30',
+                  comment: '여권 챙기기!'
                 }
               ]
             }
@@ -114,15 +114,15 @@ export default {
     },
     jsonTest () {
       axios
-       .post('http://localhost:8399/test/json/', this.data)
-       .then(response => (
-         alert('json test')
-       ))
-       .catch(error => {
-         console.log(error)
-         this.errored = true
-       })
-       .finally(() => this.loading = false)
+        .post('http://localhost:8399/test/json/', this.data)
+        .then(response => (
+          console.log(response.data)
+        ))
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
+        .finally(() => this.loading = false)
     }
   }
 }
