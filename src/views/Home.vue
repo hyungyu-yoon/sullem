@@ -1,13 +1,86 @@
 <template>
-  <HelloWorld />
+<div>
+<div>
+    <v-img src="../assets/banner.jpg"
+           aspect-ratio="3.0"  gradient="rgba(255,255,255,.25), rgba(255,255,255,.5)">
+      <v-layout align-center justify-center fill-height wrap mt-3>
+          <v-flex xs12 sm3>
+          <v-text-field
+            solo
+            label="지역 입력"
+            placeholder=""
+          ></v-text-field>
+      </v-flex>
+      &nbsp;&nbsp;
+      <v-flex xs12 sm3>
+          <v-text-field
+            solo
+            label="장소 입력"
+            placeholder=""
+          ></v-text-field>
+      </v-flex>
+      </v-layout>
+    </v-img>
+  </div>
+
+  <v-container>
+    <v-layout mt-5 mb-5>
+    <v-sheet
+      width="100%"
+      elevation="5"
+      color="white"
+    >
+    <v-flex pa-5>
+          <div data-skyscanner-widget="FlightSearchWidget" data-locale="ko-KR"></div>
+    </v-flex>
+    </v-sheet>
+    </v-layout>
+    <v-layout wrap>
+      <v-flex xs12>
+        <span class="font-weight-bold headline teal--text text--accent-4">베스트<br/> 여행후기</span>
+        <v-divider class="teal accent-4"></v-divider>
+        <v-divider class="teal accent-4"></v-divider>
+      </v-flex>
+      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+      <v-flex xs12>
+        <span class="font-weight-bold headline teal--text text--accent-4">베스트<br/> 여행일정</span>
+        <v-divider class="teal accent-4"></v-divider>
+        <v-divider class="teal accent-4"></v-divider>
+      </v-flex>
+      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+      <v-flex xs12>
+        <span class="font-weight-bold headline teal--text text--accent-4">새로운<br/> 여행후기</span>
+        <v-divider class="teal accent-4"></v-divider>
+        <v-divider class="teal accent-4"></v-divider>
+      </v-flex>
+      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+      <v-flex xs12>
+        <span class="font-weight-bold headline teal--text text--accent-4">새로운<br/> 여행일정</span>
+        <v-divider class="teal accent-4"></v-divider>
+        <v-divider class="teal accent-4"></v-divider>
+      </v-flex>
+      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+    </v-layout>
+  </v-container>
+  </div>
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld'
 
 export default {
   components: {
-    HelloWorld
+
+  },
+  mounted () {
+    let recaptchaScript = document.createElement('script')
+    recaptchaScript.setAttribute('src', 'https://widgets.skyscanner.net/widget-server/js/loader.js')
+    document.head.appendChild(recaptchaScript)
   }
 }
 </script>
+<style>
+.v-text-field__details{
+  display:none!important;
+}
+</style>
