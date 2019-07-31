@@ -61,7 +61,7 @@ export default {
     signUp () {
       axios
         .post('http://localhost:8399/member/insert/', {
-          id: this.email,
+          email: this.email,
           password: this.password,
           name: this.name,
           age: this.age,

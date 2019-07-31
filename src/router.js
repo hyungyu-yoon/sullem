@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Index from './views/Index.vue'
 import PostPage from './views/PostPage.vue'
+import PostWriter from './views/PostWriter.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -31,6 +32,11 @@ export default new Router({
       path: '/postPage',
       name: 'postPage',
       component: PostPage
+    },
+    {
+      path: '/postWriter',
+      name: 'postWriter',
+      component: PostWriter
     }
   ]
 })

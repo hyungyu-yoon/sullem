@@ -8,6 +8,9 @@ import 'vuetify/dist/vuetify.min.css'
 import axios from 'axios'
 import vuetify from './plugins/vuetify'
 import '@babel/polyfill'
+import CKEditor from '@ckeditor/ckeditor5-vue';
+
+
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
@@ -22,6 +25,7 @@ Vue.use(Vuetify, {
     error: '#b71c1c'
   }
 })
+Vue.use( CKEditor );
 
 new Vue({
   router,
