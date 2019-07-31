@@ -2,6 +2,14 @@
   <div class="hello" style="display: flex;">
     <div id="Map" style="display: inline;"></div>
     <div id="directionsPanel" style="float:left;width:30%;height 100%; display: inline;"></div>
+    <div>
+      <v-btn
+        text
+        @click="addMarker"
+      >
+        열기
+      </v-btn>
+    </div>
   </div>
 </template>
 
@@ -9,6 +17,9 @@
 /* eslint-disable */
 export default {
   name: 'MapTest',
+  props: {
+    mapEvents: Array
+  },
   methods: {
     handleLocationError(browserHasGeolocation, infoWindow, pos) {
       infoWindow.setPosition(pos);
@@ -31,6 +42,14 @@ export default {
           window.alert('Directions request failed due to ' + status);
         }
       });
+    },
+    addMarker() {
+      console.log(this.mapEvents)
+      // var marker = new google.maps.Marker({
+      //   position: myLatLng,
+      //   map: map,
+      //   title: 'Hello World!'
+      // });
     }
   },
   mounted: function() {
@@ -64,7 +83,7 @@ export default {
       // Browser doesn't support Geolocation
       handleLocationError(false, infoWindow, map.getCenter());
     }
-    this.displayRoute(directionsService, directionsDisplay);
+    // this.displayRoute(directionsService, directionsDisplay);
     // this.drawPolyline(map);
   }
 }

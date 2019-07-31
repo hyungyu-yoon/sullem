@@ -3,10 +3,10 @@
     <ScheduleImage :coverImage="coverimageUrl"/>
     <v-container>
       <v-layout>
-        <GoogleMap/>
+        <GoogleMap :mapEvents="events"/>
       </v-layout>
       <v-layout>
-        <TimeTable/>
+        <TimeTable v-on:sendEvents="deliverEvents"/>
       </v-layout>
     </v-container>
   </div>
@@ -25,7 +25,13 @@ export default {
   },
   data () {
     return {
-      coverimageUrl: 'http://tourimage.interpark.com/BBS/Tour/FckUpload/201703/discovery_20170323_6362582542356180960.jpg'
+      coverimageUrl: 'http://tourimage.interpark.com/BBS/Tour/FckUpload/201703/discovery_20170323_6362582542356180960.jpg',
+      events: []
+    }
+  },
+  methods: {
+    deliverEvents (passed) {
+      this.events = passed
     }
   }
 }
