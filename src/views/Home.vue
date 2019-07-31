@@ -2,23 +2,20 @@
 <div>
 <div>
     <v-img src="../assets/banner.jpg"
-           aspect-ratio="3.0"  gradient="rgba(255,255,255,.25), rgba(255,255,255,.5)">
-      <v-layout align-center justify-center fill-height wrap mt-3>
-          <v-flex xs12 sm3>
-          <v-text-field
-            solo
-            label="지역 입력"
-            placeholder=""
-          ></v-text-field>
-      </v-flex>
-      &nbsp;&nbsp;
-      <v-flex xs12 sm3>
+           aspect-ratio="3.0"  gradient="rgba(255,255,255,.25), rgba(255,255,255,.5)"
+            v-resize="resize"  v-bind:style="{height:newHeight}"
+           >
+      <v-layout align-center justify-center fill-height>
+      <v-flex xs6 sm4 >
           <v-text-field
             solo
             label="장소 입력"
-            placeholder=""
+            clearable
+            color="teal accent-4"
+            class="font-weight-bold"
           ></v-text-field>
       </v-flex>
+
       </v-layout>
     </v-img>
   </div>
@@ -69,6 +66,11 @@
 <script>
 
 export default {
+  data () {
+    return {
+      newHeight: null
+    }
+  },
   components: {
 
   },
@@ -76,6 +78,11 @@ export default {
     let recaptchaScript = document.createElement('script')
     recaptchaScript.setAttribute('src', 'https://widgets.skyscanner.net/widget-server/js/loader.js')
     document.head.appendChild(recaptchaScript)
+  },
+  methods: {
+    resize () {
+      this.newHeight = window.innerWidth < 600 ? window.innerHeight - 56 + 'px' : null
+    }
   }
 }
 </script>
