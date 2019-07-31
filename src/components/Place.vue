@@ -61,13 +61,18 @@
         show-arrows
         center-active
       >
-        <v-slide-item v-for="result in results"
+        <!-- <v-slide-item v-for="result in results"
           v-if="result.photos"
+          v-slot:default="{ toggle }"
+          :key="result.place_id"
+        > -->
+        <v-slide-item v-for="result in results"
           v-slot:default="{ toggle }"
           :key="result.place_id"
         >
 
           <v-card
+          draggable
           class="ml-2 mr-2 mb-2"
           width="250"
           elevation="3"
@@ -97,9 +102,11 @@
 <script>
 export default {
   name: 'place',
+  props: {
+    map: null
+  },
   data () {
     return {
-      map: null,
       locationAutoComplete: null,
       placeAutoComplete: null,
       results: [],
@@ -112,11 +119,6 @@ export default {
   },
   methods: {
     initMap () {
-      this.map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: -33.8666, lng: 151.1958 },
-        zoom: 15
-      })
-
       this.locationAutoComplete = new google.maps.places.Autocomplete(
         /** @type {!HTMLInputElement} */ (
           document.getElementById('location')), {

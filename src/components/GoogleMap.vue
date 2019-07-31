@@ -1,6 +1,6 @@
 <template>
-  <div class="hello" style="display: flex;">
-    <div id="Map" style="display: inline;"></div>
+  <div id="Map" style="display: inline;"></div>
+  <!-- <div class="hello" style="display: flex;">
     <div id="directionsPanel" style="float:left;width:30%;height 100%; display: inline;"></div>
     <div>
       <v-btn
@@ -10,7 +10,7 @@
         열기
       </v-btn>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -60,6 +60,7 @@ export default {
       zoom: 8,
       gestureHandling: 'cooperative'
     })
+
     directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
     var infoWindow = new google.maps.InfoWindow;
@@ -85,12 +86,13 @@ export default {
     }
     // this.displayRoute(directionsService, directionsDisplay);
     // this.drawPolyline(map);
+    this.$emit('sendMap', map)
   }
 }
 </script>
 <style scoped>
     #Map {
-      height:400px;
-      width: 1000px;
+      height: 500px;
+      width: 100%;
    }
 </style>
