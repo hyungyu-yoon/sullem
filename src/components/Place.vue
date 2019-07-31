@@ -157,6 +157,7 @@ export default {
     },
     placeSearch () {
       this.model = false
+
       var place = this.placeAutoComplete.getPlace()
       if (!place.geometry) {
         window.alert("No details available for input: '" + place.name + "'")
@@ -176,6 +177,7 @@ export default {
     callback (results, status) {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         this.results = results
+        console.log(results)
         this.model = true
       }
     }
