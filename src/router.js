@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import Intro from './views/Intro.vue'
 import MapTest from './views/MapTest.vue'
 import CreateSchedulePage from './views/CreateSchedulePage.vue'
 import ScheduleDetailPage from './views/ScheduleDetailPage.vue'
@@ -13,6 +14,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'intro',
+      component: Intro
+    },
+    {
+      path: '/home',
       name: 'home',
       component: Home
     },
