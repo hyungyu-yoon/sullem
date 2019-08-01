@@ -99,9 +99,9 @@ body{
 h1.border:after {
     content: "";
     display: block;
-    width: 370px;
+    width: 390px;
     border-bottom: 5px solid #00BFA5;
-    margin-left: 40px;
+    margin-left: 10px;
 }
 
 /* 배경영상에 반투명한 레이어 씌우기 */
@@ -153,7 +153,7 @@ h1.border:after {
       <div class="header-content text-center; " style="margin-left: 150px;">
         <h1 class="s3" style="color: white;">여행 그 시작은</h1>
         <h1 class="s3 border" style="letter-spacing: 3px; color: white;">&nbsp;&nbsp;&nbsp;&nbsp;준비하는 <span class="s3" id="sul">설렘</span></h1>
-        <p style="color: white; margin-top:10px;"> <span id="sul">&nbsp;&nbsp;&nbsp;&nbsp;설렘</span> 과 함께 떠나는 여행 </p>
+        <p style="color: white; margin-top:10px; margin-left: 45px;"> <span id="sul">&nbsp;&nbsp;&nbsp;&nbsp;설렘</span> 과 함께 떠나는 여행 </p>
       </div>
     </header>
 </template>
