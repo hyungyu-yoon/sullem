@@ -12,7 +12,10 @@ export default {
   name: 'about',
   components: {
     Place
-  }
+  },
+  mounted () {
+    this.$store.state.val = true
+  } // navbar 나오게 전역변수 true로
 }
 </script>
 

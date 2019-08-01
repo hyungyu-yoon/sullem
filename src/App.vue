@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Header/>
+    <Header v-if="this.$store.state.val"/>
     <v-content>
       <router-view/>
     </v-content>
@@ -9,6 +9,7 @@
 </template>
 
 <script>
+
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 export default {
