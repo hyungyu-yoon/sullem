@@ -1,30 +1,3 @@
-<style>
-.animate_contentopen {
-  animation: animateopen 1.5s ease;
-}
-
-@keyframes animateopen {
-  0% {
-    transform: scale(0.2, 0.002);
-  }
-  35% {
-    transform: scale(0.2, 0.002);
-    opacity: 1;
-  }
-  /* 30% {
-    transform: scale(0.2, 0.002);
-    opacity: 1;
-  } */
-  70% {
-    transform: scale(1, 0.002);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1, 1);
-  }
-}
-</style>
-
 <template>
   <div class="animate-contentopen">
     <div>
@@ -163,5 +136,29 @@ export default {
 <style>
 .v-text-field__details {
   display: none !important;
+}
+.animate_contentopen {
+  animation: animateopen 1.5s ease;
+}
+
+@keyframes animateopen {
+  0% {
+    transform: scale(0.2, 0.002);
+  }
+  35% {
+    transform: scale(0.2, 0.002);
+    opacity: 1;
+  }
+  /* 30% {
+    transform: scale(0.2, 0.002);
+    opacity: 1;
+  } */
+  70% {
+    transform: scale(1, 0.002);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1, 1);
+  }
 }
 </style>
