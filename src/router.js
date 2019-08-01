@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import MapTest from './views/MapTest.vue'
 import CreateSchedulePage from './views/CreateSchedulePage.vue'
+import ScheduleDetailPage from './views/ScheduleDetailPage.vue'
 
 Vue.use(Router)
 
@@ -32,6 +33,11 @@ export default new Router({
       path: '/createschedule',
       name: 'createschedule',
       component: CreateSchedulePage
+    },
+    {
+      path: '/schedule',
+      name: 'schedule',
+      component: ScheduleDetailPage
     }
   ]
 })
