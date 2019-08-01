@@ -1,98 +1,120 @@
 <template>
-  <div id="Map" style="display: inline;"></div>
-  <!-- <div class="hello" style="display: flex;">
+  <div>
+    <div id="map" style="width: 1000px"></div>
+    <v-btn text @click="addMarker">열기</v-btn>
+  </div>
+  <!-- <div>
     <div id="directionsPanel" style="float:left;width:30%;height 100%; display: inline;"></div>
-    <div>
-      <v-btn
-        text
-        @click="addMarker"
-      >
-        열기
-      </v-btn>
-    </div>
-  </div> -->
+
+  </div>-->
 </template>
 
 <script>
 /* eslint-disable */
 export default {
-  name: 'MapTest',
+  name: "MapTest",
   props: {
     mapEvents: Array
   },
+  data() {
+    return {
+      map: null,
+      infoWindow: null,
+      directionsService: null,
+      directionsDisplay: null
+    };
+  },
   methods: {
+    initMap() {
+      this.directionsService = new google.maps.DirectionsService();
+      this.directionsDisplay = new google.maps.DirectionsRenderer();
+      this.map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 0, lng: 0 },
+        zoom: 2,
+        gestureHandling: "cooperative"
+      });
+      this.$nextTick(() => {
+        this.directionsDisplay.setMap(this.map);
+      });
+      this.infoWindow = new google.maps.InfoWindow();
+    },
     handleLocationError(browserHasGeolocation, infoWindow, pos) {
       infoWindow.setPosition(pos);
-      infoWindow.setContent(browserHasGeolocation ?
-                            'Error: The Geolocation service failed.' :
-                            'Error: Your browser doesn\'t support geolocation.');
-      infoWindow.open(map);
+      infoWindow.setContent(
+        browserHasGeolocation
+          ? "Error: The Geolocation service failed."
+          : "Error: Your browser doesn't support geolocation."
+      );
+      infoWindow.open(this.map);
     },
     displayRoute(directionsService, directionsDisplay) {
-      directionsService.route({
-        origin: 'Jeju+International+Airport',
-        destination: 'Hyupjae+Beach',
-        travelMode: 'TRANSIT',
-        provideRouteAlternatives: true
-      }, function(response, status) {
-        if (status === 'OK') {
-          console.log(response)
-          directionsDisplay.setDirections(response);
-        } else {
-          window.alert('Directions request failed due to ' + status);
+      directionsService.route(
+        {
+          origin: "Jeju+International+Airport",
+          destination: "Hyupjae+Beach",
+          travelMode: "TRANSIT",
+          provideRouteAlternatives: true
+        },
+        function(response, status) {
+          if (status === "OK") {
+            console.log(response);
+            directionsDisplay.setDirections(response);
+          } else {
+            window.alert("Directions request failed due to " + status);
+          }
         }
-      });
+      );
     },
     addMarker() {
-      console.log(this.mapEvents)
-      // var marker = new google.maps.Marker({
-      //   position: myLatLng,
-      //   map: map,
-      //   title: 'Hello World!'
-      // });
+      console.log(this.mapEvents);
+      for (var i in this.mapEvents) {
+        var marker = new google.maps.Marker({
+          position: this.mapEvents[i]["latlng"],
+          map: this.map,
+          label: String(Number(i) + 1)
+        });
+      }
+    },
+    geolocation() {
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            map.setCenter(pos);
+          },
+          function() {
+            handleLocationError(true, this.infoWindow, this.map.getCenter());
+          }
+        );
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, this.infoWindow, this.map.getCenter());
+      }
     }
   },
-  mounted: function() {
-    var directionsService = new google.maps.DirectionsService;
-    var directionsDisplay = new google.maps.DirectionsRenderer;
-    var map = new google.maps.Map(document.getElementById('Map'), {
-      center: { lat: -34.397, lng: 150.644 },
-      zoom: 8,
-      gestureHandling: 'cooperative'
-    })
-
-    directionsDisplay.setMap(map);
-    directionsDisplay.setPanel(document.getElementById('directionsPanel'));
-    var infoWindow = new google.maps.InfoWindow;
-
-    // Try HTML5 geolocation.
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-
-        infoWindow.setPosition(pos);
-        infoWindow.setContent('Location found.');
-        infoWindow.open(map);
-        map.setCenter(pos);
-      }, function() {
-        handleLocationError(true, infoWindow, map.getCenter());
-      });
-    } else {
-      // Browser doesn't support Geolocation
-      handleLocationError(false, infoWindow, map.getCenter());
-    }
+  mounted() {
+    this.initMap();
+    // this.addMarker();
+    // this.geolocation();
+    // this.$nextTick(() => {
+    //   this.geolocation();
+    // });
+    // directionsDisplay.setMap(this.map);
+    this.directionsDisplay.setPanel(document.getElementById("directionsPanel"));
+    this.displayRoute(this.directionsService, this.directionsDisplay);
     // this.displayRoute(directionsService, directionsDisplay);
     // this.drawPolyline(map);
-    this.$emit('sendMap', map)
+    this.$emit("sendMap", this.map);
   }
-}
+};
 </script>
 <style scoped>
-    #Map {
-      height: 500px;
-      width: 100%;
-   }
+#map {
+  height: 500px;
+  width: 100%;
+}
 </style>
