@@ -1,3 +1,50 @@
+<template>
+  <header class="v-header container" >
+      <div @click="vdclick" class="fullscreen-video-wrap">
+          <video playsinline autoplay muted loop>
+           <source :src='video' type='video/mp4'>
+          </video>
+          <div class="layer"></div>
+      </div>
+      <div class="header-overlay">
+      </div>
+      <div class="header-content text-center; " style="margin-left: 150px;">
+        <h1 class="s3" style="color: white;">여행 그 시작은</h1>
+        <h1 class="s3 border" style="letter-spacing: 3px; color: white;">&nbsp;&nbsp;&nbsp;&nbsp;준비하는 <span class="s3" id="sul">설렘</span></h1>
+        <p style="color: white; margin-top:10px; margin-left: 45px;"> <span id="sul">&nbsp;&nbsp;&nbsp;&nbsp;설렘</span> 과 함께 떠나는 여행 </p>
+      </div>
+    </header>
+</template>
+
+<script>
+import router from '@/router'
+import { setTimeout } from 'timers'
+
+export default {
+  mounted: function () {
+    this.$store.state.val = false
+    console.log(this.video)
+  },
+  data () {
+    return {
+      video: `vid${Math.ceil(Math.random() * 4)}_Trim.mp4` // 랜덤비디오 개수
+    }
+  },
+  methods: {
+    vdclick: function () {
+      var element = document.getElementsByClassName('fullscreen-video-wrap')[0]
+      var elementt = document.getElementsByClassName('header-content')[0]
+      element.classList.add('animate_content')
+      elementt.classList.add('animate_content')
+      setTimeout(function () {
+        console.log('Works!')
+        router.push({ path: 'home' })
+      }, 1500)
+    }
+  }
+}
+</script>
+
 <style>
 *{
   box-sizing: border-box;
@@ -33,22 +80,6 @@ body{
   min-height:100%;
   min-width:100%;
 }
-/* @media(max-width:1280px){
-    .fullscreen-video-wrap{
-    position:absolute;
-    top:0;
-    left:0;
-    height:100vh;
-    width: 100vw;
-    z-index: 2;
-    overflow:hidden;
-  }
-
-  .fullscreen-video-wrap video{
-  min-height:20%;
-  min-width:20%;
-  }
-} */
 
 .header-overlay{
   height:100vh;
@@ -76,16 +107,6 @@ body{
   padding-bottom:2rem;
 }
 
-/* @media(max-width:960px){
-  .container{
-    padding-right:3rem;
-    padding-left:3rem;
-  }
-} */
-.v-app-bar{
-  /* display: none; */
-  /* visibility: hidden; */
-}
 #sul {
   color: #00BFA5;
 }
@@ -139,62 +160,3 @@ h1.border:after {
   }
 }
 </style>
-
-<template>
-  <header class="v-header container" >
-      <div @click="vdclick" class="fullscreen-video-wrap">
-          <video playsinline autoplay muted loop>
-           <source :src='video' type='video/mp4'>
-          </video>
-          <div class="layer"></div>
-      </div>
-      <div class="header-overlay">
-      </div>
-      <div class="header-content text-center; " style="margin-left: 150px;">
-        <h1 class="s3" style="color: white;">여행 그 시작은</h1>
-        <h1 class="s3 border" style="letter-spacing: 3px; color: white;">&nbsp;&nbsp;&nbsp;&nbsp;준비하는 <span class="s3" id="sul">설렘</span></h1>
-        <p style="color: white; margin-top:10px; margin-left: 45px;"> <span id="sul">&nbsp;&nbsp;&nbsp;&nbsp;설렘</span> 과 함께 떠나는 여행 </p>
-      </div>
-    </header>
-</template>
-
-<script>
-import router from '@/router'
-import { setTimeout } from 'timers'
-
-export default {
-  // props: [
-  //   'myVal'
-  // ],
-
-  mounted: function () {
-    this.$store.state.val = false
-    console.log(this.video)
-  },
-  data () {
-    return {
-      video: `vid${Math.ceil(Math.random() * 4)}_Trim.mp4` // 랜덤비디오 개수
-    }
-  },
-  methods: {
-    vdclick: function () {
-      var element = document.getElementsByClassName('fullscreen-video-wrap')[0]
-      var elementt = document.getElementsByClassName('header-content')[0]
-      element.classList.add('animate_content')
-      elementt.classList.add('animate_content')
-      //   fullscreen-video-wrap.classList.add('animate_content')
-      //   header-content.classList.add('animate_content')
-      setTimeout(function () {
-        console.log('Works!')
-        router.push({ path: 'home' })
-      }, 1500)
-    }
-    // hidenav: function () {
-    //   console.log(this.myVal)
-    //   this.myVal = false;
-    //   console.log(this.myVal)
-    //   eventBus.$emit('fixVal', this.myVal);
-    // }
-  }
-}
-</script>
