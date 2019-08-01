@@ -19,14 +19,6 @@ body{
   color: black;
 }
 
-.container{
-  max-width:960px;
-  padding-left:1rem;
-  padding-right:1rem;
-  margin:auto;
-  text-align:center;
-}
-
 .fullscreen-video-wrap{
   position:absolute;
   top:0;
