@@ -4,7 +4,7 @@
     <v-content>
       <router-view/>
     </v-content>
-    <Footer></Footer>
+    <Footer v-if="this.$store.state.val"></Footer>
   </v-app>
 </template>
 
