@@ -150,7 +150,7 @@ h1.border:after {
 
 <template>
   <header class="v-header container" >
-      <div @click="vdclick" class="fullscreen-video-wrap ">
+      <div @click="vdclick" class="fullscreen-video-wrap">
           <video playsinline autoplay muted loop>
            <source :src='video' type='video/mp4'>
           </video>
@@ -161,13 +161,14 @@ h1.border:after {
       <div class="header-content text-center; " style="margin-left: 150px;">
         <h1 class="s3" style="color: white;">여행 그 시작은</h1>
         <h1 class="s3 border" style="letter-spacing: 3px; color: white;">&nbsp;&nbsp;&nbsp;&nbsp;준비하는 <span class="s3" id="sul">설렘</span></h1>
-        <p style="color: white"> <span id="sul">&nbsp;&nbsp;&nbsp;&nbsp;설렘</span> 과 함께 떠나는 여행 </p>
+        <p style="color: white; margin-top:10px;"> <span id="sul">&nbsp;&nbsp;&nbsp;&nbsp;설렘</span> 과 함께 떠나는 여행 </p>
       </div>
     </header>
 </template>
 
 <script>
 import router from '@/router'
+import { setTimeout } from 'timers'
 
 export default {
   // props: [
@@ -185,9 +186,16 @@ export default {
   },
   methods: {
     vdclick: function () {
-    //   fullscreen-video-wrap.classList.add('animate_content')
-    //   header-content.classList.add('animate_content')
-      router.push({ path: 'home' })
+      var element = document.getElementsByClassName('fullscreen-video-wrap')[0]
+      var elementt = document.getElementsByClassName('header-content')[0]
+      element.classList.add('animate_content')
+      elementt.classList.add('animate_content')
+      //   fullscreen-video-wrap.classList.add('animate_content')
+      //   header-content.classList.add('animate_content')
+      setTimeout(function () {
+        console.log('Works!')
+        router.push({ path: 'home' })
+      }, 1500)
     }
     // hidenav: function () {
     //   console.log(this.myVal)
