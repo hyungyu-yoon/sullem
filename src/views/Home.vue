@@ -1,26 +1,26 @@
 <template>
   <div class="animate-contentopen">
-    <div>
-      <v-img
-        src="../assets/banner.jpg"
-        aspect-ratio="3.0"
-        gradient="rgba(255,255,255,.25), rgba(255,255,255,.5)"
-        v-resize="resize"
-        v-bind:style="{height:newHeight}"
-      >
-        <v-layout align-center justify-center fill-height>
-          <v-flex xs6 sm4>
-            <v-text-field
-              solo
-              label="장소 입력"
-              clearable
-              color="teal accent-4"
-              class="font-weight-bold"
-            ></v-text-field>
-          </v-flex>
-        </v-layout>
-      </v-img>
-    </div>
+    <v-img
+      src="../assets/banner.jpg"
+      aspect-ratio="3.0"
+      gradient="rgba(255,255,255,.25), rgba(255,255,255,.5)"
+      v-resize="resize"
+      v-bind:style="{height:newHeight}"
+    >
+      <v-layout align-center justify-center fill-height>
+        <v-flex xs6 sm4>
+          <v-text-field
+            solo
+            label="장소 입력"
+            clearable
+            color="teal accent-4"
+            class="font-weight-bold"
+            append-icon="fa-search"
+            @click:append="search"
+          ></v-text-field>
+        </v-flex>
+      </v-layout>
+    </v-img>
 
     <v-container class="animate-contentopen">
       <v-layout mt-5 mb-5>
@@ -129,6 +129,9 @@ export default {
     resize () {
       this.newHeight =
         window.innerWidth < 600 ? window.innerHeight - 56 + 'px' : null
+    },
+    search () {
+      alert('검색이야')
     }
   }
 }
