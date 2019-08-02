@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="map" style="width: 1000px"></div>
+    <div id="map" style="width: 1240px"></div>
     <v-btn text @click="addMarker">열기</v-btn>
   </div>
   <!-- <div>

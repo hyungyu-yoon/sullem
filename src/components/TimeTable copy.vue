@@ -3,18 +3,10 @@
     <v-flex>
       <v-sheet height="64">
         <v-toolbar flat color="white">
-          <v-btn outlined class="mr-4" @click="setToday">
-            Today
-          </v-btn>
-          <v-btn fab text small @click="prev">
-            이전
-          </v-btn>
-          <v-btn fab text small @click="next">
-            이후
-          </v-btn>
-          <v-btn fab text small @click="send">
-            보내기
-          </v-btn>
+          <v-btn outlined class="mr-4" @click="setToday">Today</v-btn>
+          <v-btn fab text small @click="prev">이전</v-btn>
+          <v-btn fab text small @click="next">이후</v-btn>
+          <v-btn fab text small @click="send">보내기</v-btn>
           <v-toolbar-title>{{ title }}</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
@@ -43,15 +35,8 @@
           full-width
           offset-x
         >
-          <v-card
-            color="grey lighten-4"
-            min-width="350px"
-            flat
-          >
-            <v-toolbar
-              :color="selectedEvent.color"
-              dark
-            >
+          <v-card color="grey lighten-4" min-width="350px" flat>
+            <v-toolbar :color="selectedEvent.color" dark>
               <v-btn icon>
                 <v-icon>edit</v-icon>
               </v-btn>
@@ -68,13 +53,7 @@
               <span v-html="selectedEvent.details"></span>
             </v-card-text>
             <v-card-actions>
-              <v-btn
-                text
-                color="secondary"
-                @click="selectedOpen = false"
-              >
-                Cancel
-              </v-btn>
+              <v-btn text color="secondary" @click="selectedOpen = false">Cancel</v-btn>
             </v-card-actions>
           </v-card>
         </v-menu>
@@ -144,7 +123,8 @@ export default {
     },
     monthFormatter () {
       return this.$refs.calendar.getFormatter({
-        timeZone: 'UTC', month: 'long'
+        timeZone: 'UTC',
+        month: 'long'
       })
     }
   },
@@ -168,7 +148,9 @@ export default {
       const open = () => {
         this.selectedEvent = event
         this.selectedElement = nativeEvent.target
-        setTimeout(() => { this.selectedOpen = true }, 10)
+        setTimeout(() => {
+          this.selectedOpen = true
+        }, 10)
       }
 
       if (this.selectedOpen) {
@@ -193,5 +175,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
