@@ -97,6 +97,7 @@
 </template>
 
 <script>
+import createEventModal from './createEventModal.vue'
 export default {
   name: 'place',
   props: {
