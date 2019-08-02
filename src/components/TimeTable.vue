@@ -6,6 +6,7 @@
           <v-btn outlined class="mr-4" @click="setToday">First</v-btn>
           <v-btn fab text small @click="prev">이전</v-btn>
           <v-btn fab text small @click="next">이후</v-btn>
+          <v-btn fab text small @click="send">만들기</v-btn>
           <v-btn fab text small @click="send">보내기</v-btn>
           <!-- <v-toolbar-title>{{ title }}</v-toolbar-title> -->
           <v-spacer></v-spacer>
@@ -43,12 +44,6 @@
               </v-btn>
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
               <v-spacer></v-spacer>
-              <v-btn icon>
-                <v-icon>favorite</v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon>more_vert</v-icon>
-              </v-btn>
             </v-toolbar>
             <v-card-text>
               <span v-html="selectedEvent.details"></span>
@@ -80,7 +75,7 @@ export default {
         details: '제주도의 관문!',
         start: '2019-01-08 9:30',
         end: '2019-01-08 10:30',
-        color: 'red',
+        color: '#80CBC4',
         latlng: { lat: -25.363, lng: 131.044 },
         type: 'location'
       },
@@ -98,7 +93,7 @@ export default {
         details: 'Going to the beach!',
         start: '2019-01-08 12:30',
         end: '2019-01-08 13:30',
-        color: 'blue',
+        color: '#80CBC4',
         latlng: { lat: 0, lng: 0 },
         type: 'location'
       }
@@ -144,14 +139,24 @@ export default {
       this.focus = this.start
     },
     prev () {
-      this.$refs.calendar.prev()
+      var prev = new Date(this.today)
+      prev.setDate(prev.getDate() - 1)
+      var year = prev.getFullYear()
+      var month = prev.getMonth() + 1
+      var day = prev.getDate()
+      prev = year + '-' + month + '-' + day
+      this.focus = prev
+      this.today = prev
     },
     next () {
-      // this.$refs.calendar.move();
       var nextDay = new Date(this.today)
       nextDay.setDate(nextDay.getDate() + 1)
-      // console.log(nextDay);
-      // this.$refs.calendar.next();
+      var year = nextDay.getFullYear()
+      var month = nextDay.getMonth() + 1
+      var day = nextDay.getDate()
+      nextDay = year + '-' + month + '-' + day
+      this.focus = nextDay
+      this.today = nextDay
     },
     showEvent ({ nativeEvent, event }) {
       const open = () => {
@@ -178,7 +183,8 @@ export default {
     // },
     send () {
       this.$emit('sendEvents', this.events)
-    }
+    },
+    addEvent () {}
   }
 }
 </script>
