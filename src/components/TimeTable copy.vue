@@ -3,11 +3,11 @@
     <v-flex>
       <v-sheet height="64">
         <v-toolbar flat color="white">
-          <v-btn outlined class="mr-4" @click="setToday">First</v-btn>
+          <v-btn outlined class="mr-4" @click="setToday">Today</v-btn>
           <v-btn fab text small @click="prev">이전</v-btn>
           <v-btn fab text small @click="next">이후</v-btn>
           <v-btn fab text small @click="send">보내기</v-btn>
-          <!-- <v-toolbar-title>{{ title }}</v-toolbar-title> -->
+          <v-toolbar-title>{{ title }}</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
       </v-sheet>
@@ -17,8 +17,7 @@
           interval-count="48"
           ref="calendar"
           v-model="focus"
-          color="#1DE9B6"
-          event-text-color="black"
+          color="second"
           :events="events"
           :event-color="getEventColor"
           :event-margin-bottom="3"
@@ -69,8 +68,8 @@ export default {
     today: '2019-01-08',
     focus: '2019-01-08',
     type: '4day',
-    start: '2019-01-08',
-    end: null,
+    start: null,
+    end: '2019-01-12',
     selectedEvent: {},
     selectedElement: null,
     selectedOpen: false,
@@ -81,17 +80,7 @@ export default {
         start: '2019-01-08 9:30',
         end: '2019-01-08 10:30',
         color: 'red',
-        latlng: { lat: -25.363, lng: 131.044 },
-        type: 'location'
-      },
-      {
-        name: '길찾기',
-        details: '30km',
-        start: '2019-01-08 10:30',
-        end: '2019-01-08 12:30',
-        color: 'transparent',
-        latlng: null,
-        type: 'route'
+        latlng: { lat: -25.363, lng: 131.044 }
       },
       {
         name: 'Hyupjae+Beach',
@@ -99,31 +88,39 @@ export default {
         start: '2019-01-08 12:30',
         end: '2019-01-08 13:30',
         color: 'blue',
-        latlng: { lat: 0, lng: 0 },
-        type: 'location'
+        latlng: { lat: 0, lng: 0 }
       }
     ]
   }),
   computed: {
-    // title() {
-    //   const { start, end } = this;
-    //   if (!start || !end) {
-    //     return "";
-    //   }
+    title () {
+      const { start, end } = this
+      if (!start || !end) {
+        return ''
+      }
 
-    //   const startMonth = this.monthFormatter(start);
-    //   const endMonth = this.monthFormatter(end);
-    //   const suffixMonth = startMonth === endMonth ? "" : endMonth;
+      const startMonth = this.monthFormatter(start)
+      const endMonth = this.monthFormatter(end)
+      const suffixMonth = startMonth === endMonth ? '' : endMonth
 
-    //   const startYear = start.year;
-    //   const endYear = end.year;
-    //   const suffixYear = startYear === endYear ? "" : endYear;
+      const startYear = start.year
+      const endYear = end.year
+      const suffixYear = startYear === endYear ? '' : endYear
 
-    //   const startDay = start.day + this.nth(start.day);
-    //   const endDay = end.day + this.nth(end.day);
+      const startDay = start.day + this.nth(start.day)
+      const endDay = end.day + this.nth(end.day)
 
-    //   return "";
-    // },
+      switch (this.type) {
+        case 'month':
+          return `${startMonth} ${startYear}`
+        case 'week':
+        case '4day':
+          return `${startMonth} ${startDay} ${startYear} - ${suffixMonth} ${endDay} ${suffixYear}`
+        case 'day':
+          return `${startMonth} ${startDay} ${startYear}`
+      }
+      return ''
+    },
     monthFormatter () {
       return this.$refs.calendar.getFormatter({
         timeZone: 'UTC',
@@ -134,24 +131,18 @@ export default {
   methods: {
     viewDay ({ date }) {
       this.focus = date
-      this.today = date
     },
     getEventColor (event) {
       return event.color
     },
     setToday () {
-      this.today = this.start
-      this.focus = this.start
+      this.focus = this.today
     },
     prev () {
       this.$refs.calendar.prev()
     },
     next () {
-      // this.$refs.calendar.move();
-      var nextDay = new Date(this.today)
-      nextDay.setDate(nextDay.getDate() + 1)
-      // console.log(nextDay);
-      // this.$refs.calendar.next();
+      this.$refs.calendar.next()
     },
     showEvent ({ nativeEvent, event }) {
       const open = () => {
@@ -171,11 +162,11 @@ export default {
 
       nativeEvent.stopPropagation()
     },
-    // nth(d) {
-    //   return d > 3 && d < 21
-    //     ? "th"
-    //     : ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"][d % 10];
-    // },
+    nth (d) {
+      return d > 3 && d < 21
+        ? 'th'
+        : ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th'][d % 10]
+    },
     send () {
       this.$emit('sendEvents', this.events)
     }
@@ -184,7 +175,4 @@ export default {
 </script>
 
 <style scoped>
-.v-event-timed {
-  border: 0px !important;
-}
 </style>
