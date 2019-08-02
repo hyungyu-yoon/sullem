@@ -10,6 +10,7 @@
 </template>
 
 <script>
+// import { log } from 'util'
 /* eslint-disable */
 export default {
   name: "MapTest",
@@ -66,13 +67,15 @@ export default {
       );
     },
     addMarker() {
-      console.log(this.mapEvents);
+      var index = 1;
       for (var i in this.mapEvents) {
-        var marker = new google.maps.Marker({
-          position: this.mapEvents[i]["latlng"],
-          map: this.map,
-          label: String(Number(i) + 1)
-        });
+        if (this.mapEvents[i]["type"] == "location") {
+          var marker = new google.maps.Marker({
+            position: this.mapEvents[i]["latlng"],
+            map: this.map,
+            label: String(index++)
+          });
+        }
       }
     },
     geolocation() {

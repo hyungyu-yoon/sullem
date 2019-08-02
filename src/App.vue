@@ -2,7 +2,7 @@
   <v-app>
     <Header v-if="this.$store.state.val"/>
     <v-content>
-      <router-view/>
+      <router-view />
     </v-content>
     <Footer v-if="this.$store.state.val"></Footer>
   </v-app>
