@@ -5,6 +5,7 @@ import Intro from './views/Intro.vue'
 import MapTest from './views/MapTest.vue'
 import CreateSchedulePage from './views/CreateSchedulePage.vue'
 import ScheduleDetailPage from './views/ScheduleDetailPage.vue'
+import SearchPage from './views/SearchPage.vue'
 
 Vue.use(Router)
 
@@ -44,6 +45,11 @@ export default new Router({
       path: '/schedule',
       name: 'schedule',
       component: ScheduleDetailPage
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: SearchPage
     }
   ]
 })
