@@ -68,12 +68,20 @@
           :key="result.place_id"
         >-->
         <v-slide-item v-for="result in results" v-slot:default="{ toggle }" :key="result.place_id">
-          <v-card draggable class="ml-2 mr-2 mb-2" width="250" elevation="3" @click="toggle">
+          <v-card class="ml-2 mr-2 mb-2" width="250" elevation="3">
             <v-img class="white--text" height="150px" :src="result.photos[0].getUrl(100,100)">
-              <v-card-title
-                class="align-end fill-height text-wrap"
-                style="text-shadow: 2px 2px 8px black;"
-              >{{result.name}}</v-card-title>
+              <v-layout
+                align-content-end
+                justify-center
+                style="background-color: #EEEEEE; background-color: rgba( 255, 255, 255, 0.5 );"
+              >
+                <v-card-title
+                  class="text-wrap align-end fill-height"
+                  style="text-shadow: 2px 2px 8px black;"
+                  @click="sendData"
+                >{{result.name}}</v-card-title>
+                <v-icon color="#4DB6AC" @click="sendData">fa-plus-circle</v-icon>
+              </v-layout>
             </v-img>
 
             <!-- <v-card-text>
@@ -170,6 +178,9 @@ export default {
 
       var service = new google.maps.places.PlacesService(this.map)
       service.textSearch(request, this.callback)
+    },
+    sendData () {
+      this.$emit('sendPlace')
     },
     callback (results, status) {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
