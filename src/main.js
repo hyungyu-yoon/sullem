@@ -23,7 +23,9 @@ Vue.use(Vuetify, {
     error: '#b71c1c'
   }
 })
+
 new Vue({
+  // el: '#app',
   router,
   store,
   vuetify,

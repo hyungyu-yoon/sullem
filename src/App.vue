@@ -1,14 +1,15 @@
 <template>
   <v-app>
-    <Header />
+    <Header v-if="this.$store.state.val"/>
     <v-content>
       <router-view />
     </v-content>
-    <Footer></Footer>
+    <Footer v-if="this.$store.state.val"></Footer>
   </v-app>
 </template>
 
 <script>
+
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 export default {
