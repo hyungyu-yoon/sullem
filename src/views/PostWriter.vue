@@ -30,32 +30,32 @@ export default {
   methods: {
     UploadAdapter (loader) {
       console.log(loader.file)
-          // this.loader = loader
-          this.upload = () => {
-            const body = new FormData();
-            body.append('file', loader.file);
-            console.log("body")
-            console.log(body);
-            return fetch('http://192.168.31.114:8399/post/upload', {
-              file: body,
-              method: 'POST'
-            })
-            .then(response => (
-              console.log("data"),
-              console.log(response)
-            ))
-            .then(downloadUrl => {
-              return {
-                default: downloadUrl
-              }
-            })
-            .catch(error => {
-              console.log(error);
-            });
-          }
-        //   this.abort = () => {
-        //     console.log('Abort upload.')
-        // }
+      // this.loader = loader
+      this.upload = () => {
+        const body = new FormData()
+        body.append('file', loader.file)
+        console.log('body')
+        console.log(body)
+        return fetch('http://192.168.31.114:8399/post/upload', {
+          upload: body,
+          method: 'POST'
+        })
+          .then(response => (
+            console.log('data'),
+            console.log(response)
+          ))
+          .then(downloadUrl => {
+            return {
+              default: downloadUrl
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
+      //   this.abort = () => {
+      //     console.log('Abort upload.')
+      // }
     }
 
     // addEventLog (eventName, ...args) {
