@@ -1,27 +1,52 @@
 <template>
 <div>
-    <v-img
-      src="../assets/banner2.jpg"
-      aspect-ratio="3.0"
-      gradient="rgba(255,255,255,.25), rgba(255,255,255,.5)"
-    >
-      <v-layout align-center justify-center fill-height></v-layout>
-    </v-img>
+    <v-sheet class="teal accent-4" height="150" tile>
+      <v-layout align-center justify-center fill-height>
+        <v-flex xs6 sm4>
+          <v-text-field
+            solo
+            label="장소 입력"
+            clearable
+            color="teal accent-4"
+            class="font-weight-bold"
+            append-icon="fa-search"
+            @click:append="search"
+            v-model="text"
+          ></v-text-field>
+        </v-flex>
+      </v-layout>
+    </v-sheet>
 
-    <v-container grid-list-md>
+    <v-container grid-list-md mt-3>
       <v-layout wrap>
         <v-flex md3 class="hidden-sm-and-down">
-          <v-card color="purple" dark>
-            <v-card-title primary class="title">Lorem</v-card-title>
-            <v-card-text>{{ lorem }}</v-card-text>
-          </v-card>
+          <v-card
+            class="mx-auto"
+            max-width="300"
+            tile
+          >
+    <v-list rounded>
+      <v-subheader>Category</v-subheader>
+      <v-list-item-group v-model="item" color="teal accent-4">
+        <v-list-item
+          v-for="(item, i) in items"
+          :key="i"
+        >
+          <!-- <v-list-item-icon>
+            <v-icon v-text="item.icon"></v-icon>
+          </v-list-item-icon> -->
+          <v-list-item-content>
+            <v-list-item-title v-text="item.text" class="font-weight-bold"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
+    </v-list>
+  </v-card>
         </v-flex>
         <v-flex xs12 md9>
           <v-layout wrap>
             <v-flex xs12>
-              <v-sheet elevation="5">
-                  <span>게시물 등록 장소</span>
-              </v-sheet>
+                <schedule-list :query="this.$route.params.query"></schedule-list>
             </v-flex>
 
           </v-layout>
@@ -32,27 +57,28 @@
 </template>
 
 <script>
+import ScheduleList from '../components/ScheduleList.vue'
 export default {
+  components: {
+    ScheduleList
+  },
   data: () => ({
     lorem: `Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.`,
+    item: 0,
     items: [
-      {
-        color: 'red lighten-2',
-        icon: 'fa-camera'
-      },
-      {
-        color: 'purple darken-1',
-        icon: 'fa-utensils'
-      },
-      {
-        color: 'green lighten-1',
-        icon: 'fa-camera'
-      },
-      {
-        color: 'indigo',
-        icon: 'fa-bed'
-      }
-    ]
-  })
+      { text: '여행일정' },
+      { text: '여행후기' }
+
+    ],
+    text: ''
+  }),
+  mounted () {
+    // alert(this.$route.params.query)
+  },
+  methods: {
+    search () {
+      alert(this.text)
+    }
+  }
 }
 </script>

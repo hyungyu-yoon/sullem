@@ -16,7 +16,8 @@
             color="teal accent-4"
             class="font-weight-bold"
             append-icon="fa-search"
-            @click:append="search"
+            @click:append="$router.push({name:'search',params:{query:text}})"
+            v-model="text"
           ></v-text-field>
         </v-flex>
       </v-layout>
@@ -112,7 +113,8 @@
 export default {
   data () {
     return {
-      newHeight: null
+      newHeight: null,
+      text: ''
     }
   },
   components: {},
@@ -129,9 +131,6 @@ export default {
     resize () {
       this.newHeight =
         window.innerWidth < 600 ? window.innerHeight - 56 + 'px' : null
-    },
-    search () {
-      alert('검색이야')
     }
   }
 }
