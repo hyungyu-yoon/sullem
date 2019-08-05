@@ -1,78 +1,77 @@
 <template>
   <div>
-    <h1>Post</h1>
+    <vue-editor id="editor" useCustomImageHandler @imageAdded="handleImageAdded" v-model="editorData"> </vue-editor>
+    <textarea v-model="editorData" style="width:500px; height:300px"></textarea>
+    <v-btn @click="postUpload">등록</v-btn>
 
-    <vue-ckeditor
-           type="classic"
-           v-model="editorData"
-           :upload-adapter="UploadAdapter"
-           ></vue-ckeditor><br /><br />
-    <h2>Live editor data</h2>
-    <textarea v-model="editorData" style="width:500px; height:500px"></textarea>
+    <textarea>{{thumbnail}}</textarea>
   </div>
 </template>
 
 <script>
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import VueCkeditor from 'vue-ckeditor5'
-
+import { VueEditor } from "vue2-editor";
+import axios from "axios";
 export default {
-  name: 'postWriter',
   components: {
-    'vue-ckeditor': VueCkeditor.component
+    VueEditor
   },
-  data () {
+
+  data() {
     return {
-      editorData: '<p>Hello world!</p>',
-      editorDisabled: false
-    }
+      title: 'titleTest',
+      editorData: '<p>Hello~</p>',
+      thumbnail: ''
+    };
   },
+
   methods: {
-    UploadAdapter (loader) {
-      console.log(loader.file)
-      // this.loader = loader
-      this.upload = () => {
-        const body = new FormData()
-        body.append('file', loader.file)
-        console.log('body')
-        console.log(body)
-        return fetch('http://192.168.31.114:8399/post/upload', {
-          upload: body,
-          method: 'POST'
+    handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
+      // An example of using FormData
+      // NOTE: Your key could be different such as:
+      // formData.append('file', file)
+
+      var formData = new FormData()
+      formData.append("image", file)
+      console.log(file)
+
+      axios({
+        url: "http://localhost:8399/post/uploadImage",
+        method: "POST",
+        data: formData
+      })
+        .then(result => {
+          let url = result.data; // Get url from response
+          Editor.insertEmbed(cursorLocation, "image", url)
+          resetUploader()
+          if(this.thumbnail == ''){
+            this.thumbnail = url
+          }
+          console.log(result)
         })
-          .then(response => (
-            console.log('data'),
-            console.log(response)
-          ))
-          .then(downloadUrl => {
-            return {
-              default: downloadUrl
-            }
-          })
-          .catch(error => {
-            console.log(error)
-          })
-      }
-      //   this.abort = () => {
-      //     console.log('Abort upload.')
-      // }
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    postUpload : function(){
+
+      axios
+        .post('http://localhost:8399/post/uploadPost', {
+          title: this.title,
+          name: "testAuthor", // this.$session.get("name")
+          thumbnail: this.thumbnail,
+          content: this.editorData,
+          tag: "#중국 #태국"
+        })
+        .then(response => (
+          console.log(response)
+        )
+        )
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
+        .finally(() => this.loading = false)
     }
-
-    // addEventLog (eventName, ...args) {
-    //      const eventValue = `Event: '${eventName}'.`
-    //      this.eventsLog += `<p>${eventValue} Check debugger console.</p>`
-    //      console.log(eventValue)
-    //      for (let index = 0, length = args.length; index < length; ++index) {
-    //        console.log(args[index])
-    //      }
-    //      console.log('\n')
-    //    }
   }
-}
+};
 </script>
-
-<style>
-.ck-content{
-  height:500px;
-}
-</style>
