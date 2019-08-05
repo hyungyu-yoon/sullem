@@ -50,6 +50,30 @@ export default {
   box-sizing: border-box;
 }
 
+@media (max-width: 600px) {
+  .header-content {
+    margin: auto !important;
+  }
+
+  .header-content h1{
+    font-size:30px !important;
+  /* text-align: left !important; */
+  }
+
+  .header-content p{
+    font-size:20px !important;
+    margin: auto !important;
+    margin-top: 6px !important;
+  }
+  h1.border:after {
+    content: "";
+    display: block;
+    width: 242px !important;
+    border-bottom: 5px solid #00BFA5;
+    margin-left: 10px;
+  }
+}
+
 body{
   margin:0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
