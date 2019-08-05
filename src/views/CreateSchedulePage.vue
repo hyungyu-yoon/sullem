@@ -1,15 +1,15 @@
 <template>
   <div>
-    <ScheduleImage :coverImage="coverimageUrl"/>
+    <ScheduleImage :coverImage="coverimageUrl" />
     <v-container>
       <v-layout>
-        <GoogleMap :mapEvents="events" v-on:sendMap="deliverMap"/>
+        <GoogleMap :mapEvents="events" v-on:sendMap="deliverMap" />
       </v-layout>
       <v-layout>
-        <place :map="map"/>
+        <place :map="map" :events="events" />
       </v-layout>
       <v-layout>
-        <TimeTable v-on:sendEvents="deliverEvents"/>
+        <TimeTable v-on:sendEvents="deliverEvents" :startDay="setStart" />
       </v-layout>
     </v-container>
   </div>
@@ -30,9 +30,11 @@ export default {
   },
   data () {
     return {
-      coverimageUrl: 'http://tourimage.interpark.com/BBS/Tour/FckUpload/201703/discovery_20170323_6362582542356180960.jpg',
+      coverimageUrl:
+        'http://tourimage.interpark.com/BBS/Tour/FckUpload/201703/discovery_20170323_6362582542356180960.jpg',
       events: [],
-      map: null
+      map: null,
+      setStart: '2019-01-08'
     }
   },
   methods: {

@@ -62,11 +62,6 @@
         show-arrows
         center-active
       >
-        <!-- <v-slide-item v-for="result in results"
-          v-if="result.photos"
-          v-slot:default="{ toggle }"
-          :key="result.place_id"
-        >-->
         <v-slide-item v-for="result in results" v-slot:default="{ toggle }" :key="result.place_id">
           <v-card class="ml-2 mr-2 mb-2" width="250" elevation="3">
             <v-img class="white--text" height="150px" :src="result.photos[0].getUrl(100,100)">
@@ -75,20 +70,14 @@
                 justify-center
                 style="background-color: #EEEEEE; background-color: rgba( 255, 255, 255, 0.5 );"
               >
-                <v-card-title
+                <!-- <v-card-title
                   class="text-wrap align-end fill-height"
                   style="text-shadow: 2px 2px 8px black;"
-                  @click="sendData"
-                >{{result.name}}</v-card-title>
-                <v-icon color="#4DB6AC" @click="sendData">fa-plus-circle</v-icon>
+                >{{ result.name }}</v-card-title>-->
+                <DetailModal :SpecificLocation="result" />
+                <EventModal :SpecificLocation="result" :events="events" />
               </v-layout>
             </v-img>
-
-            <!-- <v-card-text>
-                <div class="text-wrap">
-                {{result.name}}
-              </div>
-            </v-card-text>-->
           </v-card>
         </v-slide-item>
       </v-slide-group>
@@ -97,11 +86,17 @@
 </template>
 
 <script>
-import createEventModal from './createEventModal.vue'
+import EventModal from './EventModal.vue'
+import DetailModal from './DetailModal.vue'
 export default {
   name: 'place',
+  components: {
+    EventModal,
+    DetailModal
+  },
   props: {
-    map: null
+    map: null,
+    events: null
   },
   data () {
     return {

@@ -23,7 +23,7 @@
           :events="events"
           :event-color="getEventColor"
           :event-margin-bottom="3"
-          :now="today"
+          :now="startDay"
           :type="type"
           :end="end"
           @click:event="showEvent"
@@ -60,8 +60,10 @@
 
 <script>
 export default {
+  props: {
+    startDay: null
+  },
   data: () => ({
-    today: '2019-01-08',
     focus: '2019-01-08',
     type: '4day',
     start: '2019-01-08',
@@ -93,6 +95,15 @@ export default {
         details: 'Going to the beach!',
         start: '2019-01-08 12:30',
         end: '2019-01-08 13:30',
+        color: '#80CBC4',
+        latlng: { lat: 0, lng: 0 },
+        type: 'location'
+      },
+      {
+        name: 'Hyupjae+Beach',
+        details: 'Going to the beach!',
+        start: '2019-01-08 16:30',
+        end: '2019-01-09 18:30',
         color: '#80CBC4',
         latlng: { lat: 0, lng: 0 },
         type: 'location'
@@ -129,34 +140,34 @@ export default {
   methods: {
     viewDay ({ date }) {
       this.focus = date
-      this.today = date
+      this.startDay = date
     },
     getEventColor (event) {
       return event.color
     },
     setToday () {
-      this.today = this.start
+      this.startDay = this.start
       this.focus = this.start
     },
     prev () {
-      var prev = new Date(this.today)
+      var prev = new Date(this.startDay)
       prev.setDate(prev.getDate() - 1)
       var year = prev.getFullYear()
       var month = prev.getMonth() + 1
       var day = prev.getDate()
       prev = year + '-' + month + '-' + day
       this.focus = prev
-      this.today = prev
+      this.startDay = prev
     },
     next () {
-      var nextDay = new Date(this.today)
+      var nextDay = new Date(this.startDay)
       nextDay.setDate(nextDay.getDate() + 1)
       var year = nextDay.getFullYear()
       var month = nextDay.getMonth() + 1
       var day = nextDay.getDate()
       nextDay = year + '-' + month + '-' + day
       this.focus = nextDay
-      this.today = nextDay
+      this.startDay = nextDay
     },
     showEvent ({ nativeEvent, event }) {
       const open = () => {
