@@ -24,6 +24,7 @@ export default {
   mounted: function () {
     this.$store.state.val = false
     console.log(this.video)
+    console.log(this.$route['name'])
   },
   data () {
     return {

@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Intro from './views/Intro.vue'
 import MapTest from './views/MapTest.vue'
 import CreateSchedulePage from './views/CreateSchedulePage.vue'
+import AdminPage from './views/AdminPage.vue'
 
 Vue.use(Router)
 
@@ -38,6 +39,11 @@ export default new Router({
       path: '/createschedule',
       name: 'createschedule',
       component: CreateSchedulePage
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminPage
     }
   ]
 })
