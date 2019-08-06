@@ -11,6 +11,7 @@
             class="font-weight-bold"
             append-icon="fa-search"
             @click:append="search"
+            @keyup.enter="search"
             v-model="text"
           ></v-text-field>
         </v-flex>
@@ -46,7 +47,11 @@
         <v-flex xs12 md9>
           <v-layout wrap>
             <v-flex xs12>
-                <schedule-list :query="this.$route.params.query"></schedule-list>
+                <search-item-list
+                 :query="this.$route.params.query"
+                 :category="this.$route.params.category"
+                 v-if="item == 0"
+                ></search-item-list>
             </v-flex>
 
           </v-layout>
@@ -57,13 +62,12 @@
 </template>
 
 <script>
-import ScheduleList from '../components/ScheduleList.vue'
+import SearchItemList from '../components/SearchItemList.vue'
 export default {
   components: {
-    ScheduleList
+    SearchItemList
   },
   data: () => ({
-    lorem: `Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.`,
     item: 0,
     items: [
       { text: '여행일정' },
@@ -73,6 +77,11 @@ export default {
     text: ''
   }),
   mounted () {
+    if (this.$route.params.category === '여행일정') {
+      this.item = 0
+    } else {
+      this.item = 1
+    }
     // alert(this.$route.params.query)
   },
   methods: {

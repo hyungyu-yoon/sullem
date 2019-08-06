@@ -8,7 +8,18 @@
       v-bind:style="{height:newHeight}"
     >
       <v-layout align-center justify-center fill-height>
-        <v-flex xs6 sm4>
+        <v-flex xs4 md2>
+          <v-select
+          :items="items"
+          v-model="category"
+          solo
+          color="teal accent-4"
+
+        ></v-select>
+
+        </v-flex>
+        &nbsp;
+        <v-flex xs6 md4 lg3>
           <v-text-field
             solo
             label="장소 입력"
@@ -16,7 +27,8 @@
             color="teal accent-4"
             class="font-weight-bold"
             append-icon="fa-search"
-            @click:append="$router.push({name:'search',params:{query:text}})"
+            @click:append="$router.push({name:'search',params:{query:text,category:category}})"
+            @keyup.enter="$router.push({name:'search',params:{query:text,category:category}})"
             v-model="text"
           ></v-text-field>
         </v-flex>
@@ -114,7 +126,8 @@ export default {
   data () {
     return {
       newHeight: null,
-      text: ''
+      category: '여행일정',
+      items: ['여행일정', '여행후기']
     }
   },
   components: {},
