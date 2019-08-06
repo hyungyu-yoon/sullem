@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import PostPage from './views/PostPage.vue'
+import PostWriter from './views/PostWriter.vue'
 import Intro from './views/Intro.vue'
 import MapTest from './views/MapTest.vue'
 import CreateSchedulePage from './views/CreateSchedulePage.vue'
+import ScheduleDetailPage from './views/ScheduleDetailPage.vue'
+import SearchPage from './views/SearchPage.vue'
 
 Vue.use(Router)
 
@@ -30,6 +34,16 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {
+      path: '/postPage',
+      name: 'postPage',
+      component: PostPage
+    },
+    {
+      path: '/postWriter',
+      name: 'postWriter',
+      component: PostWriter
+    },
+    {
       path: '/test',
       name: 'test',
       component: MapTest
@@ -38,6 +52,16 @@ export default new Router({
       path: '/createschedule',
       name: 'createschedule',
       component: CreateSchedulePage
+    },
+    {
+      path: '/schedule',
+      name: 'schedule',
+      component: ScheduleDetailPage
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: SearchPage
     }
   ]
 })
