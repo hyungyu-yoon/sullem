@@ -19,22 +19,23 @@ export default {
     Schedule
   },
   props: {
-    query: { type: String },
+    query: { type: String, default: ' ' },
     category: { type: String }
   },
   data () {
     return {
-      items: 5
+      items: 5,
+      page: 1
     }
   },
   mounted () {
-    // axios.get('http://192.168.31.114:8399/post/test')
-    //   .then(function (response) {
-    //     console.log(response.data)
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error)
-    //   })
+    axios.get('http://192.168.31.114:8399/post/selectPage/' + this.query + '/' + this.page)
+      .then(function (response) {
+        console.log(response.data)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   },
   methods: {
 
