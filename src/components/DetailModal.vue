@@ -35,10 +35,10 @@ export default {
   props: {
     SpecificLocation: null
   },
-  data() {
+  data () {
     return {
       dialog: false
-    };
+    }
   }
-};
+}
 </script>

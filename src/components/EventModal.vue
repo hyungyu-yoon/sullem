@@ -106,15 +106,16 @@ export default {
       if (i > 0) {
         if (this.events[i - 1].type == "route") {
           this.events[i - 1].end = this.events[i].start;
+          this.events[i - 1].overview_path = null;
         } else {
           this.addRoute(i++);
         }
       }
-      console.log(i, this.events.length);
 
       if (i + 1 < this.events.length) {
         if (this.events[i + 1].type == "route") {
           this.events[i + 1].start = this.events[i].end;
+          this.events[i + 1].overview_path = null;
         } else {
           this.addRoute(i + 1);
         }
@@ -130,7 +131,9 @@ export default {
     addRoute(idx) {
       var newRoute = {
         name: "길찾기",
-        details: "없음.",
+        // origin: ,
+        // destination: ,
+        overview_path: null,
         start: this.events[idx - 1].end,
         end: this.events[idx].start,
         color: "transparent",

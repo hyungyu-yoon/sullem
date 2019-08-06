@@ -63,75 +63,75 @@ export default {
     events: null
   },
   data: () => ({
-    focus: "2019-01-08",
-    type: "4day",
-    start: "2019-01-08",
+    focus: '2019-01-08',
+    type: '4day',
+    start: '2019-01-08',
     end: null,
     selectedEvent: {},
     selectedElement: null,
     selectedOpen: false
   }),
   computed: {
-    monthFormatter() {
+    monthFormatter () {
       return this.$refs.calendar.getFormatter({
-        timeZone: "UTC",
-        month: "long"
-      });
+        timeZone: 'UTC',
+        month: 'long'
+      })
     }
   },
   methods: {
-    viewDay({ date }) {
-      this.focus = date;
-      this.start = date;
+    viewDay ({ date }) {
+      this.focus = date
+      this.start = date
     },
-    getEventColor(event) {
-      return event.color;
+    getEventColor (event) {
+      return event.color
     },
-    setToday() {
-      this.start = this.startDay;
-      this.focus = this.startDay;
+    setToday () {
+      this.start = this.startDay
+      this.focus = this.startDay
     },
-    prev() {
-      var prev = new Date(this.start);
-      prev.setDate(prev.getDate() - 1);
-      var year = prev.getFullYear();
-      var month = "" + prev.getMonth() + 1;
-      var day = "" + prev.getDate();
-      if (month.length < 2) month = "0" + month;
-      if (day.length < 2) day = "0" + day;
-      prev = year + "-" + month + "-" + day;
-      this.focus = prev;
-      this.start = prev;
+    prev () {
+      var prev = new Date(this.start)
+      prev.setDate(prev.getDate() - 1)
+      var year = prev.getFullYear()
+      var month = '' + prev.getMonth() + 1
+      var day = '' + prev.getDate()
+      if (month.length < 2) month = '0' + month
+      if (day.length < 2) day = '0' + day
+      prev = year + '-' + month + '-' + day
+      this.focus = prev
+      this.start = prev
     },
-    next() {
-      var nextDay = new Date(this.start);
-      nextDay.setDate(nextDay.getDate() + 1);
-      var year = nextDay.getFullYear();
-      var month = "" + nextDay.getMonth() + 1;
-      var day = "" + nextDay.getDate();
-      if (month.length < 2) month = "0" + month;
-      if (day.length < 2) day = "0" + day;
-      nextDay = year + "-" + month + "-" + day;
-      this.focus = nextDay;
-      this.start = nextDay;
+    next () {
+      var nextDay = new Date(this.start)
+      nextDay.setDate(nextDay.getDate() + 1)
+      var year = nextDay.getFullYear()
+      var month = '' + nextDay.getMonth() + 1
+      var day = '' + nextDay.getDate()
+      if (month.length < 2) month = '0' + month
+      if (day.length < 2) day = '0' + day
+      nextDay = year + '-' + month + '-' + day
+      this.focus = nextDay
+      this.start = nextDay
     },
-    showEvent({ nativeEvent, event }) {
+    showEvent ({ nativeEvent, event }) {
       const open = () => {
-        this.selectedEvent = event;
-        this.selectedElement = nativeEvent.target;
+        this.selectedEvent = event
+        this.selectedElement = nativeEvent.target
         setTimeout(() => {
-          this.selectedOpen = true;
-        }, 10);
-      };
-
-      if (this.selectedOpen) {
-        this.selectedOpen = false;
-        setTimeout(open, 10);
-      } else {
-        open();
+          this.selectedOpen = true
+        }, 10)
       }
 
-      nativeEvent.stopPropagation();
+      if (this.selectedOpen) {
+        this.selectedOpen = false
+        setTimeout(open, 10)
+      } else {
+        open()
+      }
+
+      nativeEvent.stopPropagation()
     },
     // nth(d) {
     //   return d > 3 && d < 21
@@ -141,17 +141,17 @@ export default {
     // send() {
     //   this.$emit("sendEvents", this.events);
     // },
-    addEvent() {}
+    addEvent () {}
   },
-  mounted() {
-    this.start = this.startDay;
+  mounted () {
+    this.start = this.startDay
   },
   watch: {
-    start: function() {
-      this.$emit("changeHead", this.start);
+    start: function () {
+      this.$emit('changeHead', this.start)
     }
   }
-};
+}
 </script>
 
 <style scoped>
