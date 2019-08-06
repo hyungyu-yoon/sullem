@@ -16,22 +16,22 @@
 </template>
 
 <script>
-import ScheduleImage from "../components/ScheduleImageCover.vue";
-import GoogleMap from "../components/GoogleMap.vue";
-import TimeTable from "../components/TimeTable.vue";
-import Place from "@/components/Place.vue";
+import ScheduleImage from '../components/ScheduleImageCover.vue'
+import GoogleMap from '../components/GoogleMap.vue'
+import TimeTable from '../components/TimeTable.vue'
+import Place from '@/components/Place.vue'
 export default {
-  name: "CreateSchedulePage",
+  name: 'CreateSchedulePage',
   components: {
     ScheduleImage,
     GoogleMap,
     TimeTable,
     Place
   },
-  data() {
+  data () {
     return {
       coverimageUrl:
-        "http://tourimage.interpark.com/BBS/Tour/FckUpload/201703/discovery_20170323_6362582542356180960.jpg",
+        'http://tourimage.interpark.com/BBS/Tour/FckUpload/201703/discovery_20170323_6362582542356180960.jpg',
       events: [
         // {
         //   name: "Jeju+International+Airport",
@@ -73,20 +73,20 @@ export default {
         // }
       ],
       map: null,
-      setStart: "2019-01-08",
+      setStart: '2019-01-08',
       head: this.setStart
-    };
+    }
   },
   methods: {
-    deliverEvents(passed) {
-      this.events = passed;
+    deliverEvents (passed) {
+      this.events = passed
     },
-    deliverMap(mapPassed) {
-      this.map = mapPassed;
+    deliverMap (mapPassed) {
+      this.map = mapPassed
     },
-    deliverHead(value) {
-      this.head = value;
+    deliverHead (value) {
+      this.head = value
     }
   }
-};
+}
 </script>
