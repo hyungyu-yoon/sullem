@@ -1,11 +1,17 @@
 <template>
-  <div>
-    <vue-editor id="editor" useCustomImageHandler @imageAdded="handleImageAdded" v-model="editorData"> </vue-editor>
-    <textarea v-model="editorData" style="width:500px; height:300px"></textarea>
-    <v-btn @click="postUpload">등록</v-btn>
-
-    <textarea>{{thumbnail}}</textarea>
-  </div>
+  <v-container style="height:1000px">
+    <v-layout wrap>
+      <v-flex xs12>
+        <v-btn @click="postUpload" style="float:right">등록</v-btn>
+      </v-flex>
+      <v-flex xs12>
+        <v-sheet height="800">
+        <vue-editor id="editor" useCustomImageHandler @imageAdded="handleImageAdded" v-model="editorData"> </vue-editor>
+      </v-sheet>
+      </v-flex>
+    </v-layout>
+    <!-- <textarea v-model="editorData" style="width:500px; height:300px"></textarea> -->
+  </v-container>
 </template>
 
 <script>
@@ -35,13 +41,14 @@ export default {
       console.log(file)
 
       axios({
-        url: "http://localhost:8399/post/uploadImage",
+        url: "http://192.168.31.114:8399/post/uploadImage",
         method: "POST",
         data: formData
       })
         .then(result => {
           let url = result.data; // Get url from response
-          Editor.insertEmbed(cursorLocation, "image", url)
+            Editor.insertEmbed(cursorLocation, "image", url)
+
           resetUploader()
           if(this.thumbnail == ''){
             this.thumbnail = url
@@ -53,7 +60,6 @@ export default {
         });
     },
     postUpload : function(){
-
       axios
         .post('http://localhost:8399/post/uploadPost', {
           title: this.title,
@@ -75,3 +81,7 @@ export default {
   }
 };
 </script>
+
+<style>
+
+</style>
