@@ -10,7 +10,6 @@
       </v-sheet>
       </v-flex>
     </v-layout>
-    <!-- <textarea v-model="editorData" style="width:500px; height:300px"></textarea> -->
   </v-container>
 </template>
 
@@ -27,7 +26,8 @@ export default {
       post: {
         title: 'ttt',
         editorData: '<p>Hello~</p>',
-        thumbnail: ''
+        thumbnail: '',
+        description:  "it's description"
       }
     };
   },
@@ -68,9 +68,9 @@ export default {
           title: this.post.title,
           seq: 1,
           name: "shinjong", // this.$session.get("name")
+          description: this.post.description,
           thumbnail: this.post.thumbnail,
           content: this.post.editorData,
-          tag: "#중국 #태국"
         })
         .then(response => (
           console.log(response)
@@ -87,5 +87,7 @@ export default {
 </script>
 
 <style>
-
+img:hover {
+  cursor:pointer;
+}
 </style>
