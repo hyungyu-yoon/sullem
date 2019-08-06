@@ -6,11 +6,10 @@
       </v-flex>
       <v-flex xs12>
         <v-sheet height="800">
-        <vue-editor id="editor" useCustomImageHandler @imageAdded="handleImageAdded" v-model="editorData"> </vue-editor>
+        <vue-editor id="editor" useCustomImageHandler @imageAdded="handleImageAdded" v-model="post.editorData"> </vue-editor>
       </v-sheet>
       </v-flex>
     </v-layout>
-    <!-- <textarea v-model="editorData" style="width:500px; height:300px"></textarea> -->
   </v-container>
 </template>
 
@@ -24,9 +23,12 @@ export default {
 
   data() {
     return {
-      title: 'titleTest',
-      editorData: '<p>Hello~</p>',
-      thumbnail: ''
+      post: {
+        title: 'ttt',
+        editorData: '<p>Hello~</p>',
+        thumbnail: '',
+        description:  "it's description"
+      }
     };
   },
 
@@ -50,8 +52,8 @@ export default {
             Editor.insertEmbed(cursorLocation, "image", url)
 
           resetUploader()
-          if(this.thumbnail == ''){
-            this.thumbnail = url
+          if(this.post.thumbnail == ''){
+            this.post.thumbnail = url
           }
           console.log(result)
         })
@@ -60,13 +62,15 @@ export default {
         });
     },
     postUpload : function(){
+      console.log(this.post.title)
       axios
         .post('http://localhost:8399/post/uploadPost', {
-          title: this.title,
-          name: "testAuthor", // this.$session.get("name")
-          thumbnail: this.thumbnail,
-          content: this.editorData,
-          tag: "#중국 #태국"
+          title: this.post.title,
+          seq: 1,
+          name: "shinjong", // this.$session.get("name")
+          description: this.post.description,
+          thumbnail: this.post.thumbnail,
+          content: this.post.editorData,
         })
         .then(response => (
           console.log(response)
@@ -83,5 +87,7 @@ export default {
 </script>
 
 <style>
-
+img:hover {
+  cursor:pointer;
+}
 </style>
