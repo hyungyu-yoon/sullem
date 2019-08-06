@@ -46,7 +46,7 @@ export default {
       alert('logout')
       this.$session.destroy()
       this.$store.state.user = null
-      this.$router.push('/')
+      this.$router.push('/home')
     },
     jsonTest () {
       axios
