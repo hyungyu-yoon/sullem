@@ -1,7 +1,6 @@
 <template>
   <div>
     <div id="map" style="width: 1240px"></div>
-    <v-btn text @click="addMarker">열기</v-btn>
   </div>
   <!-- <div>
     <div id="directionsPanel" style="float:left;width:30%;height 100%; display: inline;"></div>
@@ -15,7 +14,7 @@
 export default {
   name: "MapTest",
   props: {
-    mapEvents: Array
+    mapEvents: null
   },
   data() {
     return {
@@ -69,7 +68,10 @@ export default {
     addMarker() {
       var index = 1;
       for (var i in this.mapEvents) {
+        console.log(this.mapEvents);
+
         if (this.mapEvents[i]["type"] == "location") {
+          console.log(this.mapEvents[i]);
           var marker = new google.maps.Marker({
             position: this.mapEvents[i]["latlng"],
             map: this.map,
@@ -112,6 +114,11 @@ export default {
     // this.displayRoute(directionsService, directionsDisplay);
     // this.drawPolyline(map);
     this.$emit("sendMap", this.map);
+  },
+  watch: {
+    mapEvents: function() {
+      this.addMarker();
+    }
   }
 };
 </script>

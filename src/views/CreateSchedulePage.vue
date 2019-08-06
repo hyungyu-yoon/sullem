@@ -6,44 +6,85 @@
         <GoogleMap :mapEvents="events" v-on:sendMap="deliverMap" />
       </v-layout>
       <v-layout>
-        <place :map="map" :events="events" />
+        <place :map="map" :events="events" :head="head" />
       </v-layout>
       <v-layout>
-        <TimeTable v-on:sendEvents="deliverEvents" :startDay="setStart" />
+        <TimeTable v-on:changeHead="deliverHead" :startDay="setStart" :events="events" />
       </v-layout>
     </v-container>
   </div>
 </template>
 
 <script>
-import ScheduleImage from '../components/ScheduleImageCover.vue'
-import GoogleMap from '../components/GoogleMap.vue'
-import TimeTable from '../components/TimeTable.vue'
-import Place from '@/components/Place.vue'
+import ScheduleImage from "../components/ScheduleImageCover.vue";
+import GoogleMap from "../components/GoogleMap.vue";
+import TimeTable from "../components/TimeTable.vue";
+import Place from "@/components/Place.vue";
 export default {
-  name: 'CreateSchedulePage',
+  name: "CreateSchedulePage",
   components: {
     ScheduleImage,
     GoogleMap,
     TimeTable,
     Place
   },
-  data () {
+  data() {
     return {
       coverimageUrl:
-        'http://tourimage.interpark.com/BBS/Tour/FckUpload/201703/discovery_20170323_6362582542356180960.jpg',
-      events: [],
+        "http://tourimage.interpark.com/BBS/Tour/FckUpload/201703/discovery_20170323_6362582542356180960.jpg",
+      events: [
+        // {
+        //   name: "Jeju+International+Airport",
+        //   details: "제주도의 관문!",
+        //   start: "2019-01-08 9:30",
+        //   end: "2019-01-08 10:30",
+        //   color: "#80CBC4",
+        //   latlng: { lat: -25.363, lng: 131.044 },
+        //   type: "location"
+        // },
+        // {
+        //   name: "길찾기",
+        //   details: "30km",
+        //   start: "2019-01-08 10:30",
+        //   end: "2019-01-08 12:30",
+        //   color: "transparent",
+        //   latlng: null,
+        //   type: "route"
+        // },
+        // {
+        //   name: "Hyupjae+Beach",
+        //   details: "Going to the beach!",
+        //   start: "2019-01-08 12:30",
+        //   end: "2019-01-08 13:30",
+        //   color: "#80CBC4",
+        //   latlng: { lat: 0, lng: 0 },
+        //   type: "location"
+        // }
+        // {
+        //   name: "Hyupjae+Beach",
+        //   details: "Going to the beach!",
+        //   start: "2019-01-08 16:30",
+        //   end: "2019-01-09 18:30",
+        //   color: "#80CBC4",
+        //   latlng: { lat: 0, lng: 0 },
+        //   type: "location"
+        // }
+      ],
       map: null,
-      setStart: '2019-01-08'
-    }
+      setStart: "2019-01-08",
+      head: this.setStart
+    };
   },
   methods: {
-    deliverEvents (passed) {
-      this.events = passed
+    deliverEvents(passed) {
+      this.events = passed;
     },
-    deliverMap (mapPassed) {
-      this.map = mapPassed
+    deliverMap(mapPassed) {
+      this.map = mapPassed;
+    },
+    deliverHead(value) {
+      this.head = value;
     }
   }
-}
+};
 </script>
