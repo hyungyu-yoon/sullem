@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import Index from './views/Index.vue'
 import PostPage from './views/PostPage.vue'
 import PostWriter from './views/PostWriter.vue'
 import Intro from './views/Intro.vue'
@@ -31,11 +30,6 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    },
-    {
-      path: '/index',
-      name: 'index',
-      component: Index
     },
     {
       path: '/postPage',
