@@ -4,6 +4,10 @@ import Home from './views/Home.vue'
 import Index from './views/Index.vue'
 import PostPage from './views/PostPage.vue'
 import PostWriter from './views/PostWriter.vue'
+import Intro from './views/Intro.vue'
+import MapTest from './views/MapTest.vue'
+import CreateSchedulePage from './views/CreateSchedulePage.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -12,6 +16,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'intro',
+      component: Intro
+    },
+    {
+      path: '/home',
       name: 'home',
       component: Home
     },
@@ -37,6 +46,16 @@ export default new Router({
       path: '/postWriter',
       name: 'postWriter',
       component: PostWriter
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: MapTest
+    },
+    {
+      path: '/createschedule',
+      name: 'createschedule',
+      component: CreateSchedulePage
     }
   ]
 })

@@ -1,21 +1,25 @@
 <template>
-  <v-layout>
-     <v-toolbar>
-       <v-toolbar-title>Traveler</v-toolbar-title>
-       <v-spacer></v-spacer>
-       <v-toolbar-title v-if="this.$store.state.user !=null"> {{ this.$store.state.user.name}}</v-toolbar-title>
-       <v-toolbar-items>
-       <!-- <v-toolbar-items class="hidden-sm-and-down"> -->
-       <!-- <v-toolbar-title v-if="this.$store.state.user != null">{{this.$store.state.user}}</v-toolbar-title> -->
-         <v-btn v-if="this.$store.state.user == null" @click="showLogin" text>로그인</v-btn>
-         <v-btn v-if="this.$store.state.user !=null" @click="logout" text>로그아웃</v-btn>
-         <v-btn v-if="this.$store.state.user !=null" text>마이 페이지</v-btn>
-         <v-btn @click="jsonTest" text>JSON 등록Test</v-btn>
-       </v-toolbar-items>
-       <LoginPage></LoginPage>
-       <AccountPage></AccountPage>
-     </v-toolbar>
-  </v-layout>
+  <div>
+
+   <v-app-bar app dense elevation="1">
+      <v-toolbar-title class=" text-uppercase">
+        <span class="headline font-weight-bold teal--text text--accent-4" >Sullem </span>
+        <span class="font-weight-bold subtitle-1 teal--text text--accent-4 hidden-xs-only">설렘이 함께하는 당신의 여행</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-title v-if="this.$store.state.user !=null"> {{ this.$store.state.user.name}}님</v-toolbar-title>
+        <v-toolbar-items>
+          <v-btn text class="font-weight-black">여행일정</v-btn>
+          <v-btn text class="font-weight-black">여행후기</v-btn>
+          <v-btn class="font-weight-black" v-if="this.$store.state.user == null" @click="showLogin" text>로그인</v-btn>
+          <v-btn class="font-weight-black" v-if="this.$store.state.user !=null" @click="logout" text>로그아웃</v-btn>
+          <v-btn class="font-weight-black" v-if="this.$store.state.user !=null" text>마이 페이지</v-btn>
+        </v-toolbar-items>
+
+    </v-app-bar>
+    <LoginPage></LoginPage>
+    <AccountPage></AccountPage>
+  </div>
 </template>
 
 <script>
@@ -30,73 +34,7 @@ export default {
   },
   data () {
     return {
-      data:
-        {
-          title: '신종이 여행',
-          date: '2018-10-01~2019-11-03',
-          days:
-          [
-            {
-              day: 1,
-              route: [
-                {
-                  origin: 'place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE',
-                  destination: 'place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU',
-                  travelMode: 'TRANSIT',
-                  start_time: '09:30',
-                  end_time: '11:30',
-                  comment: '여권 챙기기!'
-                },
-                {
-                  origin: 'place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE',
-                  destination: 'place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU',
-                  travelMode: 'TRANSIT',
-                  start_time: '09:30',
-                  end_time: '11:30',
-                  comment: '여권 챙기기!'
-                },
-                {
-                  origin: 'place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE',
-                  destination: 'place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU',
-                  travelMode: 'TRANSIT',
-                  start_time: '09:30',
-                  end_time: '11:30',
-                  comment: '여권 챙기기!'
-                }
-              ]
-            },
-            {
-              day: 2,
-              route: [
-                {
-                  origin: 'place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE',
-                  destination: 'place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU',
-                  travelMode: 'TRANSIT',
-                  start_time: '09:30',
-                  end_time: '11:30',
-                  comment: '여권 챙기기!'
-                },
-                {
-                  origin: 'place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE',
-                  destination: 'place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU',
-                  travelMode: 'TRANSIT',
-                  start_time: '09:30',
-                  end_time: '11:30',
-                  comment: '여권 챙기기!'
-                },
-                {
-                  origin: 'place_id:ChIJ3S-JXmauEmsRUcIaWtf4MzE',
-                  destination: 'place_id:ChIJdT8Y6SlhDDURyJcsX9FENmU',
-                  travelMode: 'TRANSIT',
-                  start_time: '09:30',
-                  end_time: '11:30',
-                  comment: '여권 챙기기!'
-                }
-              ]
-            }
-          ]
-        }
-
+      data:""
     }
   },
   mounted () {
