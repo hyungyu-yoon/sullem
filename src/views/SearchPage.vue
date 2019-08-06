@@ -79,7 +79,7 @@ export default {
   mounted () {
     if (this.$route.params.category === '여행일정') {
       this.item = 0
-    } else {
+    } else if (this.$route.params.category === '여행후기') {
       this.item = 1
     }
     // alert(this.$route.params.query)
