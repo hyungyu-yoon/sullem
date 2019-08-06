@@ -17,6 +17,7 @@
     "vue-canvasvideo": "^1.0.0",
     "vue-router": "^3.0.3",
     "vue-session": "^1.0.0",
+    "vue2-editor": "^2.10.0",
     "vuetify": "^2.0.0",
     "vuex": "^3.0.1"
   },
