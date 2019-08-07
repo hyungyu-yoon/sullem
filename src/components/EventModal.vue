@@ -36,65 +36,65 @@
 </template>
 
 <script>
-import { log } from 'util'
+import { log } from "util";
 export default {
   props: {
     SpecificLocation: null,
     events: null,
     head: null
   },
-  data () {
+  data() {
     return {
       dialog: false,
       hour: [],
-      min: ['00', '30'],
+      min: ["00", "30"],
       duration: 30,
       selectedHour: null,
       selectedMin: null
-    }
+    };
   },
   methods: {
-    addEvents () {
+    addEvents() {
       var startTime = new Date(
         this.head +
-          ' ' +
+          " " +
           this.selectedHour +
-          ':' +
+          ":" +
           this.selectedMin +
-          ':' +
-          '00'
-      )
-      var endTime = startTime
-      endTime.setMinutes(endTime.getMinutes() + this.duration)
-      var endYear = endTime.getFullYear()
-      var endMonth = '' + endTime.getMonth() + 1
-      var endDay = '' + endTime.getDate()
-      var endHour = '' + endTime.getHours()
-      var endMin = '' + endTime.getMinutes()
-      if (endMonth.length < 2) endMonth = '0' + endMonth
-      if (endDay.length < 2) endDay = '0' + endDay
-      if (endHour.length < 2) endHour = '0' + endHour
-      if (endMin.length < 2) endMin = '0' + endMin
+          ":" +
+          "00"
+      );
+      var endTime = startTime;
+      endTime.setMinutes(endTime.getMinutes() + this.duration);
+      var endYear = endTime.getFullYear();
+      var endMonth = "" + endTime.getMonth() + 1;
+      var endDay = "" + endTime.getDate();
+      var endHour = "" + endTime.getHours();
+      var endMin = "" + endTime.getMinutes();
+      if (endMonth.length < 2) endMonth = "0" + endMonth;
+      if (endDay.length < 2) endDay = "0" + endDay;
+      if (endHour.length < 2) endHour = "0" + endHour;
+      if (endMin.length < 2) endMin = "0" + endMin;
       endTime =
-        endYear + '-' + endMonth + '-' + endDay + ' ' + endHour + ':' + endMin
-      startTime = this.head + ' ' + this.selectedHour + ':' + this.selectedMin
+        endYear + "-" + endMonth + "-" + endDay + " " + endHour + ":" + endMin;
+      startTime = this.head + " " + this.selectedHour + ":" + this.selectedMin;
 
       var newEvent = {
         name: this.SpecificLocation.name,
-        details: '없음.',
+        details: "없음.",
         start: startTime,
         end: endTime,
-        color: '#80CBC4',
+        color: "#80CBC4",
         latlng: {
           lat: this.SpecificLocation.geometry.location.lat(),
           lng: this.SpecificLocation.geometry.location.lng()
         },
-        type: 'location'
-      }
-      var i
+        type: "location"
+      };
+      var i;
       for (i = 0; i < this.events.length; ++i) {
         if (this.events[i].start > newEvent.start) {
-          break
+          break;
         }
       }
       // To do
@@ -102,53 +102,55 @@ export default {
       // 2. 새로운 이벤트의 끝나는 시간이 이후 이벤트의 시작 시간과 같을 경우 중간 경로 아예 삭제
       // 3. 상자 크기 이쁘게
       // 4. 상자 보더 관리하기.
-      this.events.splice(i, 0, newEvent)
+      this.events.splice(i, 0, newEvent);
       if (i > 0) {
-        if (this.events[i - 1].type == 'route') {
-          this.events[i - 1].end = this.events[i].start
-          this.events[i - 1].overview_path = null
+        if (this.events[i - 1].type == "route") {
+          this.events[i - 1].end = this.events[i].start;
+          this.events[i - 1].overview_path = null;
+          this.events[i - 1].destination = this.events[i].latlng;
         } else {
-          this.addRoute(i++)
+          this.addRoute(i++);
         }
       }
 
       if (i + 1 < this.events.length) {
-        if (this.events[i + 1].type == 'route') {
-          this.events[i + 1].start = this.events[i].end
-          this.events[i + 1].overview_path = null
+        if (this.events[i + 1].type == "route") {
+          this.events[i + 1].start = this.events[i].end;
+          this.events[i + 1].overview_path = null;
+          this.events[i + 1].origin = this.events[i].latlng;
         } else {
-          this.addRoute(i + 1)
+          this.addRoute(i + 1);
         }
       }
-      this.resetEvents()
+      this.resetEvents();
     },
-    resetEvents () {
-      this.dialog = false
-      this.selectedHour = null
-      this.selectedMin = null
-      this.duration = 30
+    resetEvents() {
+      this.dialog = false;
+      this.selectedHour = null;
+      this.selectedMin = null;
+      this.duration = 30;
     },
-    addRoute (idx) {
+    addRoute(idx) {
       var newRoute = {
-        name: '길찾기',
-        // origin: ,
-        // destination: ,
+        name: "길찾기",
+        origin: this.events[idx - 1].latlng,
+        destination: this.events[idx].latlng,
         overview_path: null,
         start: this.events[idx - 1].end,
         end: this.events[idx].start,
-        color: 'transparent',
+        color: "transparent",
         latlng: null,
-        type: 'route'
-      }
-      this.events.splice(idx, 0, newRoute)
+        type: "route"
+      };
+      this.events.splice(idx, 0, newRoute);
     }
   },
   watch: {},
-  created () {
+  created() {
     for (var i = 0; i < 24; ++i) {
-      if (i < 10) this.hour.push('0' + i)
-      else this.hour.push(i)
+      if (i < 10) this.hour.push("0" + i);
+      else this.hour.push(i);
     }
   }
-}
+};
 </script>
