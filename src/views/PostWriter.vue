@@ -12,6 +12,7 @@
             label="Title"
             placeholder="제목을 입력하세요"
             outlined
+            v-model="post.title"
           ></v-text-field>
           </v-flex>
           <v-flex xs12>
@@ -19,10 +20,11 @@
             label="description"
             placeholder="한줄 설명"
             outlined
+            v-model="post.description"
           ></v-text-field>
           </v-flex>
           <v-flex xs12>
-          <vue-editor id="editor" :style="{height: height}" useCustomImageHandler @imageAdded="handleImageAdded" v-model="editorData"> </vue-editor>
+          <vue-editor id="editor" :style="{height: height}" useCustomImageHandler @imageAdded="handleImageAdded" v-model="post.editorData"> </vue-editor>
 
           </v-flex>
         </v-layout>
@@ -42,10 +44,12 @@ export default {
 
   data () {
     return {
-      title: 'titleTest',
-      editorData: '',
-      thumbnail: '',
-      description: "it's description",
+      post: {
+        title: '',
+        editorData: '',
+        thumbnail: '',
+        description: ''
+      },
       height: '510px'
     }
   },
@@ -83,7 +87,7 @@ export default {
     postUpload: function () {
       console.log(this.post.title)
       axios
-        .post('http://localhost:8399/post/uploadPost', {
+        .post('http://192.168.31.114:8399/post/uploadPost', {
           title: this.post.title,
           seq: 1,
           name: 'shinjong', // this.$session.get("name")
