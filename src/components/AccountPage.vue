@@ -7,25 +7,38 @@
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
-                <v-flex xs12>
-                  <v-text-field v-model="email" label="Email*" required></v-text-field>
-                </v-flex>
-                <v-flex xs12>
-                  <v-text-field v-model="password" label="Password*" type="password" required></v-text-field>
-                </v-flex>
 
-                <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="name" label="name*" required></v-text-field>
+                <v-flex sm6>
+                  <v-text-field v-model="user.email" label="Email*" required></v-text-field>
                 </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="age" label="age*" type="Number" required></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field v-model="gender" label="gender*" required></v-text-field>
+                <v-btn @click="">check</v-btn>
                 <v-flex xs12>
-
-                  <v-text-field v-model="phone" label="phone(010-0000-0000)*" required></v-text-field>
+                  <v-text-field v-model="user.password" label="Password*" type="password" required></v-text-field>
                 </v-flex>
+                <v-flex xs12>
+                  <v-text-field v-model="user.password_valid" label="Valid Password*" type="password" required></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field v-model="user.phone" label="phone(010-0000-0000)*" required></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field v-model="user.name" label="name*" required></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-select
+                    :items="borns"
+                    label="Borns"
+                    v-model="user.age"
+                  ></v-select>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-select
+                    :items="genders"
+                    label="Gender"
+                    v-model="user.gender"
+                  ></v-select>
+                  <!-- <v-text-field v-model="gender" label="gender*" required></v-text-field> -->
+
                 </v-flex>
               </v-layout>
             </v-container>
@@ -33,8 +46,8 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="cancel">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click="signUp">Register</v-btn>
+            <v-btn color="blue darken-1" text @click="cancel">Close</v-btn>
+            <v-btn color="blue darken-1" text @click="signUp">Register</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -46,12 +59,20 @@ export default {
   name: 'AccountPage',
   data () {
     return {
-      email: null,
-      password: null,
-      name: null,
-      age: null,
-      gender: null,
-      phone: null
+      borns: ['1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999', '2000',
+        '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
+        '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'
+      ],
+      genders: ['Man', 'Woman'],
+      user: {
+        email: null,
+        password: null,
+        password_valid: null,
+        name: null,
+        age: null,
+        gender: null,
+        phone: null
+      }
     }
   },
   methods: {
@@ -59,25 +80,35 @@ export default {
       this.$store.state.Account = false
     },
     signUp () {
-      axios
-        .post('http://localhost:8399/member/insert/', {
-          id: this.email,
-          password: this.password,
-          name: this.name,
-          age: this.age,
-          gender: this.gender,
-          phone: this.phone
-        })
-        .then(response => (
-          alert('회원가입을 축하합니다 ^^'),
-          this.cancel()
-        )
-        )
-        .catch(error => {
-          console.log(error)
-          this.errored = true
-        })
-        .finally(() => this.loading = false)
+      if (this.user.email != null && this.user.password != null && this.user.password_valid != null &&
+        this.user.name != null && this.user.age != null &&
+        this.user.gender != null && this.user.phone != null) {
+        if (this.user.password == this.user.password_valid) {
+          axios
+            .post('http://localhost:8399/member/insert/', {
+              email: this.user.email,
+              password: this.user.password,
+              name: this.user.name,
+              age: this.user.age,
+              gender: this.user.gender,
+              phone: this.user.phone
+            })
+            .then(response => (
+              alert('회원가입을 축하합니다 ^^'),
+              this.cancel()
+            )
+            )
+            .catch(error => {
+              console.log(error)
+              this.errored = true
+            })
+            .finally(() => this.loading = false)
+        } else {
+          alert('패스워드를 확인하세요.')
+        }
+      } else {
+        alert('입력정보를 확인하세요.')
+      }
     }
   }
 }

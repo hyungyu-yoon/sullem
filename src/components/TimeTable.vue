@@ -6,8 +6,6 @@
           <v-btn outlined class="mr-4" @click="setToday">First</v-btn>
           <v-btn fab text small @click="prev">이전</v-btn>
           <v-btn fab text small @click="next">이후</v-btn>
-          <v-btn fab text small @click="send">만들기</v-btn>
-          <v-btn fab text small @click="send">보내기</v-btn>
           <!-- <v-toolbar-title>{{ title }}</v-toolbar-title> -->
           <v-spacer></v-spacer>
         </v-toolbar>
@@ -22,8 +20,9 @@
           event-text-color="black"
           :events="events"
           :event-color="getEventColor"
+          :event-overlap-threshold="0"
           :event-margin-bottom="3"
-          :now="today"
+          :now="start"
           :type="type"
           :end="end"
           @click:event="showEvent"
@@ -53,15 +52,27 @@
             </v-card-actions>
           </v-card>
         </v-menu>
+        <SelectRouteModal
+          :isOpen="routeSelect"
+          :event="selectedEvent"
+          @close="routeSelect = false"
+        />
       </v-sheet>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
+import SelectRouteModal from './SelectRouteModal.vue'
 export default {
+  components: {
+    SelectRouteModal
+  },
+  props: {
+    startDay: null,
+    events: null
+  },
   data: () => ({
-    today: '2019-01-08',
     focus: '2019-01-08',
     type: '4day',
     start: '2019-01-08',
@@ -69,56 +80,9 @@ export default {
     selectedEvent: {},
     selectedElement: null,
     selectedOpen: false,
-    events: [
-      {
-        name: 'Jeju+International+Airport',
-        details: '제주도의 관문!',
-        start: '2019-01-08 9:30',
-        end: '2019-01-08 10:30',
-        color: '#80CBC4',
-        latlng: { lat: -25.363, lng: 131.044 },
-        type: 'location'
-      },
-      {
-        name: '길찾기',
-        details: '30km',
-        start: '2019-01-08 10:30',
-        end: '2019-01-08 12:30',
-        color: 'transparent',
-        latlng: null,
-        type: 'route'
-      },
-      {
-        name: 'Hyupjae+Beach',
-        details: 'Going to the beach!',
-        start: '2019-01-08 12:30',
-        end: '2019-01-08 13:30',
-        color: '#80CBC4',
-        latlng: { lat: 0, lng: 0 },
-        type: 'location'
-      }
-    ]
+    routeSelect: false
   }),
   computed: {
-    // title() {
-    //   const { start, end } = this;
-    //   if (!start || !end) {
-    //     return "";
-    //   }
-
-    //   const startMonth = this.monthFormatter(start);
-    //   const endMonth = this.monthFormatter(end);
-    //   const suffixMonth = startMonth === endMonth ? "" : endMonth;
-
-    //   const startYear = start.year;
-    //   const endYear = end.year;
-    //   const suffixYear = startYear === endYear ? "" : endYear;
-
-    //   const startDay = start.day + this.nth(start.day);
-    //   const endDay = end.day + this.nth(end.day);
-
-    //   return "";
-    // },
     monthFormatter () {
       return this.$refs.calendar.getFormatter({
         timeZone: 'UTC',
@@ -129,51 +93,65 @@ export default {
   methods: {
     viewDay ({ date }) {
       this.focus = date
-      this.today = date
+      this.start = date
     },
     getEventColor (event) {
       return event.color
     },
     setToday () {
-      this.today = this.start
-      this.focus = this.start
+      this.start = this.startDay
+      this.focus = this.startDay
     },
     prev () {
-      var prev = new Date(this.today)
+      var prev = new Date(this.start)
       prev.setDate(prev.getDate() - 1)
       var year = prev.getFullYear()
-      var month = prev.getMonth() + 1
-      var day = prev.getDate()
+      var month = '' + prev.getMonth() + 1
+      var day = '' + prev.getDate()
+      if (month.length < 2) month = '0' + month
+      if (day.length < 2) day = '0' + day
       prev = year + '-' + month + '-' + day
       this.focus = prev
-      this.today = prev
+      this.start = prev
     },
     next () {
-      var nextDay = new Date(this.today)
+      var nextDay = new Date(this.start)
       nextDay.setDate(nextDay.getDate() + 1)
       var year = nextDay.getFullYear()
-      var month = nextDay.getMonth() + 1
-      var day = nextDay.getDate()
+      var month = '' + nextDay.getMonth() + 1
+      var day = '' + nextDay.getDate()
+      if (month.length < 2) month = '0' + month
+      if (day.length < 2) day = '0' + day
       nextDay = year + '-' + month + '-' + day
       this.focus = nextDay
-      this.today = nextDay
+      this.start = nextDay
     },
     showEvent ({ nativeEvent, event }) {
-      const open = () => {
-        this.selectedEvent = event
-        this.selectedElement = nativeEvent.target
+      this.selectedEvent = event
+      this.selectedElement = nativeEvent.target
+      if (event.name == '길찾기') {
+        setTimeout(() => {
+          this.routeSelect = true
+        }, 10)
+      } else if (event.overview_path == null) {
+        console.log('장소입니다.')
+        // const open = () => {
+        //   // this.selectedEvent = event;
+        //   // this.selectedElement = nativeEvent.target;
         setTimeout(() => {
           this.selectedOpen = true
         }, 10)
-      }
-
-      if (this.selectedOpen) {
-        this.selectedOpen = false
-        setTimeout(open, 10)
+        // };
       } else {
-        open()
+        console.log('경로입니다.')
       }
 
+      // if (this.selectedOpen) {
+      //   this.selectedOpen = false;
+      //   setTimeout(open, 10);
+      // } else {
+      //   open();
+      // }
       nativeEvent.stopPropagation()
     },
     // nth(d) {
@@ -181,16 +159,24 @@ export default {
     //     ? "th"
     //     : ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"][d % 10];
     // },
-    send () {
-      this.$emit('sendEvents', this.events)
-    },
+    // send() {
+    //   this.$emit("sendEvents", this.events);
+    // },
     addEvent () {}
+  },
+  mounted () {
+    this.start = this.startDay
+  },
+  watch: {
+    start: function () {
+      this.$emit('changeHead', this.start)
+    }
   }
 }
 </script>
 
 <style scoped>
-.v-event-timed {
-  border: 0px !important;
+.pl-1 {
+  color: black;
 }
 </style>
