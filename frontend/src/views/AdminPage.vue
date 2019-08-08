@@ -11,7 +11,7 @@
                 <v-toolbar-title>Sullem Administration</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-app-bar>
-
+            <!-- 햄버거 부분 코드 시작 -->
             <v-navigation-drawer
             v-model="drawer"
             app
@@ -53,7 +53,8 @@
                 fixed
 
             ></v-navigation-drawer>
-
+            <!-- 햄버거 부분 코드 끝 -->
+            <!-- 리스트 부분 코드 시작 -->
             <v-container>
                 <v-card>
                     <v-card-title>
@@ -78,7 +79,6 @@
                     @page-count="pageCount = $event"
                     >
                       <template v-slot:top>
-                        <!-- <v-toolbar flat color="white"> -->
                           <v-divider
                             class="mx-4"
                             inset
@@ -86,50 +86,51 @@
                           ></v-divider>
                           <v-spacer></v-spacer>
                           <v-dialog v-model="dialog" max-width="500px">
-                            <!-- <template v-slot:activator="{ on }">
-                              <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
-                            </template> -->
                             <v-card>
-                              <!-- <v-card-title>
-                                <span class="headline">{{ formTitle }}</span>
-                              </v-card-title> -->
-
-                              <!-- <v-card-text>
+                              <v-card-text>
                                 <v-container grid-list-md>
                                   <v-layout wrap>
-                                    <v-flex xs12 sm6 md4>
-                                      <v-text-field v-model="editedItem.name" label="Names"></v-text-field>
+                                    <v-flex xs12>
+                                      <v-text-field v-model="user.password" label="Password*" type="password" required></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12>
+                                      <v-text-field v-model="user.password_valid" label="Valid Password*" type="password" required></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12>
+                                      <v-text-field v-model="user.phone" label="phone(010-0000-0000)*" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md4>
-                                      <v-text-field v-model="editedItem.email" label="Emails"></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md4>
-                                      <v-text-field v-model="editedItem.age" label="Ages"></v-text-field>
+                                      <v-select
+                                        :items="types"
+                                        label="Type*"
+                                        v-model="user.type"
+                                      ></v-select>
                                     </v-flex>
                                   </v-layout>
                                 </v-container>
-                              </v-card-text> -->
-
+                                <small>*indicates required field</small>
+                              </v-card-text>
+                              <!-- edit 부분 -->
                               <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                                <v-btn color="blue darken-1" text @click="editSave">Save</v-btn>
                               </v-card-actions>
                             </v-card>
+                            <!-- edit 끝 -->
                           </v-dialog>
-                        <!-- </v-toolbar> -->
                       </template>
                       <template v-slot:item.action="{ item }">
                         <v-icon
                           small
                           class="mr-2"
-                          @click="editItem"
+                          @click="editItem(item)"
                         >
                           fas fa-edit
                         </v-icon>
                         <v-icon
                           small
-                          @click="deleteItem"
+                          @click="deleteItem(item)"
                         >
                           fas fa-trash
                         </v-icon>
@@ -166,20 +167,43 @@
 <script>
 import axios from 'axios'
 import router from '@/router'
+import { async } from 'q';
 
 export default {
   props: {
     source: String
   },
-  mounted () {
+  created () {
     this.selectAll()
-
-    // axios
-    //   .get('192.168.31.114:8399/member/selectAll/')
-    //   .then(response => (this.info = response))
-    // //   console.log(this.info)
+    // console.log(this.$session.get('user'))
+    if (this.$session.get('user') === undefined) {
+      router.push({ path: 'home' })
+      alert('접근 권한이 없습니다.')
+    } else { 
+      if (this.$session.get('user')['type'] === 'admin') {
+        // alert('관리자입니다.')
+      } else {
+        router.push({ path: 'home' })
+        alert('관리자 권한이 없습니다.')
+      }
+    }
   },
   data: () => ({
+    borns: ['1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999', '2000',
+        '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
+        '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'
+      ],
+    genders: ['Man', 'Woman'],
+    types: ['admin', 'user'],
+    user: {
+      email: null,
+      password: null,
+      password_valid: null,
+      name: null,
+      age: null,
+      gender: null,
+      phone: null,
+    },
     dialog: false,
     drawer: false,
     left: false,
@@ -189,10 +213,13 @@ export default {
     search: '',
     headers: [
       { text: 'Seq', value: 'seq' },
+      { text: 'Type', value: 'type' },
       { text: 'Name', value: 'name' },
       { text: 'Email', value: 'email' },
+      { text: 'Created', value: 'create_at'},
       { text: 'Age', value: 'age' },
-      { text: 'Actions', value: 'action', sortable: false }
+      { text: 'Phone', value: 'phone'},
+      { text: 'Actions', value: 'action', sortable: false },
     ],
     members: [],
     editedindex: -1,
@@ -207,21 +234,12 @@ export default {
       age: 0
     }
   }),
-  // computed: {
-  //     formTitle () {
-  //       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-  //     },
-  //   },
 
   watch: {
     dialog (val) {
       val || this.close()
     }
   },
-
-  // created () {
-  //   this.initialize()
-  // },
 
   methods: {
     selectAll: function () {
@@ -230,9 +248,7 @@ export default {
         url: '//192.168.31.114:8399/member/selectAll/'
       })
         .then(response => {
-          console.log(response)
-          console.log(response['data'])
-          console.log(response['data'][0])
+          // console.log(response['data'])
           this.members = response['data']
           // this.members.push(response['data'][0])
         })
@@ -246,44 +262,64 @@ export default {
     scheclick: function () {
       router.push({ path: 'home' })
     },
-    deleteBySeq: async function () {
-      await axios({
-        method: 'delete',
-        url: '//192.168.31.114:8399/member/delete/5' })
+
+    deleteItem: async function (item) {
+      console.log(item['seq'])
+      var con_test = confirm('Are you sure you want to delete this item?')
+      console.log(con_test)
+      if (con_test) {
+        await axios({
+          method: 'delete',
+        url: `//192.168.31.114:8399/member/delete/${item['seq']}` })
         .then(response => {
           console.log('delete!')
-          console.log(response)
         })
       this.selectAll()
+      }
     },
+
     editItem (item) {
-      this.editedIndex = this.members.indexOf(item)
-      this.editedItem = Object.assign({}, item)
+      this.user.seq = item['seq']
+      this.user.name = item['name']
+      this.user.create_at = item['create_at']
+      this.user.age = item['age']
+      this.user.phone = item['phone']
+      this.user.email = item['email']
+      this.user.type = item['type']
       this.dialog = true
     },
 
-    deleteItem (item) {
-      const index = this.members.indexOf()
-      console.log(this.members)
-      confirm('Are you sure you want to delete this item?') && this.members.splice(index, 1)
+    editSave: async function () {
+       await axios
+            .post('//192.168.31.114:8399/member/update', {
+              email: this.user.email,
+              password: this.user.password,
+              phone: this.user.phone,
+              type: this.user.type
+            })
+            .then(response => (
+              alert('업데이트 성공 ^^'),
+              // console.log(response.data),
+              // console.log(this.$session.get('user')['type']),
+              this.close(),
+              this.selectAll()
+            )
+            )
+            .catch(error => {
+              console.log(error)
+              this.errored = true
+            })
+            .finally(() => this.loading = false)
+      if ( this.$session.get('user')['email'] === this.user.email) {
+        console.log(this.user)
+        this.$session.set('user', this.user)
+        }
     },
 
     close () {
       this.dialog = false
-      setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      }, 300)
     },
 
-    save () {
-      if (this.editedIndex > -1) {
-        Object.assign(this.members[this.editedIndex], this.editedItem)
-      } else {
-        this.members.push(this.editedItem)
-      }
-      this.close()
-    },
     enterkey: function () {
       if (window.event.keyCode === 13) {
         // 엔터키가 눌렸을 때 실행할 내용
@@ -295,10 +331,5 @@ export default {
 </script>
 
 <style>
-@media (max-width: 640px) {
-  .search {
-    width: 230px !important;
-  }
-}
 
 </style>
