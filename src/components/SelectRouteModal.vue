@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import RouteMap from "./routeMap.vue";
+import RouteMap from './routeMap.vue'
 export default {
-  name: "SelectRouteModal",
+  name: 'SelectRouteModal',
   components: {
     RouteMap
   },
@@ -28,9 +28,9 @@ export default {
     event: null
   },
   methods: {
-    sendClose() {
-      this.$emit("close");
+    sendClose () {
+      this.$emit('close')
     }
   }
-};
+}
 </script>

@@ -39,7 +39,6 @@
                   ></v-select>
                   <!-- <v-text-field v-model="gender" label="gender*" required></v-text-field> -->
 
-
                 </v-flex>
               </v-layout>
             </v-container>
@@ -60,11 +59,11 @@ export default {
   name: 'AccountPage',
   data () {
     return {
-      borns: ['1990','1991','1992','1993','1994','1995','1996','1997','1998','1999','2000',
-        '2001','2002','2003','2004','2005','2006','2007','2008','2009','2010',
-        '2011','2012','2013','2014','2015','2016','2017','2018'
+      borns: ['1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999', '2000',
+        '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
+        '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'
       ],
-      genders: ['Man','Woman'],
+      genders: ['Man', 'Woman'],
       user: {
         email: null,
         password: null,
@@ -81,10 +80,10 @@ export default {
       this.$store.state.Account = false
     },
     signUp () {
-      if(this.user.email!=null && this.user.password!=null && this.user.password_valid!=null
-        && this.user.name!=null && this.user.age!=null
-        && this.user.gender !=null && this.user.phone!=null){
-        if(this.user.password==this.user.password_valid){
+      if (this.user.email != null && this.user.password != null && this.user.password_valid != null &&
+        this.user.name != null && this.user.age != null &&
+        this.user.gender != null && this.user.phone != null) {
+        if (this.user.password == this.user.password_valid) {
           axios
             .post('http://localhost:8399/member/insert/', {
               email: this.user.email,
@@ -104,11 +103,11 @@ export default {
               this.errored = true
             })
             .finally(() => this.loading = false)
-        }else{
-          alert("패스워드를 확인하세요.")
+        } else {
+          alert('패스워드를 확인하세요.')
         }
-      }else {
-        alert("입력정보를 확인하세요.")
+      } else {
+        alert('입력정보를 확인하세요.')
       }
     }
   }

@@ -8,11 +8,9 @@ import 'vuetify/dist/vuetify.min.css'
 import axios from 'axios'
 import vuetify from './plugins/vuetify'
 import '@babel/polyfill'
-import Vue2Editor from "vue2-editor";
+import Vue2Editor from 'vue2-editor'
 
-Vue.use(Vue2Editor);
-
-
+Vue.use(Vue2Editor)
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios

@@ -8,7 +8,7 @@ export default new Vuex.Store({
     Login: false,
     Account: false,
     user: null,
-    val: true
+    AdminNav: false
   },
   mutations: {
 

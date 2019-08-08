@@ -140,6 +140,7 @@ export default {
     )
     document.head.appendChild(recaptchaScript)
     this.$store.state.val = true
+    console.log(this.$route['name'])
   },
   methods: {
     resize () {
