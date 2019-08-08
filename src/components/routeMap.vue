@@ -23,34 +23,34 @@
 
 <script>
 export default {
-  name: "RouteMap",
+  name: 'RouteMap',
   props: {
     mapEvent: null
   },
-  data() {
+  data () {
     return {
       map: null,
       infoWindow: null,
       directionsService: null,
       directionsDisplay: null,
-      activeBtn: "TRANSIT"
-    };
+      activeBtn: 'TRANSIT'
+    }
   },
   methods: {
-    initMap() {
-      this.directionsService = new google.maps.DirectionsService();
-      this.directionsDisplay = new google.maps.DirectionsRenderer();
-      this.map = new google.maps.Map(document.getElementById("map"), {
+    initMap () {
+      this.directionsService = new google.maps.DirectionsService()
+      this.directionsDisplay = new google.maps.DirectionsRenderer()
+      this.map = new google.maps.Map(document.getElementById('map'), {
         center: this.mapEvent.origin,
         zoom: 10,
-        gestureHandling: "cooperative"
-      });
+        gestureHandling: 'cooperative'
+      })
       this.$nextTick(() => {
-        this.directionsDisplay.setMap(this.map);
-      });
-      this.infoWindow = new google.maps.InfoWindow();
+        this.directionsDisplay.setMap(this.map)
+      })
+      this.infoWindow = new google.maps.InfoWindow()
     },
-    displayRoute(directionsService, directionsDisplay) {
+    displayRoute (directionsService, directionsDisplay) {
       directionsService.route(
         {
           origin: this.mapEvent.origin,
@@ -58,29 +58,29 @@ export default {
           travelMode: this.activeBtn,
           provideRouteAlternatives: true
         },
-        function(response, status) {
-          if (status === "OK") {
+        function (response, status) {
+          if (status === 'OK') {
             // console.log(response);
-            directionsDisplay.setDirections(response);
+            directionsDisplay.setDirections(response)
           } else {
-            window.alert("Directions request failed due to " + status);
+            window.alert('Directions request failed due to ' + status)
           }
         }
-      );
+      )
     }
   },
-  mounted() {
-    this.initMap();
-    this.directionsDisplay.setPanel(document.getElementById("directionsPanel"));
-    this.displayRoute(this.directionsService, this.directionsDisplay);
+  mounted () {
+    this.initMap()
+    this.directionsDisplay.setPanel(document.getElementById('directionsPanel'))
+    this.displayRoute(this.directionsService, this.directionsDisplay)
     // this.$emit("sendMap", this.map);
   },
   watch: {
-    activeBtn: function() {
-      this.displayRoute(this.directionsService, this.directionsDisplay);
+    activeBtn: function () {
+      this.displayRoute(this.directionsService, this.directionsDisplay)
     }
   }
-};
+}
 </script>
 <style scoped>
 #map {

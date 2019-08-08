@@ -8,8 +8,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="sendClose">Disagree</v-btn>
-          <v-btn color="green darken-1" text @click="sendClose">Agree</v-btn>
+          <v-btn color="green darken-1" text @click="sendClose">취소</v-btn>
+          <v-btn color="green darken-1" text @click="sendClose">저장</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
