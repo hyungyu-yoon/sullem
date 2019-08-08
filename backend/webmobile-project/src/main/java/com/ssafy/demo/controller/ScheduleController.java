@@ -17,16 +17,15 @@ import com.ssafy.demo.service.ScheduleServiceImpl;
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/schedule")
 public class ScheduleController {
 
 	@Autowired
 	private ScheduleServiceImpl service;
 	
-	@PostMapping("json")
-	public String readJson(@RequestBody String s) {
-		System.out.println();
-//		int result = service.insertSchedule(s);
-		return s;
+	@PostMapping("insert")
+	public int insert(String jsonData) {
+		System.out.println(jsonData);
+		return 1;
 	}
 }

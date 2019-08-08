@@ -1,8 +1,10 @@
 package com.ssafy.demo.repository;
 
+import com.ssafy.demo.dto.ScheduleDTO;
+
 public interface ScheduleRepository {
-	public int insertSchedule(String s);
-	public int updateSchedule(int scdNo, String s);
-	public int deleteSchedule(int scdNo);
+	public int insert(ScheduleDTO s);
+	public int update(ScheduleDTO s);
+	public int delete(int scdNo);
 	
 }

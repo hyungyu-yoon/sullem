@@ -13,26 +13,51 @@
           <v-btn class="font-weight-black" v-if="this.$store.state.user == null" @click="showLogin" text>로그인</v-btn>
           <v-btn class="font-weight-black" v-if="this.$store.state.user !=null" @click="logout" text>로그아웃</v-btn>
           <v-btn class="font-weight-black" v-if="this.$store.state.user !=null" text>마이 페이지</v-btn>
+          <v-btn class="font-weight-black" @click="jsonTest" text>Json</v-btn>
         </v-toolbar-items>
     </v-app-bar>
     <LoginPage></LoginPage>
     <AccountPage></AccountPage>
+    <FindPasswordPage></FindPasswordPage>
   </div>
 </template>
 
 <script>
 import LoginPage from '@/components/login/LoginPage.vue'
 import AccountPage from '@/components/login/AccountPage.vue'
+import FindPasswordPage from '@/components/login/FindPasswordPage.vue'
+
 import axios from 'axios'
 export default {
   name: 'Header',
   components: {
     LoginPage,
-    AccountPage
+    AccountPage,
+    FindPasswordPage
   },
   data () {
     return {
-      data: ''
+      data: {
+        title: "test",
+        events: [
+          {
+            no:1,
+            name:'a'
+          },
+          {
+            no:2,
+            name:'a'
+          },
+          {
+            no:3,
+            name:'a'
+          },
+          {
+            no:4,
+            name:'a'
+          }
+        ]
+      }
     }
   },
   mounted () {
@@ -49,8 +74,12 @@ export default {
       this.$router.push('/home')
     },
     jsonTest () {
+      console.log(this.data)
       axios
-        .post('http://localhost:8399/test/json/', this.data)
+        .post('http://192.168.31.114:8399/schedule/insert/', {
+          jsonData: this.data
+        }
+        )
         .then(response => (
           console.log(response.data)
         ))
