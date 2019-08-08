@@ -39,6 +39,7 @@ export default {
     return {
       data: {
         title: "test",
+        description: "description",
         events: [
           {
             no:1,
@@ -76,12 +77,11 @@ export default {
     jsonTest () {
       console.log(this.data)
       axios
-        .post('http://192.168.31.114:8399/schedule/insert/', {
-          jsonData: this.data
-        }
+        .post('http://192.168.31.114:8399/schedule/insert/', this.data
         )
         .then(response => (
           console.log(response.data)
+
         ))
         .catch(error => {
           console.log(error)

@@ -1,6 +1,7 @@
 package com.ssafy.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.demo.dto.DaysDTO;
@@ -24,8 +26,8 @@ public class ScheduleController {
 	private ScheduleServiceImpl service;
 	
 	@PostMapping("insert")
-	public int insert(String jsonData) {
-		System.out.println(jsonData);
-		return 1;
+	public Object insert(@RequestBody Map<String,Object> params) {
+		System.out.println(params.get("events"));
+		return params;
 	}
 }

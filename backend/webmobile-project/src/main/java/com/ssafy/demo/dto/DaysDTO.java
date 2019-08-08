@@ -3,27 +3,28 @@ package com.ssafy.demo.dto;
 import java.util.List;
 
 public class DaysDTO {
-	private int day;
-	private List<RouteDTO> route;
-	public DaysDTO(int day, List<RouteDTO> route) {
-		this.day = day;
-		this.route = route;
+	private int no;
+	private String name;
+	public DaysDTO(int no, String name) {
+		super();
+		this.no = no;
+		this.name = name;
 	}
-	public int getDay() {
-		return day;
+	public int getNo() {
+		return no;
 	}
-	public void setDay(int day) {
-		this.day = day;
+	public void setNo(int no) {
+		this.no = no;
 	}
-	public List<RouteDTO> getRoute() {
-		return route;
+	public String getName() {
+		return name;
 	}
-	public void setRoute(List<RouteDTO> route) {
-		this.route = route;
+	public void setName(String name) {
+		this.name = name;
 	}
 	@Override
 	public String toString() {
-		return "DaysDTO [day=" + day + ", route=" + route + "]";
+		return "{no:" + no + ",name:" + name+"}";
 	}
 	
 	
