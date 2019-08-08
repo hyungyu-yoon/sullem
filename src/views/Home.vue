@@ -127,7 +127,8 @@ export default {
     return {
       newHeight: null,
       category: '여행일정',
-      items: ['여행일정', '여행후기']
+      items: ['여행일정', '여행후기'],
+      text: ''
     }
   },
   components: {},

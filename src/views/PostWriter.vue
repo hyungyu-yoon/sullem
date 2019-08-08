@@ -1,76 +1,99 @@
 <template>
-  <v-container style="height:1000px">
+  <v-container grid-list-md>
     <v-layout wrap>
       <v-flex xs12>
         <v-btn @click="postUpload" style="float:right">등록</v-btn>
       </v-flex>
       <v-flex xs12>
-        <v-sheet height="800">
-        <vue-editor id="editor" useCustomImageHandler @imageAdded="handleImageAdded" v-model="post.editorData"> </vue-editor>
-      </v-sheet>
+        <v-sheet elevation="3" height="745px" v-resize="resize">
+        <v-layout pa-5 wrap>
+          <v-flex xs12 >
+            <v-text-field
+            label="Title"
+            placeholder="제목을 입력하세요"
+            outlined
+            v-model="post.title"
+          ></v-text-field>
+          </v-flex>
+          <v-flex xs12>
+            <v-text-field
+            label="description"
+            placeholder="한줄 설명"
+            outlined
+            v-model="post.description"
+          ></v-text-field>
+          </v-flex>
+          <v-flex xs12>
+          <vue-editor id="editor" :style="{height: height}" useCustomImageHandler @imageAdded="handleImageAdded" v-model="post.editorData"> </vue-editor>
+
+          </v-flex>
+        </v-layout>
+        </v-sheet>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import { VueEditor } from "vue2-editor";
-import axios from "axios";
+import { VueEditor } from 'vue2-editor'
+import axios from 'axios'
 export default {
   components: {
     VueEditor
   },
 
-  data() {
+  data () {
     return {
       post: {
-        title: 'ttt',
-        editorData: '<p>Hello~</p>',
+        title: '',
+        editorData: '',
         thumbnail: '',
-        description:  "it's description"
-      }
-    };
+        description: ''
+      },
+      height: '510px'
+    }
   },
 
   methods: {
-    handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
+    handleImageAdded: function (file, Editor, cursorLocation, resetUploader) {
       // An example of using FormData
       // NOTE: Your key could be different such as:
       // formData.append('file', file)
 
       var formData = new FormData()
-      formData.append("image", file)
+      formData.append('image', file)
       console.log(file)
 
       axios({
-        url: "http://192.168.31.114:8399/post/uploadImage",
-        method: "POST",
+        url: 'http://192.168.31.114:8399/post/uploadImage',
+        method: 'POST',
         data: formData
       })
         .then(result => {
-          let url = result.data; // Get url from response
-            Editor.insertEmbed(cursorLocation, "image", url)
+          let url = result.data // Get url from response
+          Editor.insertEmbed(cursorLocation, 'image', url)
 
           resetUploader()
-          if(this.post.thumbnail == ''){
+
+          if (this.post.thumbnail === '') {
             this.post.thumbnail = url
           }
           console.log(result)
         })
         .catch(err => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     },
-    postUpload : function(){
+    postUpload: function () {
       console.log(this.post.title)
       axios
-        .post('http://localhost:8399/post/uploadPost', {
+        .post('http://192.168.31.114:8399/post/uploadPost', {
           title: this.post.title,
           seq: 1,
-          name: "shinjong", // this.$session.get("name")
+          name: 'shinjong', // this.$session.get("name")
           description: this.post.description,
           thumbnail: this.post.thumbnail,
-          content: this.post.editorData,
+          content: this.post.editorData
         })
         .then(response => (
           console.log(response)
@@ -81,9 +104,20 @@ export default {
           this.errored = true
         })
         .finally(() => this.loading = false)
+    },
+    resize () {
+      if (window.innerWidth < 920 && window.innerWidth >= 538) {
+        this.height = '480px'
+      } else if (window.innerWidth < 538 && window.innerWidth >= 380) {
+        this.height = '440px'
+      } else if (window.innerWidth < 380) {
+        this.height = '420px'
+      } else {
+        this.height = '510px'
+      }
     }
   }
-};
+}
 </script>
 
 <style>
