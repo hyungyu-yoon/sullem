@@ -7,20 +7,20 @@
 </template>
 
 <script>
-import Place from '@/components/Place.vue'
+import Place from "@/components/CreateSchedule/Place.vue";
 export default {
-  name: 'about',
+  name: "about",
   components: {
     Place
   },
-  mounted () {
-    this.$store.state.val = true
+  mounted() {
+    this.$store.state.val = true;
   } // navbar 나오게 전역변수 true로
-}
+};
 </script>
 
 <style>
-  #map {
-    height: 500px;
-  }
+#map {
+  height: 500px;
+}
 </style>
