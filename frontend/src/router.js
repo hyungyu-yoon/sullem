@@ -5,10 +5,10 @@ import PostWriter from './views/PostWriter.vue'
 import Intro from './views/Intro.vue'
 import MapTest from './views/MapTest.vue'
 import CreateSchedulePage from './views/CreateSchedulePage.vue'
-
 import AdminPage from './views/AdminPage.vue'
 import ScheduleDetailPage from './views/ScheduleDetailPage.vue'
 import SearchPage from './views/SearchPage.vue'
+import PostDetailPage from './views/PostDetailPage.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -62,6 +62,11 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: SearchPage
+    },
+    {
+      path: '/post',
+      name: 'post',
+      component: PostDetailPage
     }
   ]
 })
