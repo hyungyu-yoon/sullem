@@ -49,7 +49,6 @@ public class PostController {
 		
 		
 		byte[] pData = image.getBytes();
-//		int lByteArraySize = pData.length;
 		File lOutFile = null;
 		FileOutputStream lFileOutputStream = null;
 		String url ="";
@@ -72,6 +71,7 @@ public class PostController {
 		Date date = new Date();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		post.setCreateDate(df.format(date));
+		System.out.println(df.format(date)+" : Upload Post");
 		System.out.println(post.toString());
 		return service.insert(post);
 	}
@@ -79,8 +79,7 @@ public class PostController {
 	
 	@GetMapping("selectPage/{title}/{p}")
 	public PostPageDTO selectPage(@PathVariable String p,@PathVariable String title){
-		System.out.println("p:"+p);
-		System.out.println("title:"+title);
+		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+":: title:"+title+"/p:"+p);
 		PostPageDTO pp = service.makePagePost(title,p,12);
 		System.out.println(pp);
 		return pp;

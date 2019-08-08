@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import LoginPage from '@/components/LoginPage.vue'
-import AccountPage from '@/components/AccountPage.vue'
+import LoginPage from '@/components/login/LoginPage.vue'
+import AccountPage from '@/components/login/AccountPage.vue'
 import axios from 'axios'
 export default {
   name: 'Header',

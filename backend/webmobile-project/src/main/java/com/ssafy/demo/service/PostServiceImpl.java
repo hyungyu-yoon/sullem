@@ -40,14 +40,11 @@ public class PostServiceImpl implements PostService{
 		if (page != null && page.length() > 0) {
 			p = Integer.parseInt(page);
 		}
-		System.out.println("//"+keyword+"//");
 		if (keyword == "" || keyword == null || keyword.equals(" ")) {
 			keyword = "%";
-			System.out.println("keyword null: " + keyword);
 			totalBoardCount = repo.selectAll().size();
 		} else {
 			keyword = "%"+keyword+"%";
-			System.out.println("keyword not null: " + keyword);
 			totalBoardCount = repo.selectByKeyword(keyword).size();
 		}
 		
@@ -56,7 +53,6 @@ public class PostServiceImpl implements PostService{
 			totalPageCount++;
 
 		int startCol = (p - 1) * per;
-		System.out.println(startCol +" / "+ per);
 		List<PostSimpleDTO> postList = repo.pageList(keyword, startCol, per);
 
 		int startPage = (p - 1) / 10 * 10 + 1;
