@@ -107,6 +107,7 @@ export default {
         if (this.events[i - 1].type == 'route') {
           this.events[i - 1].end = this.events[i].start
           this.events[i - 1].overview_path = null
+          this.events[i - 1].destination = this.events[i].latlng
         } else {
           this.addRoute(i++)
         }
@@ -116,6 +117,7 @@ export default {
         if (this.events[i + 1].type == 'route') {
           this.events[i + 1].start = this.events[i].end
           this.events[i + 1].overview_path = null
+          this.events[i + 1].origin = this.events[i].latlng
         } else {
           this.addRoute(i + 1)
         }
@@ -131,8 +133,8 @@ export default {
     addRoute (idx) {
       var newRoute = {
         name: '길찾기',
-        // origin: ,
-        // destination: ,
+        origin: this.events[idx - 1].latlng,
+        destination: this.events[idx].latlng,
         overview_path: null,
         start: this.events[idx - 1].end,
         end: this.events[idx].start,

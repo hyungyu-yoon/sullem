@@ -20,6 +20,7 @@
           event-text-color="black"
           :events="events"
           :event-color="getEventColor"
+          :event-overlap-threshold="0"
           :event-margin-bottom="3"
           :now="start"
           :type="type"
@@ -51,13 +52,22 @@
             </v-card-actions>
           </v-card>
         </v-menu>
+        <SelectRouteModal
+          :isOpen="routeSelect"
+          :event="selectedEvent"
+          @close="routeSelect = false"
+        />
       </v-sheet>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
+import SelectRouteModal from './SelectRouteModal.vue'
 export default {
+  components: {
+    SelectRouteModal
+  },
   props: {
     startDay: null,
     events: null
@@ -69,7 +79,8 @@ export default {
     end: null,
     selectedEvent: {},
     selectedElement: null,
-    selectedOpen: false
+    selectedOpen: false,
+    routeSelect: false
   }),
   computed: {
     monthFormatter () {
@@ -116,21 +127,31 @@ export default {
       this.start = nextDay
     },
     showEvent ({ nativeEvent, event }) {
-      const open = () => {
-        this.selectedEvent = event
-        this.selectedElement = nativeEvent.target
+      this.selectedEvent = event
+      this.selectedElement = nativeEvent.target
+      if (event.name == '길찾기') {
+        setTimeout(() => {
+          this.routeSelect = true
+        }, 10)
+      } else if (event.overview_path == null) {
+        console.log('장소입니다.')
+        // const open = () => {
+        //   // this.selectedEvent = event;
+        //   // this.selectedElement = nativeEvent.target;
         setTimeout(() => {
           this.selectedOpen = true
         }, 10)
-      }
-
-      if (this.selectedOpen) {
-        this.selectedOpen = false
-        setTimeout(open, 10)
+        // };
       } else {
-        open()
+        console.log('경로입니다.')
       }
 
+      // if (this.selectedOpen) {
+      //   this.selectedOpen = false;
+      //   setTimeout(open, 10);
+      // } else {
+      //   open();
+      // }
       nativeEvent.stopPropagation()
     },
     // nth(d) {
@@ -155,7 +176,7 @@ export default {
 </script>
 
 <style scoped>
-.v-event-timed {
-  border: 0px !important;
+.pl-1 {
+  color: black;
 }
 </style>
