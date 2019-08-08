@@ -4,7 +4,6 @@
   </div>
   <!-- <div>
     <div id="directionsPanel" style="float:left;width:30%;height 100%; display: inline;"></div>
-
   </div>-->
 </template>
 

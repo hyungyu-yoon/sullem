@@ -62,15 +62,6 @@ export default {
         //   latlng: { lat: 0, lng: 0 },
         //   type: "location"
         // }
-        // {
-        //   name: "Hyupjae+Beach",
-        //   details: "Going to the beach!",
-        //   start: "2019-01-08 16:30",
-        //   end: "2019-01-09 18:30",
-        //   color: "#80CBC4",
-        //   latlng: { lat: 0, lng: 0 },
-        //   type: "location"
-        // }
       ],
       map: null,
       setStart: '2019-01-08',

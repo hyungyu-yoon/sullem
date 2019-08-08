@@ -1,135 +1,86 @@
 <template>
-  <div>
-    <div id="map" style="width: 1240px"></div>
-  </div>
-  <!-- <div>
-    <div id="directionsPanel" style="float:left;width:30%;height 100%; display: inline;"></div>
-
-  </div>-->
+  <v-layout justify-space-between>
+    <div id="map" style="width: 600px"></div>
+    <div>
+      <div>
+        <v-btn @click="activeBtn = 'TRANSIT'">
+          <v-icon :color="activeBtn === 'TRANSIT' ? '#1DE9B6' : ''">fa-bus</v-icon>
+        </v-btn>
+        <v-btn @click="activeBtn = 'DRIVING'">
+          <v-icon :color="activeBtn === 'DRIVING' ? '#1DE9B6' : ''">fa-car</v-icon>
+        </v-btn>
+        <v-btn @click="activeBtn = 'WALKING'">
+          <v-icon :color="activeBtn === 'WALKING' ? '#1DE9B6' : ''">fa-walking</v-icon>
+        </v-btn>
+      </div>
+      <div
+        id="directionsPanel"
+        style="float:left;width:100%;height: 500px; display: inline; overflow: auto"
+      ></div>
+    </div>
+  </v-layout>
 </template>
 
 <script>
-// import { log } from 'util'
-/* eslint-disable */
 export default {
-  name: "MapTest",
+  name: 'RouteMap',
   props: {
-    mapEvents: null
+    mapEvent: null
   },
-  data() {
+  data () {
     return {
       map: null,
       infoWindow: null,
       directionsService: null,
       directionsDisplay: null,
-      markers: []
-    };
+      activeBtn: 'TRANSIT'
+    }
   },
   methods: {
-    initMap() {
-      this.directionsService = new google.maps.DirectionsService();
-      this.directionsDisplay = new google.maps.DirectionsRenderer();
-      this.map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 0, lng: 0 },
-        zoom: 2,
-        gestureHandling: "cooperative"
-      });
+    initMap () {
+      this.directionsService = new google.maps.DirectionsService()
+      this.directionsDisplay = new google.maps.DirectionsRenderer()
+      this.map = new google.maps.Map(document.getElementById('map'), {
+        center: this.mapEvent.origin,
+        zoom: 10,
+        gestureHandling: 'cooperative'
+      })
       this.$nextTick(() => {
-        this.directionsDisplay.setMap(this.map);
-      });
-      this.infoWindow = new google.maps.InfoWindow();
+        this.directionsDisplay.setMap(this.map)
+      })
+      this.infoWindow = new google.maps.InfoWindow()
     },
-    handleLocationError(browserHasGeolocation, infoWindow, pos) {
-      infoWindow.setPosition(pos);
-      infoWindow.setContent(
-        browserHasGeolocation
-          ? "Error: The Geolocation service failed."
-          : "Error: Your browser doesn't support geolocation."
-      );
-      infoWindow.open(this.map);
-    },
-    displayRoute(directionsService, directionsDisplay) {
+    displayRoute (directionsService, directionsDisplay) {
       directionsService.route(
         {
-          origin: "Jeju+International+Airport",
-          destination: "Hyupjae+Beach",
-          travelMode: "TRANSIT",
+          origin: this.mapEvent.origin,
+          destination: this.mapEvent.destination,
+          travelMode: this.activeBtn,
           provideRouteAlternatives: true
         },
-        function(response, status) {
-          if (status === "OK") {
-            console.log(response);
-            directionsDisplay.setDirections(response);
+        function (response, status) {
+          if (status === 'OK') {
+            // console.log(response);
+            directionsDisplay.setDirections(response)
           } else {
-            window.alert("Directions request failed due to " + status);
+            window.alert('Directions request failed due to ' + status)
           }
         }
-      );
-    },
-    addMarker() {
-      var index = 1;
-      for (var i in this.mapEvents) {
-        if (this.mapEvents[i]["type"] == "location") {
-          var marker = new google.maps.Marker({
-            position: this.mapEvents[i]["latlng"],
-            map: this.map,
-            label: String(index++)
-          });
-          this.markers.push(marker);
-        }
-      }
-    },
-    deleteMarker() {
-      this.setMapOnAll(null);
-      this.markers = [];
-    },
-    setMapOnAll(map) {
-      for (var i = 0; i < this.markers.length; i++) {
-        this.markers[i].setMap(map);
-      }
-    },
-    geolocation() {
-      // Try HTML5 geolocation.
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            map.setCenter(pos);
-          },
-          function() {
-            handleLocationError(true, this.infoWindow, this.map.getCenter());
-          }
-        );
-      } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, this.infoWindow, this.map.getCenter());
-      }
+      )
     }
   },
-  mounted() {
-    this.initMap();
-    // this.addMarker();
-    // this.geolocation();
-    // this.$nextTick(() => {
-    //   this.geolocation();
-    // });
-    // directionsDisplay.setMap(this.map);
-    this.directionsDisplay.setPanel(document.getElementById("directionsPanel"));
-    this.displayRoute(this.directionsService, this.directionsDisplay);
-    // this.displayRoute(directionsService, directionsDisplay);
-    // this.drawPolyline(map);
-    this.$emit("sendMap", this.map);
+  mounted () {
+    this.initMap()
+    this.directionsDisplay.setPanel(document.getElementById('directionsPanel'))
+    this.displayRoute(this.directionsService, this.directionsDisplay)
+    // this.$emit("sendMap", this.map);
   },
   watch: {
-    mapEvents: function() {
-      this.deleteMarker();
-      this.addMarker();
+    activeBtn: function () {
+      this.displayRoute(this.directionsService, this.directionsDisplay)
     }
   }
-};
+}
 </script>
 <style scoped>
 #map {
