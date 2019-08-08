@@ -263,7 +263,8 @@ export default {
     },
 
     deleteItem (item) {
-      const index = this.members.indexOf(item)
+      const index = this.members.indexOf()
+      console.log(this.members)
       confirm('Are you sure you want to delete this item?') && this.members.splice(index, 1)
     },
 
