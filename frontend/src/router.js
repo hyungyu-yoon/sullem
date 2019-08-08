@@ -64,7 +64,7 @@ export default new Router({
       component: SearchPage
     },
     {
-      path: '/post',
+      path: '/post/:no',
       name: 'post',
       component: PostDetailPage
     }

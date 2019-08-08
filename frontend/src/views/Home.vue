@@ -11,10 +11,12 @@
         <v-flex xs4 md2>
           <v-select
           :items="items"
-          v-model="category"
+          v-model="select"
+          item-text="category"
+          item-value="value"
           solo
           color="teal accent-4"
-
+        return-object
         ></v-select>
 
         </v-flex>
@@ -27,8 +29,8 @@
             color="teal accent-4"
             class="font-weight-bold"
             append-icon="fa-search"
-            @click:append="$router.push({name:'search',params:{query:text,category:category}})"
-            @keyup.enter="$router.push({name:'search',params:{query:text,category:category}})"
+            @click:append="$router.push({name:'search',params:{text:text,category:select.value,page:1}})"
+            @keyup.enter="$router.push({name:'search',params:{text:text,category:select.value,page:1}})"
             v-model="text"
           ></v-text-field>
         </v-flex>
@@ -126,8 +128,11 @@ export default {
   data () {
     return {
       newHeight: null,
-      category: '여행일정',
-      items: ['여행일정', '여행후기'],
+      select: { category: '여행일정', value: 0 },
+      items: [
+        { category: '여행일정', value: 0 },
+        { category: '여행후기', value: 1 }
+      ],
       text: ''
     }
   },

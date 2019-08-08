@@ -1,13 +1,88 @@
 <template>
-  <div>
+  <v-container grid-list-md>
+    <v-layout wrap>
+      <v-flex xs12 ml-6 mr-6>
+        <span class="grey--text">{{createDate.substring(0,16)}}</span>
+      </v-flex>
+      <v-flex xs12 ml-5 mr-5>
 
-    <textarea v-html="content"></textarea>
-  </div>
+        <span class="display-1 font-weight-black">{{title}}</span>
+
+      </v-flex>
+      <v-flex xs12 ml-8 mr-8 mb-4>
+        <span class="title font-weight-thin">{{description}}</span>
+      </v-flex>
+      <v-flex xs12>
+        <v-sheet elevation="5">
+          <v-layout>
+            <v-flex xs12 ma-5>
+          <div v-html="content">
+
+          </div>
+          </v-flex>
+          </v-layout>
+        </v-sheet>
+
+      </v-flex>
+      <v-flex xs12 mt-2>
+        <v-sheet elevation="5">
+           <v-layout>
+            <v-flex xs12 ma-5>
+           <div id="disqus_thread"></div>
+          </v-flex>
+          </v-layout>
+        </v-sheet>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
-
+import axios from 'axios'
 export default {
-  name: 'postDetail'
+  data () {
+    return {
+      no: 0,
+      title: '',
+      description: '',
+      content: '',
+      createDate: '',
+      disqus_config: ''
+    }
+  },
+  created () {
+    this.no = this.$route.params.no
+    axios.get('http://192.168.31.114:8399/post/detailPost/' + this.no)
+      .then(response => {
+        this.title = response.data.title
+        this.description = response.data.description
+        this.content = response.data.content
+        this.createDate = response.data.createDate
+      }
+      )
+      .catch(function (error) {
+        console.log(error)
+      })
+  },
+  mounted () {
+    this.disqus_config = function () {
+      this.page.url = 'http://localhost:8080/post/' + this.no // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = this.no // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    }
+
+    let recaptchaScript = document.createElement('script')
+    recaptchaScript.setAttribute(
+      'src',
+      'https://happyhacking-1.disqus.com/embed.js'
+    )
+    document.head.appendChild(recaptchaScript)
+  }
 }
 </script>
+
+<style>
+img {
+  width:100%;
+  height:auto;
+}
+</style>

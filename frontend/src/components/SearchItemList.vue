@@ -8,6 +8,7 @@
     >
       <schedule-card v-if="results.category == 0"></schedule-card>
       <post-card v-if="results.category == 1"
+        :no="result.postNo"
         :name="result.name"
         :title="result.title"
         :description="result.description"
@@ -41,11 +42,20 @@ export default {
     PostCard
   },
   props: {
-    results: { type: Object }
+    results: { type: Object },
+    num: { type: Number }
+  },
+  created () {
+    this.page = this.num
   },
   data () {
     return {
       page: 1
+    }
+  },
+  watch: {
+    page: function () {
+      this.$emit('getPage', this.page)
     }
   },
   methods: {
