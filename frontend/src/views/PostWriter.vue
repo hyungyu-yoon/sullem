@@ -37,6 +37,8 @@
 <script>
 import { VueEditor } from 'vue2-editor'
 import axios from 'axios'
+import router from '@/router'
+
 export default {
   components: {
     VueEditor
@@ -84,19 +86,20 @@ export default {
           console.log(err)
         })
     },
-    postUpload: function () {
+    postUpload: async function () {
       console.log(this.post.title)
-      axios
+      await axios
         .post('http://192.168.31.114:8399/post/uploadPost', {
           title: this.post.title,
-          seq: 1,
-          name: 'shinjong', // this.$session.get("name")
+          seq: this.$session.get('user')['seq'],
+          name: this.$session.get('user')['name'],
           description: this.post.description,
           thumbnail: this.post.thumbnail,
           content: this.post.editorData
         })
         .then(response => (
-          console.log(response)
+          console.log(response),
+          router.push({ path: 'home' })
         )
         )
         .catch(error => {

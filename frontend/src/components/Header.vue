@@ -12,7 +12,7 @@
           <v-btn text class="font-weight-black">여행후기</v-btn>
           <v-btn class="font-weight-black" v-if="this.$store.state.user == null" @click="showLogin" text>로그인</v-btn>
           <v-btn class="font-weight-black" v-if="this.$store.state.user !=null" @click="logout" text>로그아웃</v-btn>
-          <v-btn class="font-weight-black" v-if="this.$store.state.user !=null" text>마이 페이지</v-btn>
+          <v-btn class="font-weight-black" v-if="this.$store.state.user !=null" @click="mypage" text>마이 페이지</v-btn>
         </v-toolbar-items>
     </v-app-bar>
     <LoginPage></LoginPage>
@@ -24,6 +24,7 @@
 import LoginPage from '@/components/LoginPage.vue'
 import AccountPage from '@/components/AccountPage.vue'
 import axios from 'axios'
+import router from '@/router'
 export default {
   name: 'Header',
   components: {
@@ -59,7 +60,10 @@ export default {
           this.errored = true
         })
         .finally(() => this.loading = false)
-    }
+    },
+      mypage () {
+        router.push({ path: 'mypage' })
+      }
   }
 }
 </script>
