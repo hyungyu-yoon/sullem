@@ -1,8 +1,9 @@
 <template>
 <v-hover v-slot:default="{ hover }">
-  <v-card   :elevation="hover ? 5 : 1"
-   max-height="330px"
+  <v-card   :elevation="hover ? 5 : 0"
+   max-height="300px"
    @click="$router.push({name:'post', params:{no:no}})"
+   outlined
   >
     <v-img
       class="white--text"
@@ -10,8 +11,8 @@
       :src="thumbnail"
     >
     </v-img>
-    <v-card-title class="headline font-weight-medium">{{title}}</v-card-title>
-    <v-card-text class="subtitle-1 font-weight-bold ma-0">
+    <v-card-title class="text-truncate body-1 font-weight-bold">{{title}}</v-card-title>
+    <v-card-text class="body-2 font-weight-medium ma-0">
       {{description}}
     </v-card-text>
   </v-card>
