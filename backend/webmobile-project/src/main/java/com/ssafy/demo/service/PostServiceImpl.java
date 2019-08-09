@@ -91,4 +91,9 @@ public class PostServiceImpl implements PostService{
 	public int delete(int postNo) {
 		return repo.delete(postNo);
 	}
+
+	@Override
+	public List<PostDTO> selectBySeq(int seq) {
+		return repo.selectBySeq(seq);
+	}
 }

@@ -15,6 +15,7 @@ public interface PostRepository {
 	public List<PostSimpleDTO> pageList(@Param("keyword")String keyword, @Param("startCol")int startCol, @Param("count")int count);
 	public List<PostSimpleDTO> selectListByViewsTop(@Param("per")int per);
 	public List<PostSimpleDTO> selectAll();
+	public List<PostDTO> selectBySeq(int seq);
 	public int increaseLikesByPostNo(int postNo);
 	public int increaseViewsByPostNo(int postNo);
 }

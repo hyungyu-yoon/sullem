@@ -68,9 +68,9 @@ public class PostController {
 		return service.selectListByViewsTop(10);
 	}
 	
-	@GetMapping("select_sq/{postNo}")
-	public PostDTO selectByPostNo(@PathVariable int postNo) {
-		return service.selectByPostNo(postNo);
+	@GetMapping("selectBySeq/{seq}")
+	public List<PostDTO> selectBySeq(@PathVariable int seq) {
+		return service.selectBySeq(seq);
 	}
 	
 	@GetMapping("detailPost/{postNo}")
