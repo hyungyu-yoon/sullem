@@ -54,16 +54,7 @@
           <v-divider class="teal accent-4"></v-divider>
           <v-divider class="teal accent-4"></v-divider>
         </v-flex>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+        <item-list no='1'></item-list>
         <v-flex xs12>
           <span class="font-weight-bold headline teal--text text--accent-4">
             베스트
@@ -72,16 +63,7 @@
           <v-divider class="teal accent-4"></v-divider>
           <v-divider class="teal accent-4"></v-divider>
         </v-flex>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+        <item-list no='2'></item-list>
         <v-flex xs12>
           <span class="font-weight-bold headline teal--text text--accent-4">
             새로운
@@ -90,16 +72,7 @@
           <v-divider class="teal accent-4"></v-divider>
           <v-divider class="teal accent-4"></v-divider>
         </v-flex>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+        <item-list no='3'></item-list>
         <v-flex xs12>
           <span class="font-weight-bold headline teal--text text--accent-4">
             새로운
@@ -108,22 +81,14 @@
           <v-divider class="teal accent-4"></v-divider>
           <v-divider class="teal accent-4"></v-divider>
         </v-flex>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+        <item-list no='4'></item-list>
       </v-layout>
     </v-container>
   </div>
 </template>
 
 <script>
+import ItemList from '@/components/Home/ItemList.vue'
 export default {
   data () {
     return {
@@ -136,7 +101,9 @@ export default {
       text: ''
     }
   },
-  components: {},
+  components: {
+    ItemList
+  },
   mounted () {
     let recaptchaScript = document.createElement('script')
     recaptchaScript.setAttribute(
