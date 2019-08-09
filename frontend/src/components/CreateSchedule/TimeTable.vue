@@ -45,7 +45,8 @@
               <v-spacer></v-spacer>
             </v-toolbar>
             <v-card-text>
-              <span v-html="selectedEvent.details"></span>
+              <!-- <div id="panelDescription"></div> -->
+              <div v-html="selectedEvent.panel"></div>
             </v-card-text>
             <v-card-actions>
               <v-btn text color="secondary" @click="selectedOpen = false">Cancel</v-btn>
@@ -53,9 +54,11 @@
           </v-card>
         </v-menu>
         <SelectRouteModal
+          v-if="modalOpen"
           :isOpen="routeSelect"
           :event="selectedEvent"
-          @close="routeSelect = false"
+          @close="close"
+          @save="save"
         />
       </v-sheet>
     </v-flex>
@@ -63,7 +66,7 @@
 </template>
 
 <script>
-import SelectRouteModal from './SelectRouteModal.vue'
+import SelectRouteModal from "./SelectRouteModal.vue";
 export default {
   components: {
     SelectRouteModal
@@ -73,77 +76,82 @@ export default {
     events: null
   },
   data: () => ({
-    focus: '2019-01-08',
-    type: '4day',
-    start: '2019-01-08',
+    focus: "2019-01-08",
+    type: "4day",
+    start: "2019-01-08",
     end: null,
     selectedEvent: {},
     selectedElement: null,
     selectedOpen: false,
-    routeSelect: false
+    routeSelect: false,
+    modalOpen: true
   }),
   computed: {
-    monthFormatter () {
+    monthFormatter() {
       return this.$refs.calendar.getFormatter({
-        timeZone: 'UTC',
-        month: 'long'
-      })
+        timeZone: "UTC",
+        month: "long"
+      });
     }
   },
   methods: {
-    viewDay ({ date }) {
-      this.focus = date
-      this.start = date
+    viewDay({ date }) {
+      this.focus = date;
+      this.start = date;
     },
-    getEventColor (event) {
-      return event.color
+    getEventColor(event) {
+      return event.color;
     },
-    setToday () {
-      this.start = this.startDay
-      this.focus = this.startDay
+    setToday() {
+      this.start = this.startDay;
+      this.focus = this.startDay;
     },
-    prev () {
-      var prev = new Date(this.start)
-      prev.setDate(prev.getDate() - 1)
-      var year = prev.getFullYear()
-      var month = '' + prev.getMonth() + 1
-      var day = '' + prev.getDate()
-      if (month.length < 2) month = '0' + month
-      if (day.length < 2) day = '0' + day
-      prev = year + '-' + month + '-' + day
-      this.focus = prev
-      this.start = prev
+    prev() {
+      var prev = new Date(this.start);
+      prev.setDate(prev.getDate() - 1);
+      var year = prev.getFullYear();
+      var month = "" + prev.getMonth() + 1;
+      var day = "" + prev.getDate();
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+      prev = year + "-" + month + "-" + day;
+      this.focus = prev;
+      this.start = prev;
     },
-    next () {
-      var nextDay = new Date(this.start)
-      nextDay.setDate(nextDay.getDate() + 1)
-      var year = nextDay.getFullYear()
-      var month = '' + nextDay.getMonth() + 1
-      var day = '' + nextDay.getDate()
-      if (month.length < 2) month = '0' + month
-      if (day.length < 2) day = '0' + day
-      nextDay = year + '-' + month + '-' + day
-      this.focus = nextDay
-      this.start = nextDay
+    next() {
+      var nextDay = new Date(this.start);
+      nextDay.setDate(nextDay.getDate() + 1);
+      var year = nextDay.getFullYear();
+      var month = "" + nextDay.getMonth() + 1;
+      var day = "" + nextDay.getDate();
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+      nextDay = year + "-" + month + "-" + day;
+      this.focus = nextDay;
+      this.start = nextDay;
     },
-    showEvent ({ nativeEvent, event }) {
-      this.selectedEvent = event
-      this.selectedElement = nativeEvent.target
-      if (event.name == '길찾기') {
+    showEvent({ nativeEvent, event }) {
+      this.selectedEvent = event;
+      this.selectedElement = nativeEvent.target;
+      if (event.name == "길찾기") {
         setTimeout(() => {
-          this.routeSelect = true
-        }, 10)
+          this.routeSelect = true;
+        }, 10);
       } else if (event.overview_path == null) {
-        console.log('장소입니다.')
+        console.log("장소입니다.");
         // const open = () => {
         //   // this.selectedEvent = event;
         //   // this.selectedElement = nativeEvent.target;
         setTimeout(() => {
-          this.selectedOpen = true
-        }, 10)
+          this.selectedOpen = true;
+        }, 10);
         // };
       } else {
-        console.log('경로입니다.')
+        console.log("경로입니다.");
+        console.log(this.selectedEvent.panel);
+        setTimeout(() => {
+          this.selectedOpen = true;
+        }, 10);
       }
 
       // if (this.selectedOpen) {
@@ -152,7 +160,7 @@ export default {
       // } else {
       //   open();
       // }
-      nativeEvent.stopPropagation()
+      nativeEvent.stopPropagation();
     },
     // nth(d) {
     //   return d > 3 && d < 21
@@ -162,17 +170,28 @@ export default {
     // send() {
     //   this.$emit("sendEvents", this.events);
     // },
-    addEvent () {}
+    save() {
+      this.events.push({});
+      this.events.pop();
+      this.close();
+    },
+    close() {
+      this.routeSelect = false;
+      this.modalOpen = false;
+      this.$nextTick(() => {
+        this.modalOpen = true;
+      });
+    }
   },
-  mounted () {
-    this.start = this.startDay
+  mounted() {
+    this.start = this.startDay;
   },
   watch: {
-    start: function () {
-      this.$emit('changeHead', this.start)
+    start: function() {
+      this.$emit("changeHead", this.start);
     }
   }
-}
+};
 </script>
 
 <style scoped>

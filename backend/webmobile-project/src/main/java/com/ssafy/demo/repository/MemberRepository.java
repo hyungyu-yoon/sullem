@@ -9,6 +9,7 @@ import com.ssafy.demo.dto.MemberDTO;
 public interface MemberRepository {
 	public int insert(MemberDTO member);
 	public int update(MemberDTO member);
+	public int updateWithPassword(MemberDTO member);
 	public int deleteBySeq(int seq);
 	public int deleteByEmail(String email);
 	public MemberDTO selectByEmail(String email);

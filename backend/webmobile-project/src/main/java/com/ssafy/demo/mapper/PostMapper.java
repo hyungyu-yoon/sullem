@@ -9,9 +9,11 @@ import com.ssafy.demo.dto.PostSimpleDTO;
 
 public interface PostMapper {
 	public int insert(PostDTO post);
+	public int delete(int postNo);
 	public PostDTO selectByPostNo(int postNo);
 	public List<PostSimpleDTO> selectByKeyword(String keyword);
 	public List<PostSimpleDTO> pageList(@Param("keyword")String keyword, @Param("startCol")int startCol, @Param("count")int count);
+	public List<PostSimpleDTO> selectListByViewsTop(@Param("per")int per);
 	public List<PostSimpleDTO> selectAll();
 	public int increaseLikesByPostNo(int postNo);
 	public int increaseViewsByPostNo(int postNo);

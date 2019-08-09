@@ -1,0 +1,63 @@
+<template>
+  <v-dialog v-model="isOpenCreateModal" persistent max-width="600px">
+    <v-card>
+      <v-card-title>
+        <span class="headline">새로운 여행일정</span>
+      </v-card-title>
+      <v-card-text>
+        <v-container grid-list-md>
+          <v-layout wrap>
+            <v-flex xs12>
+              <v-text-field v-model="title" label="여행일정 제목" required></v-text-field>
+            </v-flex>
+            <v-flex xs12 sm6 md4>
+              <v-menu
+                v-model="modal"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                transition="scale-transition"
+                offset-y
+                full-width
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field v-model="startDate" label="출발일" readonly v-on="on"></v-text-field>
+                </template>
+                <v-date-picker v-model="startDate" @input="modal = false"></v-date-picker>
+              </v-menu>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="blue darken-1" text @click="cancel">취소</v-btn>
+        <v-btn color="blue darken-1" text @click="save">생성</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</template>
+
+<script>
+export default {
+  name: "CreateScheduleModal",
+  props: {
+    isOpenCreateModal: false
+  },
+  data() {
+    return {
+      title: "",
+      startDate: "",
+      modal: false
+    };
+  },
+  methods: {
+    cancel() {
+      this.$emit("closeCreateScheduleModal");
+    },
+    save() {
+      this.$emit("createNewSchedule", this.title, this.startDate);
+    }
+  }
+};
+</script>
