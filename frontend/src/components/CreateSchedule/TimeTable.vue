@@ -45,8 +45,7 @@
               <v-spacer></v-spacer>
             </v-toolbar>
             <v-card-text>
-              <!-- <div id="panelDescription"></div> -->
-              <div v-html="selectedEvent.panel"></div>
+              <StepsTimeLine v-if="selectedEvent.panel" :steps="selectedEvent.panel"></StepsTimeLine>
             </v-card-text>
             <v-card-actions>
               <v-btn text color="secondary" @click="selectedOpen = false">Cancel</v-btn>
@@ -67,9 +66,12 @@
 
 <script>
 import SelectRouteModal from "./SelectRouteModal.vue";
+import StepsTimeLine from "./StepsTimeLine.vue";
+
 export default {
   components: {
-    SelectRouteModal
+    SelectRouteModal,
+    StepsTimeLine
   },
   props: {
     startDay: null,
