@@ -10,11 +10,11 @@
           <div>
             카테고리:
             <template v-for="(value, index) in SpecificLocation.types">
-              <span :key="index" v-if="value == 'lodging'">숙소 </span>
-              <span :key="index" v-if="value == 'spa'">스파 </span>
-              <span :key="index" v-if="value == 'bar'">바 </span>
-              <span :key="index" v-if="value == 'restaurant'">식당 </span>
-              <span :key="index" v-if="value == 'point_of_interest'">명소 </span>
+              <span :key="index" v-if="value == 'lodging'">숙소</span>
+              <span :key="index" v-if="value == 'spa'">스파</span>
+              <span :key="index" v-if="value == 'bar'">바</span>
+              <span :key="index" v-if="value == 'restaurant'">식당</span>
+              <span :key="index" v-if="value == 'point_of_interest'">명소</span>
             </template>
           </div>
           <div>상세 주소: {{ SpecificLocation.formatted_address }}</div>
@@ -35,10 +35,10 @@ export default {
   props: {
     SpecificLocation: null
   },
-  data () {
+  data() {
     return {
       dialog: false
-    }
+    };
   }
-}
+};
 </script>

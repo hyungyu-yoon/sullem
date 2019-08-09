@@ -45,7 +45,8 @@
               <v-spacer></v-spacer>
             </v-toolbar>
             <v-card-text>
-              <span v-html="selectedEvent.details"></span>
+              <!-- <div id="panelDescription"></div> -->
+              <div v-html="selectedEvent.panel"></div>
             </v-card-text>
             <v-card-actions>
               <v-btn text color="secondary" @click="selectedOpen = false">Cancel</v-btn>
@@ -147,6 +148,10 @@ export default {
         // };
       } else {
         console.log("경로입니다.");
+        console.log(this.selectedEvent.panel);
+        setTimeout(() => {
+          this.selectedOpen = true;
+        }, 10);
       }
 
       // if (this.selectedOpen) {

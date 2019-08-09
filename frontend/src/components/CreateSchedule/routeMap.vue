@@ -84,7 +84,21 @@ export default {
         //current route
         var route = this.getDirections().routes[this.getRouteIndex()];
         // console.log(route);
-        self.$emit("sendRoute", route, self.activeBtn);
+        // console.log(self.directionsDisplay.getPanel());
+        console.log(route.legs[0].steps.length);
+
+        var step = [];
+        // for (var i; route.legs[0].steps.length; ++i) {
+        //   console.log(route.legs[0].steps[i]);
+        //   step.push({
+        //     // distance: route.legs[0].steps[i].steps[0].distance.text,
+        //     // duration: route.legs[0].steps[i].steps[0].duration.text,
+        //     // travel_mode: route.legs[0].steps[i].travel_mode,
+        //     // instructions: route.legs[0].steps[i].instructions
+        //   });
+        // }
+
+        self.$emit("sendRoute", route, self.activeBtn, step);
       }
     );
   },

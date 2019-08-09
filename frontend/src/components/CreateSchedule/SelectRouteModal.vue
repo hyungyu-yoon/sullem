@@ -30,7 +30,8 @@ export default {
   data() {
     return {
       route: null,
-      travelmode: null
+      travelmode: null,
+      panel: null
     };
   },
   methods: {
@@ -41,12 +42,14 @@ export default {
       this.event.overview_path = this.route.overview_polyline;
       this.event.name = this.travelmode;
       this.event.color = "#F48FB1";
+      this.event.panel = this.panel;
       this.$emit("save");
       this.sendClose();
     },
-    saveRoute(routeSend, travelmode) {
+    saveRoute(routeSend, travelmode, steps) {
       this.route = routeSend;
       this.travelmode = travelmode;
+      this.panel = steps;
     }
   }
 };
