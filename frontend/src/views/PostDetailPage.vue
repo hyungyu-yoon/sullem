@@ -12,9 +12,11 @@
       <v-flex xs12 ml-8 mr-8 mb-4>
         <span class="title font-weight-thin">{{description}}</span>
       </v-flex>
+
       <v-flex xs12>
         <v-sheet elevation="5">
           <v-layout>
+
             <v-flex xs12 ma-5>
           <div v-html="content">
 
@@ -54,6 +56,7 @@ export default {
     this.no = this.$route.params.no
     axios.get('http://192.168.31.114:8399/post/detailPost/' + this.no)
       .then(response => {
+        console.log(response.data)
         this.title = response.data.title
         this.description = response.data.description
         this.content = response.data.content
