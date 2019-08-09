@@ -42,6 +42,14 @@
 		order by views desc limit 0,#{per}
 	</select>
 	
+	<select id="selectBySeq" resultType="PostDTO">
+		select 
+		*
+		from post
+		where seq=#{seq} 
+		order by postNo desc
+	</select>
+	
 	<update id="increaseLikesByPostNo" parameterType="int">
 		update post set likes=likes+1 where postNo=#{postNo};
 	</update>

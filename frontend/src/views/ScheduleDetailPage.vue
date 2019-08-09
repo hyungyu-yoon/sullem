@@ -1,93 +1,69 @@
 <template>
-  <div>
+  <div v-if="results !== ''">
     <v-img
-      src="../assets/banner2.jpg"
+      :src="results.country"
       aspect-ratio="3.0"
       gradient="rgba(255,255,255,.25), rgba(255,255,255,.5)"
     >
-      <v-layout align-center justify-center fill-height></v-layout>
+      <v-layout class="text-center" align-center justify-center fill-height>
+        <v-flex xs12>
+          <span class="display-3 font-weight-bold" >{{results.title}}</span>
+        </v-flex>
+      </v-layout>
     </v-img>
 
     <v-container grid-list-md>
       <v-layout wrap>
         <v-flex md3 class="hidden-sm-and-down">
-          <v-card color="purple" dark>
-            <v-card-title primary class="title">Lorem</v-card-title>
-            <v-card-text>{{ lorem }}</v-card-text>
+          <v-card color="teal accent-4" dark height="250">
+            <v-card-title primary class="title">{{results.name}}</v-card-title>
+            <v-card-text>{{results.createTime.substring(0,16)}}</v-card-text>
+            <v-card-text class="title">{{ results.description }}</v-card-text>
           </v-card>
         </v-flex>
         <v-flex xs12 md9>
           <v-layout wrap>
-            <v-flex xs12>
-              <v-card color="white" dark>
-                <v-card-text>{{ lorem.slice(0, 70) }}</v-card-text>
-              </v-card>
-            </v-flex>
-            <v-flex xs12>
+
+            <v-flex xs12 v-for="(event,i) in events" :key=i>
               <v-flex ma-1 xs12>
                 <span class="title font-weight-bold" ma-2>
-                  <v-icon>fa-calendar-day</v-icon>&nbsp;Day 1
+                  <v-icon>fa-calendar-day</v-icon>&nbsp;Day {{i+1}}
                 </span>
-                <span class="subtitle-2 grey--text">2019-08-01</span>
+                <span class="subtitle-2 grey--text">{{event[0].start.substring(0,10)}}</span>
               </v-flex>
               <v-sheet elevation="5">
                 <v-timeline align-top dense>
                   <v-timeline-item
-                    v-for="(item, i) in items"
+                    v-for="(data, i) in event"
+                    v-if="data.type === 'location'"
                     :key="i"
-                    :color="item.color"
-                    :icon="item.icon"
+                    :color="getColor(data.category)"
+                    :icon="getIcon(data.category)"
                     fill-dot
                   >
                     <v-card class="elevation-2" width="95%">
                       <v-layout pa-3 wrap>
                         <v-flex xs12>
                           <v-icon>fa-clock</v-icon>&nbsp;
-                          <span>09:00~10:00</span>
+                          <span>{{data.start.substring(11)}} ~ {{data.end.substring(11)}}</span>
                         </v-flex>
                         <v-flex xs12 sm6>
                           <v-card elevation="3">
-                            <v-img height="200" src="../assets/banner.jpg"></v-img>
+                            <v-img height="200" :src="data.imageUrl"></v-img>
                           </v-card>
                         </v-flex>
                         <v-flex xs12 sm6>
-                          <v-card-title class="font-weight-bold">장소 이름</v-card-title>
-                          <v-card-text>부가 설명란</v-card-text>
+                          <v-card-title class="font-weight-bold">{{data.name}}</v-card-title>
+                          <v-card-text>{{data.address}}</v-card-text>
                         </v-flex>
                       </v-layout>
-                      <v-card-text>
-                        메모란
-                        <br />Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.
-                      </v-card-text>
+
                     </v-card>
                   </v-timeline-item>
                 </v-timeline>
               </v-sheet>
             </v-flex>
-            <v-flex xs12>
-              <v-flex ma-1 xs12>
-                <span class="title font-weight-bold" ma-2>
-                  <v-icon>fa-calendar-day</v-icon>&nbsp;Day 2
-                </span>
-                <span class="subtitle-2 grey--text">2019-08-02</span>
-              </v-flex>
-              <v-sheet elevation="5">
-                <v-timeline dense>
-                  <v-timeline-item
-                    v-for="(item, i) in items"
-                    :key="i"
-                    :color="item.color"
-                    :icon="item.icon"
-                    fill-dot
-                  >
-                    <v-card class="elevation-2" width="99%">
-                      <v-card-title class="headline">Lorem ipsum</v-card-title>
-                      <v-card-text>Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.</v-card-text>
-                    </v-card>
-                  </v-timeline-item>
-                </v-timeline>
-              </v-sheet>
-            </v-flex>
+
           </v-layout>
         </v-flex>
       </v-layout>
@@ -96,6 +72,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data: () => ({
     lorem: `Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.`,
@@ -116,7 +93,56 @@ export default {
         color: 'indigo',
         icon: 'fa-bed'
       }
-    ]
-  })
+    ],
+    events: [],
+    results: ''
+  }),
+  created () {
+    axios.get('http://192.168.31.114:8399/schedule/selectByNo/1')
+      .then(response => {
+        var data = JSON.parse(response.data.events)
+        var date = ''
+        var count = -1
+        var results = []
+        for (let i = 0; i < data.length; i++) {
+          if (date !== data[i].start.substring(0, 10)) {
+            count++
+            results.push([])
+            date = data[i].start.substring(0, 10)
+            results[count].push(data[i])
+          } else {
+            results[count].push(data[i])
+          }
+        }
+        this.events = results
+
+        this.results = response.data
+        console.log(this.results)
+      }
+      )
+      .catch(function (error) {
+        console.log(error)
+      })
+  },
+  methods: {
+    getIcon (category) {
+      if (category[0] === 'lodging') {
+        return 'fa-bed'
+      } else if (category[0] === 'restaurant') {
+        return 'fa-utensils'
+      } else {
+        return 'fa-camera'
+      }
+    },
+    getColor (category) {
+      if (category[0] === 'lodging') {
+        return 'red'
+      } else if (category[0] === 'restaurant') {
+        return 'yellow lighten-3'
+      } else {
+        return 'teal accent-4'
+      }
+    }
+  }
 }
 </script>

@@ -5,10 +5,10 @@ import PostWriter from './views/PostWriter.vue'
 import Intro from './views/Intro.vue'
 import MapTest from './views/MapTest.vue'
 import CreateSchedulePage from './views/CreateSchedulePage.vue'
-
 import AdminPage from './views/AdminPage.vue'
 import ScheduleDetailPage from './views/ScheduleDetailPage.vue'
 import SearchPage from './views/SearchPage.vue'
+import PostDetailPage from './views/PostDetailPage.vue'
 import AdminPost from './views/AdminPost.vue'
 import AdminSchedule from './views/AdminSchedule.vue'
 
@@ -67,7 +67,7 @@ export default new Router({
       component: AdminSchedule
     },
     {
-      path: '/schedule',
+      path: '/schedule/:no',
       name: 'schedule',
       component: ScheduleDetailPage
     },
@@ -76,5 +76,10 @@ export default new Router({
       name: 'search',
       component: SearchPage
     },
+    {
+      path: '/post/:no',
+      name: 'post',
+      component: PostDetailPage
+    }
   ]
 })

@@ -65,12 +65,12 @@ public class PostController {
 	}
 	@GetMapping("selectTopPost")
 	public List<PostSimpleDTO> selectTopPost(){
-		return service.selectListByViewsTop(10);
+		return service.selectListByViewsTop(6);
 	}
 	
-	@GetMapping("select_sq/{postNo}")
-	public PostDTO selectByPostNo(@PathVariable int postNo) {
-		return service.selectByPostNo(postNo);
+	@GetMapping("selectBySeq/{seq}")
+	public List<PostDTO> selectBySeq(@PathVariable int seq) {
+		return service.selectBySeq(seq);
 	}
 	
 	@GetMapping("detailPost/{postNo}")
