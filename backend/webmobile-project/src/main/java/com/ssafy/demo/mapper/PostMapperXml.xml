@@ -42,7 +42,7 @@
 		order by views desc limit 0,#{per}
 	</select>
 	
-	<select id="selectBySeq">
+	<select id="selectBySeq" resultType="PostDTO">
 		select 
 		*
 		from post
