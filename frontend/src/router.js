@@ -9,6 +9,9 @@ import CreateSchedulePage from './views/CreateSchedulePage.vue'
 import AdminPage from './views/AdminPage.vue'
 import ScheduleDetailPage from './views/ScheduleDetailPage.vue'
 import SearchPage from './views/SearchPage.vue'
+import AdminPost from './views/AdminPost.vue'
+import AdminSchedule from './views/AdminSchedule.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -54,6 +57,16 @@ export default new Router({
       component: AdminPage
     },
     {
+      path: '/adminpost',
+      name: 'adminpost',
+      component: AdminPost
+    },
+    {
+      path: '/adminschedule',
+      name: 'adminschedule',
+      component: AdminSchedule
+    },
+    {
       path: '/schedule',
       name: 'schedule',
       component: ScheduleDetailPage
@@ -62,6 +75,6 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: SearchPage
-    }
+    },
   ]
 })
