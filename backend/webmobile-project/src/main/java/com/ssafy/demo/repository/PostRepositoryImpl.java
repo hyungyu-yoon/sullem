@@ -74,5 +74,11 @@ public class PostRepositoryImpl implements PostRepository{
 		return mapper.delete(postNo);
 	}
 
+	@Override
+	public List<PostDTO> selectBySeq(int seq) {
+		PostMapper mapper = template.getMapper(PostMapper.class);
+		return mapper.selectBySeq(seq);
+	}
+
 	
 }

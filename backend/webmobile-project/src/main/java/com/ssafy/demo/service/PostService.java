@@ -14,6 +14,7 @@ public interface PostService {
 	public PostDTO selectByPostNo(int postNo);
 	public List<PostSimpleDTO> selectByKeyword(String keword);
 	public List<PostSimpleDTO> selectAll();
+	public List<PostDTO> selectBySeq(int seq);
 	public PostPageDTO makePagePost(String keyword, String page, int per);
 	public List<PostSimpleDTO> selectListByViewsTop(@Param("per")int per);
 	public int increaseLikesByPostNo(int postNo);
