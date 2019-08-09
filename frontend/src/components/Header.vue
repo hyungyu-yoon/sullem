@@ -1,9 +1,16 @@
 <template>
   <div>
-   <v-app-bar app dense elevation="1">
-      <v-toolbar-title class=" text-uppercase">
-        <a><span class="headline font-weight-bold teal--text text--accent-4" @click="$router.push({name:'home'})">Sullem </span></a>
-        <span class="font-weight-bold subtitle-1 teal--text text--accent-4 hidden-xs-only">설렘이 함께하는 당신의 여행</span>
+    <v-app-bar app dense elevation="1">
+      <v-toolbar-title class="text-uppercase">
+        <a>
+          <span
+            class="headline font-weight-bold teal--text text--accent-4"
+            @click="$router.push({name:'home'})"
+          >Sullem</span>
+        </a>
+        <span
+          class="font-weight-bold subtitle-1 teal--text text--accent-4 hidden-xs-only"
+        >설렘이 함께하는 당신의 여행</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-title v-if="this.$store.state.user !=null"> {{ this.$store.state.user.name}}님</v-toolbar-title>
@@ -29,13 +36,13 @@ import FindPasswordPage from '@/components/login/FindPasswordPage.vue'
 
 import axios from 'axios'
 export default {
-  name: 'Header',
+  name: "Header",
   components: {
     LoginPage,
     AccountPage,
     FindPasswordPage
   },
-  data () {
+  data() {
     return {
       // data: {
       //   title: "test",
@@ -100,18 +107,24 @@ export default {
       // }
     }
   },
-  mounted () {
-    this.$store.state.user = this.$session.get('user')
+  mounted() {
+    this.$store.state.user = this.$session.get("user");
   },
   methods: {
-    showLogin () {
-      this.$store.state.Login = true
+    showLogin() {
+      this.$store.state.Login = true;
     },
-    async logout () {
-      alert('logout')
-      this.$session.destroy()
-      this.$store.state.user = null
-      this.$router.push('/home')
+    showCreateSchedule() {
+      this.isOpenCreateSchedule = true;
+    },
+    createNewSchedule(title, startDate) {
+      this.$router.push("/createschedule");
+    },
+    async logout() {
+      alert("logout");
+      this.$session.destroy();
+      this.$store.state.user = null;
+      this.$router.push("/home");
     },
     jsonTest () {
       console.log(this.data)
@@ -123,11 +136,11 @@ export default {
 
         ))
         .catch(error => {
-          console.log(error)
-          this.errored = true
+          console.log(error);
+          this.errored = true;
         })
-        .finally(() => this.loading = false)
+        .finally(() => (this.loading = false));
     }
   }
-}
+};
 </script>
