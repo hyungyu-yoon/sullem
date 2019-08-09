@@ -81,4 +81,14 @@ public class PostServiceImpl implements PostService{
 	public int increaseViewsByPostNo(int postNo) {
 		return repo.increaseViewsByPostNo(postNo);
 	}
+
+	@Override
+	public List<PostSimpleDTO> selectListByViewsTop(int per) {
+		return repo.selectListByViewsTop(per);
+	}
+
+	@Override
+	public int delete(int postNo) {
+		return repo.delete(postNo);
+	}
 }

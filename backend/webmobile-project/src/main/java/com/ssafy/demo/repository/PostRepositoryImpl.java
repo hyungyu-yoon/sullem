@@ -62,5 +62,17 @@ public class PostRepositoryImpl implements PostRepository{
 		return mapper.increaseViewsByPostNo(postNo);
 	}
 
+	@Override
+	public List<PostSimpleDTO> selectListByViewsTop(int per) {
+		PostMapper mapper = template.getMapper(PostMapper.class);
+		return mapper.selectListByViewsTop(per);
+	}
+
+	@Override
+	public int delete(int postNo) {
+		PostMapper mapper = template.getMapper(PostMapper.class);
+		return mapper.delete(postNo);
+	}
+
 	
 }

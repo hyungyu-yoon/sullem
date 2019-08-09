@@ -47,26 +47,27 @@ public class MemberController {
 	
 	@GetMapping("selectAll")
 	public List<MemberDTO> selectAll(){
-		System.out.println("Members : selectAll");
 		return service.selectAll();
 	}
 	
 	@PostMapping("login/{email}/{password}")
 	public MemberDTO login(@PathVariable String email, @PathVariable String password) {
-		System.out.println(service.selectByEmailAndPassword(email, password));
+		System.out.print(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+" : ");
+		System.out.println("login - "+email+"/"+password);
 		return service.selectByEmailAndPassword(email, password);
 	}
 	
 	@PostMapping("insert")
 	public int insert(@RequestBody MemberDTO member) {
-		int result = service.insert(member);
-		System.out.println("SignUp : "+ member.toString());
-		return result;
+		System.out.print(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+" : ");
+		System.out.println("Member insert - "+member.toString());
+		return service.insert(member);
 	}
 	
 	@DeleteMapping("delete/{seq}")
 	public int deleteBySeq(@PathVariable int seq) {
-		System.out.println("delete : "+seq);
+		System.out.print(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+" : ");
+		System.out.println("Member delete - "+seq);
 		return service.deleteBySeq(seq);
 	}
 
@@ -77,8 +78,8 @@ public class MemberController {
 	}
 	@PostMapping("update")
 	public MemberDTO update(@RequestBody MemberDTO member) {
-		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-		System.out.println("update :"+member.toString());
+		System.out.print(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+" : ");
+		System.out.println("update -"+member.toString());
 		service.update(member);
 		return service.selectByEmail(member.getEmail());
 	}
