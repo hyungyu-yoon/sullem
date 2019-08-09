@@ -1,28 +1,29 @@
 <template>
-  <div>
+  <div v-if="results !== ''">
     <v-img
       :src="results.country"
       aspect-ratio="3.0"
       gradient="rgba(255,255,255,.25), rgba(255,255,255,.5)"
     >
-      <v-layout align-center justify-center fill-height></v-layout>
+      <v-layout class="text-center" align-center justify-center fill-height>
+        <v-flex xs12>
+          <span class="display-3 font-weight-bold" >{{results.title}}</span>
+        </v-flex>
+      </v-layout>
     </v-img>
 
     <v-container grid-list-md>
       <v-layout wrap>
         <v-flex md3 class="hidden-sm-and-down">
-          <v-card color="teal accent-4" dark>
-            <v-card-title primary class="title">Lorem</v-card-title>
-            <v-card-text>{{ lorem }}</v-card-text>
+          <v-card color="teal accent-4" dark height="250">
+            <v-card-title primary class="title">{{results.name}}</v-card-title>
+            <v-card-text>{{results.createTime.substring(0,16)}}</v-card-text>
+            <v-card-text class="title">{{ results.description }}</v-card-text>
           </v-card>
         </v-flex>
         <v-flex xs12 md9>
           <v-layout wrap>
-            <v-flex xs12>
-              <v-card color="white" dark>
-                <v-card-text>{{ lorem.slice(0, 70) }}</v-card-text>
-              </v-card>
-            </v-flex>
+
             <v-flex xs12 v-for="(event,i) in events" :key=i>
               <v-flex ma-1 xs12>
                 <span class="title font-weight-bold" ma-2>
@@ -104,7 +105,6 @@ export default {
         var count = -1
         var results = []
         for (let i = 0; i < data.length; i++) {
-          console.log(data[i].start.substring(0, 10))
           if (date !== data[i].start.substring(0, 10)) {
             count++
             results.push([])
@@ -117,6 +117,7 @@ export default {
         this.events = results
 
         this.results = response.data
+        console.log(this.results)
       }
       )
       .catch(function (error) {

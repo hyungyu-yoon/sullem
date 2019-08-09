@@ -67,7 +67,7 @@ export default new Router({
       component: AdminSchedule
     },
     {
-      path: '/schedule',
+      path: '/schedule/:no',
       name: 'schedule',
       component: ScheduleDetailPage
     },
