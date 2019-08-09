@@ -20,7 +20,14 @@
 
     <v-container grid-list-md mt-3>
       <v-layout wrap>
-        <v-flex md3 class="hidden-sm-and-down">
+        <v-flex xs12 class="hidden-sm-and-up">
+          <v-tabs centered grow color="teal accent-4">
+          <v-tab @click="selectCategory(0)">여행일정</v-tab>
+          <v-tab @click="selectCategory(1)">여행후기</v-tab>
+        </v-tabs>
+
+        </v-flex>
+        <v-flex sm3 class="hidden-xs-only">
           <v-card
             class="mx-auto"
             max-width="300"
@@ -28,7 +35,7 @@
           >
           <v-list rounded>
             <v-subheader>Category</v-subheader>
-            <v-list-item-group v-model="item" color="teal accent-4" mandatory>
+            <v-list-item-group v-model="category" color="teal accent-4" mandatory>
               <v-list-item
                 v-for="(item, i) in items"
                 :key="i"
@@ -46,12 +53,14 @@
         </v-card>
 
         </v-flex>
-        <v-flex xs12 md9>
+        <v-flex xs12 sm9>
           <v-layout wrap>
             <v-flex xs12>
                 <search-item-list
                 v-if="results"
                  :results="results"
+                 :num='page'
+                 @getPage="paging"
                 ></search-item-list>
             </v-flex>
 
@@ -70,38 +79,48 @@ export default {
     SearchItemList
   },
   data: () => ({
-    item: 0,
+    category: 0,
     items: [
       { text: '여행일정' },
       { text: '여행후기' }
-
     ],
     text: '',
     results: null,
     page: 1
   }),
   mounted () {
-    this.text = this.$route.params.query
-    if (this.$route.params.category === '여행일정') {
-      this.item = 0
+    if (this.$route.params.text === undefined && this.$route.params.category === undefined) {
+      this.text = this.$store.state.text
+      this.category = this.$store.state.category
+      this.page = this.$store.state.page
+    } else {
+      this.text = this.$route.params.text
+      this.category = this.$route.params.category
+      this.page = this.$route.params.page
+    }
+
+    if (this.category === 0) {
       this.getScheduleList()
-    } else if (this.$route.params.category === '여행후기') {
-      this.item = 1
+    } else if (this.category === 1) {
       this.getPostList()
     }
   },
   methods: {
     search () {
-      console.log(this.item)
-      if (this.item === 0) {
+      this.$store.state.page = this.page
+      this.$store.state.category = this.category
+      this.$store.state.text = this.text
+
+      if (this.category === 0) {
         this.getScheduleList()
-      } else if (this.item === 1) {
+      } else if (this.category === 1) {
         this.getPostList()
       }
     },
     selectCategory (item) {
       this.text = ''
-      this.item = item
+      this.page = 1
+      this.category = item
       this.search()
     },
     getScheduleList () {
@@ -112,13 +131,16 @@ export default {
       axios.get('http://192.168.31.114:8399/post/selectPage/' + query + '/' + this.page)
         .then(response => {
           this.results = response.data
-          this.results.category = this.item
-          console.log(this.results)
+          this.results.category = this.category
         }
         )
         .catch(function (error) {
           console.log(error)
         })
+    },
+    paging (page) {
+      this.page = page
+      this.search()
     }
   }
 }
