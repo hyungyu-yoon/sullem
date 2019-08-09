@@ -8,10 +8,10 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12>
-                  <v-text-field v-model="email" label="Email*" required></v-text-field>
+                  <v-text-field @keyup.enter="login" v-model="email" label="Email*" required></v-text-field>
                 </v-flex>
                 <v-flex xs12>
-                  <v-text-field v-model="password" label="Password*" type="password" required></v-text-field>
+                  <v-text-field @keyup.enter="login" v-model="password" label="Password*" type="password" required></v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -26,8 +26,10 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn  text @click="cancel">Cancel</v-btn>
+            <v-btn  text @click="showFindPassword">Find password</v-btn>
             <v-btn  text @click="showAccount">Account</v-btn>
             <v-btn  text @click="login">Login</v-btn>
+            <!-- <input @keyup.enter="login"> -->
           </v-card-actions>
         </v-card>
 
@@ -45,9 +47,13 @@ export default {
     }
   },
   methods: {
-    async showAccount () {
+    showAccount () {
       this.$store.state.Login = false
       this.$store.state.Account = true
+    },
+    showFindPassword() {
+      this.$store.state.Login = false
+      this.$store.state.FindPassword = true
     },
     cancel () {
       this.$store.state.Login = false
@@ -67,7 +73,7 @@ export default {
     },
     async loginWithEmail () {
       return axios
-        .post('http://localhost:8399/member/login/' + this.email + '/' + this.password)
+        .post('http://192.168.31.114:8399/member/login/' + this.email + '/' + this.password)
         .catch(error => {
           console.log(error)
           this.errored = true

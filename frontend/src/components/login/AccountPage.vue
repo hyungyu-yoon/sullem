@@ -85,7 +85,7 @@ export default {
         this.user.gender != null && this.user.phone != null) {
         if (this.user.password == this.user.password_valid) {
           axios
-            .post('http://localhost:8399/member/insert/', {
+            .post('http://192.168.31.114:8399/member/insert/', {
               email: this.user.email,
               password: this.user.password,
               name: this.user.name,

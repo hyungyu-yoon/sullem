@@ -19,9 +19,9 @@
             disable-resize-watcher
             >
                 <v-list dense>
-                    <v-list-item @click.stop="left = !left" @click="postclick">
+                    <v-list-item @click.stop="left = !left" @click="memclick">
                         <v-list-item-action>
-                            <v-icon>Post</v-icon>
+                            <v-icon>Member</v-icon>
                         </v-list-item-action>
                     </v-list-item>
                     <br>
@@ -43,7 +43,7 @@
             <v-container>
                 <v-card>
                     <v-card-title>
-                    Members
+                    Posts
                     <v-spacer></v-spacer>
                     <v-text-field
                         v-model="search"
@@ -56,63 +56,14 @@
                     <v-data-table
                     :headers="headers"
                     :search="search"
-                    :items="members"
+                    :items="posts"
                     :page.sync="page"
                     :items-per-page="itemsPerPage"
                     hide-default-footer
                     class="elevation-1"
                     @page-count="pageCount = $event"
                     >
-                      <template v-slot:top>
-                          <v-divider
-                            class="mx-4"
-                            inset
-                            vertical
-                          ></v-divider>
-                          <v-spacer></v-spacer>
-                          <v-dialog v-model="dialog" max-width="500px">
-                            <v-card>
-                              <v-card-text>
-                                <v-container grid-list-md>
-                                  <v-layout wrap>
-                                    <v-flex xs12>
-                                      <v-text-field v-model="user.password" label="Password*" type="password" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12>
-                                      <v-text-field v-model="user.password_valid" label="Valid Password*" type="password" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12>
-                                      <v-text-field v-model="user.phone" label="phone(010-0000-0000)*" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md4>
-                                      <v-select
-                                        :items="types"
-                                        label="Type*"
-                                        v-model="user.type"
-                                      ></v-select>
-                                    </v-flex>
-                                  </v-layout>
-                                </v-container>
-                                <small>*indicates required field</small>
-                              </v-card-text>
-                              <!-- edit 부분 -->
-                              <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                                <v-btn color="blue darken-1" text @click="editSave">Save</v-btn>
-                              </v-card-actions>
-                            </v-card>
-                            <!-- edit 끝 -->
-                          </v-dialog>
-                      </template>
                       <template v-slot:item.action="{ item }">
-                        <v-icon
-                          small
-                          class="mr-2"
-                          @click="editItem(item)"
-                        >
-                          fas fa-edit
-                        </v-icon>
                         <v-icon
                           small
                           @click="deleteItem(item)"
@@ -160,7 +111,7 @@ export default {
   },
   created () {
     this.selectAll()
-    // console.log(this.$session.get('user'))
+    // console.log(this.$session.get('post'))
     if (this.$session.get('user') === undefined) {
       router.push({ path: 'home' })
       alert('접근 권한이 없습니다.')
@@ -174,20 +125,15 @@ export default {
     }
   },
   data: () => ({
-    borns: ['1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999', '2000',
-        '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010',
-        '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'
-      ],
-    genders: ['Man', 'Woman'],
-    types: ['admin', 'user'],
-    user: {
-      email: null,
-      password: null,
-      password_valid: null,
+    post: {
+      createDate: null,
+      description: null,
+      likes: null,
       name: null,
-      age: null,
-      gender: null,
-      phone: null,
+      postNo: null,
+      thumbnail: null,
+      title: null,
+      views: null,
     },
     dialog: false,
     drawer: false,
@@ -197,16 +143,16 @@ export default {
     itemsPerPage: 10,
     search: '',
     headers: [
-      { text: 'Seq', value: 'seq' },
-      { text: 'Type', value: 'type' },
+      { text: 'PostNo', value: 'postNo' },
+      { text: 'Title', value: 'title' },
       { text: 'Name', value: 'name' },
-      { text: 'Email', value: 'email' },
-      { text: 'Created', value: 'create_at'},
-      { text: 'Age', value: 'age' },
-      { text: 'Phone', value: 'phone'},
+      { text: 'Description', value: 'description' },
+      { text: 'CreateDate', value: 'createDate'},
+      { text: 'Likes', value: 'likes' },
+      { text: 'Views', value: 'views'},
       { text: 'Actions', value: 'action', sortable: false },
     ],
-    members: [],
+    posts: [],
   }),
 
   watch: {
@@ -219,12 +165,12 @@ export default {
     selectAll: function () {
       axios({
         method: 'get',
-        url: '//192.168.31.114:8399/member/selectAll/'
+        url: '//192.168.31.114:8399/post/selectAll/'
       })
         .then(response => {
           // console.log(response['data'])
-          this.members = response['data']
-          // this.members.push(response['data'][0])
+          this.posts = response['data']
+          // this.posts.push(response['data'][0])
         })
     },
     memclick: function () {
@@ -238,13 +184,13 @@ export default {
     },
 
     deleteItem: async function (item) {
-      console.log(item['seq'])
+      console.log(item['postNo'])
       var con_test = confirm('Are you sure you want to delete this item?')
       console.log(con_test)
       if (con_test) {
         await axios({
           method: 'delete',
-        url: `//192.168.31.114:8399/member/delete/${item['seq']}` })
+        url: `//192.168.31.114:8399/post/delete/${item['postNo']}` })
         .then(response => {
           console.log('delete!')
         })
@@ -253,28 +199,26 @@ export default {
     },
 
     editItem (item) {
-      this.user.seq = item['seq']
-      this.user.name = item['name']
-      this.user.create_at = item['create_at']
-      this.user.age = item['age']
-      this.user.phone = item['phone']
-      this.user.email = item['email']
-      this.user.type = item['type']
+      this.post.createDate = item['createDate']
+      this.post.name = item['name']
+      this.post.likes = item['likes']
+      this.post.postNo = item['postNo']
+      this.post.thumbnail = item['thumbnail']
+      this.post.title = item['title']
+      this.post.views = item['views']
       this.dialog = true
     },
 
     editSave: async function () {
        await axios
-            .post('//192.168.31.114:8399/member/update', {
-              email: this.user.email,
-              password: this.user.password,
-              phone: this.user.phone,
-              type: this.user.type
+            .post('//192.168.31.114:8399/post/update', {
+              title: this.post.title,
+              description: this.post.description,
             })
             .then(response => (
               alert('업데이트 성공 ^^'),
               // console.log(response.data),
-              // console.log(this.$session.get('user')['type']),
+              // console.log(this.$session.get('post')['type']),
               this.close(),
               this.selectAll()
             )
@@ -284,10 +228,6 @@ export default {
               this.errored = true
             })
             .finally(() => this.loading = false)
-      if ( this.$session.get('user')['email'] === this.user.email) {
-        console.log(this.user)
-        this.$session.set('user', this.user)
-        }
     },
 
     close () {
@@ -303,7 +243,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
