@@ -28,6 +28,12 @@ public class MemberRepositoryImpl implements MemberRepository{
 	}
 
 	@Override
+	public int updateWithPassword(MemberDTO member) {
+		MemberMapper mapper = template.getMapper(MemberMapper.class);
+		return mapper.updateWithPassword(member);
+	}
+
+	@Override
 	public int deleteBySeq(int seq) {
 		MemberMapper mapper = template.getMapper(MemberMapper.class);
 		return mapper.deleteBySeq(seq);
@@ -73,4 +79,5 @@ public class MemberRepositoryImpl implements MemberRepository{
 		return mapper.pageListByEmail(email, startCol, count);
 	}
 
+	
 }

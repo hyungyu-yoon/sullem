@@ -34,13 +34,17 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public int update(MemberDTO member) {
-		try {
-			AES256Util aes = new AES256Util();
-			member.setPassword(aes.encrypt(member.getPassword()));
-		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
-			e.printStackTrace();
+		if(member.getPassword()!=null) {
+			try {
+				AES256Util aes = new AES256Util();
+				member.setPassword(aes.encrypt(member.getPassword()));
+			} catch (UnsupportedEncodingException | GeneralSecurityException e) {
+				e.printStackTrace();
+			}
+			return repo.updateWithPassword(member);
+		}else{
+			return repo.update(member);
 		}
-		return repo.insert(member);
 	}
 
 	@Override
