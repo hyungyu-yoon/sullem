@@ -11,23 +11,43 @@
 		SELECT * FROM POST WHERE postNo=#{postNo}
 	</select>
 	
+	<delete id="delete" parameterType="int">
+		delete from post where postNo=#{postNo}
+	</delete>
+	
 	<select id="selectAll" resultType="PostSimpleDTO">
 		select 
-		postNo, title, name, tags, thumbnail, createDate 
+		postNo, title, seq, description, name, thumbnail, createDate, views, likes 
 		from Post;
 	</select>
+	
 	<select id="selectByKeyword" resultType="PostSimpleDTO">
 		select 
-		postNo, title, description, name, thumbnail, createDate, views, likes 
+		postNo, title, seq, description, name, thumbnail, createDate, views, likes 
 		from Post 
 		where title like #{keyword} or description like #{keyword} order by postNo desc
 	</select>
 	
 	<select id="pageList" resultType="PostSimpleDTO">
 		select 
-		postNo, title, description, name, thumbnail, createDate, views, likes 
+		postNo, title, seq, description, name, thumbnail, createDate, views, likes 
 		from Post 
 		where title like #{keyword} or description like #{keyword} order by postNo desc limit #{startCol},#{count}
+	</select>
+	
+	<select id="selectListByViewsTop" resultType="PostSimpleDTO">
+		select 
+		postNo, title, seq, description, name, thumbnail, createDate, views, likes 
+		from Post  
+		order by views desc limit 0,#{per}
+	</select>
+	
+	<select id="selectBySeq" resultType="PostDTO">
+		select 
+		*
+		from post
+		where seq=#{seq} 
+		order by postNo desc
 	</select>
 	
 	<update id="increaseLikesByPostNo" parameterType="int">

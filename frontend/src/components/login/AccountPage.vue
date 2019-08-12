@@ -11,7 +11,7 @@
                 <v-flex sm6>
                   <v-text-field v-model="user.email" label="Email*" required></v-text-field>
                 </v-flex>
-                <v-btn @click="">check</v-btn>
+                <v-btn id="check" style="margin-top: 17px; margin-left: 4px;" @click="vaildCheck">check</v-btn>
                 <v-flex xs12>
                   <v-text-field v-model="user.password" label="Password*" type="password" required></v-text-field>
                 </v-flex>
@@ -72,7 +72,8 @@ export default {
         age: null,
         gender: null,
         phone: null
-      }
+      },
+      validCheck: null
     }
   },
   methods: {
@@ -82,7 +83,7 @@ export default {
     signUp () {
       if (this.user.email != null && this.user.password != null && this.user.password_valid != null &&
         this.user.name != null && this.user.age != null &&
-        this.user.gender != null && this.user.phone != null) {
+        this.user.gender != null && this.user.phone != null && !this.validCheck) {
         if (this.user.password == this.user.password_valid) {
           axios
             .post('http://192.168.31.114:8399/member/insert/', {
@@ -109,7 +110,49 @@ export default {
       } else {
         alert('입력정보를 확인하세요.')
       }
+    },
+    async vaildCheck () {
+      let user = null;
+      var check = document.getElementById('check');
+      await axios
+        .get('http://192.168.31.114:8399/member/select_email/' + this.user.email)
+         .then(response => (
+              user = response.data,
+              console.log(user)
+            )
+        )
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
+        .finally(() => this.loading = false)
+
+      if (user === null || user == '' ) { 
+        this.validCheck = false
+        alert("사용 가능한 이메일입니다.")
+        console.log(check)
+        check.classList.remove("btntrue")
+        check.classList.add("btnfalse")
+        }
+      else{
+        this.validCheck=true;
+        alert("이미 있는 이메일입니다.")
+        check.classList.remove("btnfalse")
+        check.classList.add("btntrue")
+      }
     }
   }
 }
 </script>
+
+<style>
+  .btnfalse {
+    background-color: aquamarine !important;
+  }
+
+  .btntrue {
+    background-color: rgb(248, 71, 71) !important;
+  }
+
+
+</style>

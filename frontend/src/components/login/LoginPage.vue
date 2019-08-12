@@ -26,6 +26,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn  text @click="cancel">Cancel</v-btn>
+            <v-btn  text @click="showFindPassword">Find password</v-btn>
             <v-btn  text @click="showAccount">Account</v-btn>
             <v-btn  text @click="login">Login</v-btn>
             <!-- <input @keyup.enter="login"> -->
@@ -46,9 +47,13 @@ export default {
     }
   },
   methods: {
-    async showAccount () {
+    showAccount () {
       this.$store.state.Login = false
       this.$store.state.Account = true
+    },
+    showFindPassword() {
+      this.$store.state.Login = false
+      this.$store.state.FindPassword = true
     },
     cancel () {
       this.$store.state.Login = false

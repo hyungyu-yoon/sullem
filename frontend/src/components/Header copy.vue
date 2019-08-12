@@ -32,13 +32,11 @@
           @click="logout"
           text
         >로그아웃</v-btn>
-        <v-btn class="font-weight-black" @click="mypage" v-if="this.$store.state.user !=null" text>마이 페이지</v-btn>
-        <!-- <v-btn class="font-weight-black" @click="jsonTest" text>Json</v-btn> -->
+        <v-btn class="font-weight-black" v-if="this.$store.state.user !=null" text>마이 페이지</v-btn>
       </v-toolbar-items>
     </v-app-bar>
     <LoginPage></LoginPage>
     <AccountPage></AccountPage>
-    <FindPasswordPage></FindPasswordPage>
     <CreateScheduleModal
       :isOpenCreateModal="isOpenCreateSchedule"
       @closeCreateScheduleModal="isOpenCreateSchedule=false"
@@ -48,19 +46,15 @@
 </template>
 
 <script>
-import LoginPage from "@/components/login/LoginPage.vue";
-import AccountPage from "@/components/login/AccountPage.vue";
-import FindPasswordPage from "@/components/login/FindPasswordPage.vue";
+import LoginPage from "@/components/LoginPage.vue";
+import AccountPage from "@/components/AccountPage.vue";
 import CreateScheduleModal from "@/components/CreateSchedule/CreateScheduleModal.vue";
-
 import axios from "axios";
-
 export default {
   name: "Header",
   components: {
     LoginPage,
     AccountPage,
-    FindPasswordPage,
     CreateScheduleModal
   },
   data() {
@@ -89,19 +83,14 @@ export default {
       this.$router.push("/home");
     },
     jsonTest() {
-      console.log(this.data);
       axios
-        .post("http://192.168.31.114:8399/schedule/insert/", this.data)
+        .post("http://localhost:8399/test/json/", this.data)
         .then(response => console.log(response.data))
         .catch(error => {
           console.log(error);
           this.errored = true;
         })
-
-        .finally(() => this.loading = false)
-    },
-    mypage () {
-      this.$router.push("/mypage");
+        .finally(() => (this.loading = false));
     }
   }
 };
