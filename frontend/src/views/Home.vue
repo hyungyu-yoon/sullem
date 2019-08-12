@@ -1,5 +1,5 @@
 <template>
-  <div class="animate-contentopen">
+  <div class="">
     <v-img
       src="../assets/banner.jpg"
       aspect-ratio="3.0"
@@ -37,7 +37,7 @@
       </v-layout>
     </v-img>
 
-    <v-container class="animate-contentopen">
+    <v-container class="">
       <v-layout mt-5 mb-5>
         <v-sheet width="100%" elevation="5" color="white">
           <v-flex pa-5>

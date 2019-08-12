@@ -13,6 +13,8 @@
               <home-post-card v-if="no === '1'" :result="result"></home-post-card>
 
               <home-post-card v-if="no === '3'" :result="result"></home-post-card>
+
+              <home-post-card v-if="no === '5'" :result="result"></home-post-card>
             </v-flex>
           </v-layout>
         </v-container>
@@ -22,6 +24,7 @@
 import axios from 'axios'
 import HomePostCard from './HomePostCard.vue'
 import HomeScheduleCard from './HomeScheduleCard.vue'
+
 export default {
   components: {
     HomePostCard,
@@ -63,10 +66,21 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
-    } else {
+    } else if (this.no === '4'){
       axios.get('http://192.168.31.114:8399/schedule/selectPage/ /1')
         .then(response => {
           this.results = response.data.list
+          console.log(this.results)
+        }
+        )
+        .catch(function (error) {
+          console.log(error)
+        })
+    } else if (this.no === '5'){
+      axios.get(`//192.168.31.114:8399/post/selectBySeq/${this.$session.get('user')['seq']}`)
+        .then(response => {
+          console.log(response.data)
+          this.results = response.data
           console.log(this.results)
         }
         )
