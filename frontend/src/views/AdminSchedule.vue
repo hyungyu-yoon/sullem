@@ -200,14 +200,15 @@ export default {
     },
     
     editItem (item) {
-    //   this.schedule.createDate = item['createDate']
-    //   this.schedule.name = item['name']
-    //   this.schedule.likes = item['likes']
-    //   this.schedule.scheduleNo = item['scheduleNo']
-    //   this.schedule.thumbnail = item['thumbnail']
-    //   this.schedule.title = item['title']
-    //   this.schedule.views = item['views']
-    //   this.dialog = true
+      this.schedule.createDate = item['createDate']
+      this.schedule.name = item['name']
+      this.schedule.likes = item['likes']
+      this.schedule.scheduleNo = item['scheduleNo']
+      this.schedule.thumbnail = item['thumbnail']
+      this.schedule.title = item['title']
+      this.schedule.description = item['description']
+      this.schedule.views = item['views']
+      this.dialog = true
     },
 
     editSave: async function () {

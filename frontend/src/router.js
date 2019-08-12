@@ -11,6 +11,7 @@ import SearchPage from './views/SearchPage.vue'
 import PostDetailPage from './views/PostDetailPage.vue'
 import AdminPost from './views/AdminPost.vue'
 import AdminSchedule from './views/AdminSchedule.vue'
+import MyPage from './views/Mypage.vue'
 
 Vue.use(Router)
 
@@ -75,6 +76,11 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: SearchPage
+    },
+    {
+      path: '/mypage',
+      name: 'mypage',
+      component: MyPage
     },
     {
       path: '/post/:no',

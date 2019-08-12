@@ -143,6 +143,7 @@ export default {
     itemsPerPage: 10,
     search: '',
     headers: [
+      { text: 'seq', value: 'seq'},
       { text: 'PostNo', value: 'postNo' },
       { text: 'Title', value: 'title' },
       { text: 'Name', value: 'name' },
@@ -168,7 +169,7 @@ export default {
         url: '//192.168.31.114:8399/post/selectAll/'
       })
         .then(response => {
-          // console.log(response['data'])
+          console.log(response['data'])
           this.posts = response['data']
           // this.posts.push(response['data'][0])
         })
