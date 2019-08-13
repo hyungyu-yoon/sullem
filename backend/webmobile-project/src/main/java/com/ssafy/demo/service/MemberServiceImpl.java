@@ -149,8 +149,8 @@ public class MemberServiceImpl implements MemberService{
 			// 네이버일 경우 smtp.naver.com 을 입력합니다.
 			// Google일 경우 smtp.gmail.com 을 입력합니다.
 			String host = "smtp.gmail.com";
-			final String username = "coderyu219"; // 네이버 아이디를 입력해주세요. @nave.com은 입력하지 마시구요.
-			final String password = "ssafy1234"; // 네이버 이메일 비밀번호를 입력해주세요..
+			final String username = "tlswhd1020"; // 네이버 아이디를 입력해주세요. @nave.com은 입력하지 마시구요.
+			final String password = "dkffkels32"; // 네이버 이메일 비밀번호를 입력해주세요..
 			int port = 465; // 포트번호
 			// 메일 내용
 			String recipient = member.getEmail(); // 받는 사람의 메일주소를 입력해주세요. starlight747@naver.com
@@ -174,7 +174,7 @@ public class MemberServiceImpl implements MemberService{
 			});
 			session.setDebug(true); // for debug
 			Message mimeMessage = new MimeMessage(session); // MimeMessage 생성
-			mimeMessage.setFrom(new InternetAddress("coderyu219@gmail.com")); // 발신자 셋팅 , 보내는 사람의 이메일주소를 한번 더 입력합니다. 이때는 이메일 풀
+			mimeMessage.setFrom(new InternetAddress("tlswhd1020@gmail.com")); // 발신자 셋팅 , 보내는 사람의 이메일주소를 한번 더 입력합니다. 이때는 이메일 풀
 																			// 주소를 다 작성해주세요.
 			mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient)); // 수신자셋팅 //.TO 외에 .CC(참조)
 																								// .BCC(숨은참조) 도 있음

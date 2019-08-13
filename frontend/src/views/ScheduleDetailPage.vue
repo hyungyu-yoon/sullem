@@ -24,14 +24,8 @@
         <v-flex xs12 md9>
           <v-layout wrap>
             <v-tabs centered grow icons-and-text color="teal accent-4">
-              <v-tab @click="switchone" style="margin: auto;">
-                스케쥴
-                <i class="material-icons">date_range</i>
-              </v-tab>
-              <v-tab @click="switchtwo" style="margin: auto;">
-                경로
-                <i class="material-icons">map</i>
-              </v-tab>
+              <v-tab @click="switchone" style="margin: auto;">스케쥴 <v-icon>fa-calendar-alt</v-icon></v-tab>
+              <v-tab @click="switchtwo" style="margin: auto;">경로 <v-icon>fa-map-marked-alt</v-icon></v-tab>
             </v-tabs>
 
             <template v-if="this.tab">
@@ -67,7 +61,21 @@
                           <v-flex xs12 sm6>
                             <v-card-title class="font-weight-bold">{{data.name}}</v-card-title>
                             <v-card-text>{{data.address}}</v-card-text>
+                            <v-card-text>
+                            <v-rating
+                              v-model="data.rating"
+                              readonly
+                              size="15"
+                              color="yellow"
+                              background-color="yellow"
+                              half-increments
+
+                              empty-icon
+                              dense
+                            ></v-rating>
+                            </v-card-text>
                           </v-flex>
+
                         </v-layout>
                       </v-card>
                     </v-timeline-item>
