@@ -186,11 +186,36 @@ export default {
       });
     },
     deleteRoute() {
-      this.selectedOpen = false;
-      console.log(this.selectedEvent);
-      this.selectedEvent.color = "transparent";
-      this.selectedEvent.name = "길찾기";
-      this.selectedEvent.overview_path = "길찾기";
+      if (this.selectedEvent.type == "route") {
+        this.selectedOpen = false;
+        this.selectedEvent.color = "transparent";
+        this.selectedEvent.name = "길찾기";
+        this.selectedEvent.overview_path = null;
+        this.selectedEvent.panel = null;
+        this.selectedEvent.latlng = null;
+      } else {
+        // console.log(this.events.indexOf(this.selectedEvent));
+        var deleteIndex = this.events.indexOf(this.selectedEvent);
+        this.events.splice(deleteIndex, 1);
+        if (this.events.length >= 1) {
+          if (deleteIndex == 0) {
+            this.events.splice(deleteIndex, 1);
+          } else if (deleteIndex == this.events.length) {
+            this.events.splice(deleteIndex - 1, 1);
+          } else {
+            this.events.splice(deleteIndex, 1);
+            this.events[deleteIndex - 1].color = "transparent";
+            this.events[deleteIndex - 1].name = "길찾기";
+            this.events[deleteIndex - 1].panel = null;
+            this.events[deleteIndex - 1].latlng = null;
+            this.events[deleteIndex - 1].end = this.events[deleteIndex].start;
+            this.events[deleteIndex - 1].overview_path = null;
+            this.events[deleteIndex - 1].destination = this.events[
+              deleteIndex
+            ].latlng;
+          }
+        }
+      }
     }
   },
   mounted() {
