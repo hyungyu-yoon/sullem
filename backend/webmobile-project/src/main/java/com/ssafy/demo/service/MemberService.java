@@ -1,6 +1,12 @@
 package com.ssafy.demo.service;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 
 import com.ssafy.demo.dto.MemberDTO;
 import com.ssafy.demo.dto.MemberPageDTO;
@@ -17,4 +23,6 @@ public interface MemberService {
 	public List<MemberDTO> searchByName(String name);
 	public List<MemberDTO> searchByEmail(String email);
 	public MemberPageDTO makePageMemberByEmail(String email, String page, int per);
+	public String mailSender(String email) throws AddressException, MessagingException, NoSuchAlgorithmException, UnsupportedEncodingException, GeneralSecurityException;
+
 }

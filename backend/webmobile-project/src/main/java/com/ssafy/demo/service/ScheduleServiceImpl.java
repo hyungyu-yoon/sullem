@@ -3,6 +3,13 @@ package com.ssafy.demo.service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.demo.dto.DaysDTO;
+import com.ssafy.demo.dto.MemberDTO;
 import com.ssafy.demo.dto.PostPageDTO;
 import com.ssafy.demo.dto.PostSimpleDTO;
 import com.ssafy.demo.dto.RouteDTO;
@@ -17,6 +25,7 @@ import com.ssafy.demo.dto.ScheduleDTO;
 import com.ssafy.demo.dto.SchedulePageDTO;
 import com.ssafy.demo.repository.ScheduleRepository;
 import com.ssafy.demo.repository.ScheduleRepositoryImpl;
+import com.ssafy.util.AES256Util;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService{
@@ -133,5 +142,4 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return repo.selectBySeq(seq);
 	}
 
-	
 }

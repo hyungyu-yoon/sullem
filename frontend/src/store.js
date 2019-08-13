@@ -9,6 +9,7 @@ export default new Vuex.Store({
     Account: false,
     FindPassword: false,
     user: null,
+    seq: '',
     AdminNav: false,
     page: '',
     category: '',

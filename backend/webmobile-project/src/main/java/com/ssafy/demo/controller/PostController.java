@@ -54,6 +54,7 @@ public class PostController {
 	
 	@PostMapping("update")
 	public int update(@RequestBody PostDTO post) {
+		System.out.println("update");
 		return service.update(post);
 	}
 	@GetMapping("selectPage/{title}/{p}")

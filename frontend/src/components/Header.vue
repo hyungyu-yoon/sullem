@@ -97,7 +97,8 @@ export default {
       alert('logout')
       this.$session.destroy()
       this.$store.state.user = null
-      this.$router.push('/home')
+      // this.$router.push('/home')
+      this.$router.go(0)
     },
     jsonTest () {
       console.log(this.data)
