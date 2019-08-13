@@ -32,7 +32,12 @@
           @click="logout"
           text
         >로그아웃</v-btn>
-        <v-btn class="font-weight-black" @click="mypage" v-if="this.$store.state.user !=null" text>마이 페이지</v-btn>
+        <v-btn
+          class="font-weight-black"
+          @click="mypage"
+          v-if="this.$store.state.user !=null"
+          text
+        >마이 페이지</v-btn>
         <!-- <v-btn class="font-weight-black" @click="jsonTest" text>Json</v-btn> -->
       </v-toolbar-items>
     </v-app-bar>
@@ -80,6 +85,7 @@ export default {
       this.isOpenCreateSchedule = true;
     },
     createNewSchedule(title, startDate) {
+      this.isOpenCreateSchedule = false;
       this.$router.push("/createschedule");
     },
     async logout() {
@@ -98,9 +104,9 @@ export default {
           this.errored = true;
         })
 
-        .finally(() => this.loading = false)
+        .finally(() => (this.loading = false));
     },
-    mypage () {
+    mypage() {
       this.$router.push("/mypage");
     }
   }

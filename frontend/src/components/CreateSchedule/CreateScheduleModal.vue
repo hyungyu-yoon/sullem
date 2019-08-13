@@ -5,29 +5,35 @@
         <span class="headline">새로운 여행일정</span>
       </v-card-title>
       <v-card-text>
-        <v-container grid-list-md>
-          <v-layout wrap>
-            <v-flex xs12>
-              <v-text-field v-model="title" label="여행일정 제목" required></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6 md4>
-              <v-menu
-                v-model="modal"
-                :close-on-content-click="false"
-                :nudge-right="40"
-                transition="scale-transition"
-                offset-y
-                full-width
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field v-model="startDate" label="출발일" readonly v-on="on"></v-text-field>
-                </template>
-                <v-date-picker v-model="startDate" @input="modal = false"></v-date-picker>
-              </v-menu>
-            </v-flex>
-          </v-layout>
-        </v-container>
+        <v-form v-model="valid">
+          <v-container grid-list-md>
+            <v-layout wrap>
+              <v-flex xs12>
+                <v-text-field :rule="titleRules" v-model="title" label="여행일정 제목" required></v-text-field>
+              </v-flex>
+              <v-flex xs12>
+                <v-text-field v-model="description" label="여행일정 설명" required></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 md4>
+                <v-menu
+                  v-model="modal"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  required
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field v-model="startDate" label="출발일" readonly v-on="on"></v-text-field>
+                  </template>
+                  <v-date-picker v-model="startDate" @input="modal = false"></v-date-picker>
+                </v-menu>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-form>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -46,9 +52,12 @@ export default {
   },
   data() {
     return {
+      valid: false,
       title: "",
+      description: "",
       startDate: "",
-      modal: false
+      modal: false,
+      titleRules: [v => !!v || "Title is required"]
     };
   },
   methods: {
@@ -56,7 +65,9 @@ export default {
       this.$emit("closeCreateScheduleModal");
     },
     save() {
-      this.$emit("createNewSchedule", this.title, this.startDate);
+      this.$store.state.scheduleStart = this.startDate;
+      this.$store.state.scheduleTitle = this.title;
+      this.$emit("createNewSchedule");
     }
   }
 };

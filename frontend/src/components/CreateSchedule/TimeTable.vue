@@ -45,8 +45,7 @@
               <v-spacer></v-spacer>
             </v-toolbar>
             <v-card-text>
-              <!-- <div id="panelDescription"></div> -->
-              <div v-html="selectedEvent.panel"></div>
+              <StepsTimeLine v-if="selectedEvent.panel" :steps="selectedEvent.panel"></StepsTimeLine>
             </v-card-text>
             <v-card-actions>
               <v-btn text color="secondary" @click="selectedOpen = false">Cancel</v-btn>
@@ -67,9 +66,13 @@
 
 <script>
 import SelectRouteModal from "./SelectRouteModal.vue";
+import StepsTimeLine from "./StepsTimeLine.vue";
+import { log } from "util";
+
 export default {
   components: {
-    SelectRouteModal
+    SelectRouteModal,
+    StepsTimeLine
   },
   props: {
     startDay: null,
@@ -110,7 +113,7 @@ export default {
       var prev = new Date(this.start);
       prev.setDate(prev.getDate() - 1);
       var year = prev.getFullYear();
-      var month = "" + prev.getMonth() + 1;
+      var month = "" + (prev.getMonth() + 1);
       var day = "" + prev.getDate();
       if (month.length < 2) month = "0" + month;
       if (day.length < 2) day = "0" + day;
@@ -122,7 +125,7 @@ export default {
       var nextDay = new Date(this.start);
       nextDay.setDate(nextDay.getDate() + 1);
       var year = nextDay.getFullYear();
-      var month = "" + nextDay.getMonth() + 1;
+      var month = "" + (nextDay.getMonth() + 1);
       var day = "" + nextDay.getDate();
       if (month.length < 2) month = "0" + month;
       if (day.length < 2) day = "0" + day;
@@ -185,6 +188,7 @@ export default {
   },
   mounted() {
     this.start = this.startDay;
+    this.setToday();
   },
   watch: {
     start: function() {

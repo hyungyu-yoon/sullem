@@ -85,18 +85,19 @@ export default {
         var route = this.getDirections().routes[this.getRouteIndex()];
         // console.log(route);
         // console.log(self.directionsDisplay.getPanel());
-        console.log(route.legs[0].steps.length);
+        // console.log(route.legs[0].steps.length);
+        // console.log(route.legs[0].steps[0].travel_mode);
 
         var step = [];
-        // for (var i; route.legs[0].steps.length; ++i) {
-        //   console.log(route.legs[0].steps[i]);
-        //   step.push({
-        //     // distance: route.legs[0].steps[i].steps[0].distance.text,
-        //     // duration: route.legs[0].steps[i].steps[0].duration.text,
-        //     // travel_mode: route.legs[0].steps[i].travel_mode,
-        //     // instructions: route.legs[0].steps[i].instructions
-        //   });
-        // }
+        for (var i = 0; i < route.legs[0].steps.length; ++i) {
+          step.push({
+            distance: route.legs[0].steps[i].distance.text,
+            duration: route.legs[0].steps[i].duration.text,
+            travel_mode: route.legs[0].steps[i].travel_mode,
+            instructions: route.legs[0].steps[i].instructions
+          });
+        }
+        // console.log(step);
 
         self.$emit("sendRoute", route, self.activeBtn, step);
       }

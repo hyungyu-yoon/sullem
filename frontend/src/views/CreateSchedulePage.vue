@@ -36,7 +36,7 @@ export default {
         "http://tourimage.interpark.com/BBS/Tour/FckUpload/201703/discovery_20170323_6362582542356180960.jpg",
       map: null,
       events: [],
-      setStart: "2019-01-08",
+      setStart: this.$store.state.scheduleStart,
       route: {
         title: "test",
         description: "test",
@@ -196,7 +196,7 @@ export default {
           }
         ]
       },
-      head: "2019-01-08"
+      head: this.$store.state.scheduleStart
     };
   },
   methods: {

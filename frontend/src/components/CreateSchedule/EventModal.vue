@@ -67,7 +67,7 @@ export default {
       var endTime = startTime;
       endTime.setMinutes(endTime.getMinutes() + this.duration);
       var endYear = endTime.getFullYear();
-      var endMonth = "" + endTime.getMonth() + 1;
+      var endMonth = "" + (endTime.getMonth() + 1);
       var endDay = "" + endTime.getDate();
       var endHour = "" + endTime.getHours();
       var endMin = "" + endTime.getMinutes();
