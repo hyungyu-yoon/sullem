@@ -2,7 +2,7 @@
   <v-container grid-list-md>
     <v-layout wrap>
       <v-flex xs12>
-        <v-btn @click="postUpload" style="float:right" v-if="$route.params.post === undifiend">등록</v-btn>
+        <v-btn @click="postUpload" style="float:right" v-if="$route.params.post === undefined">등록</v-btn>
         <v-btn @click="updatePost" style="float:right" v-else>수정</v-btn>
       </v-flex>
       <v-flex xs12>
@@ -48,6 +48,7 @@ export default {
   data () {
     return {
       post: {
+        postNo: '',
         title: '',
         content: '',
         thumbnail: '',
@@ -60,8 +61,8 @@ export default {
     console.log(this.$store.state.Login)
     if (this.$route.params.post !== undefined) {
       this.post = this.$route.params.post
+      console.log(this.post)
     }
-    console.log(this.$route.params.post)
   },
   methods: {
     handleImageAdded: function (file, Editor, cursorLocation, resetUploader) {
@@ -97,6 +98,7 @@ export default {
       console.log(this.post.title)
       await axios
         .post('http://192.168.31.114:8399/post/uploadPost', {
+
           title: this.post.title,
           seq: this.$session.get('user')['seq'],
           name: this.$session.get('user')['name'],
@@ -116,7 +118,30 @@ export default {
         .finally(() => this.loading = false)
     },
     updatePost () {
-      alert('test')
+      axios
+        .post('http://192.168.31.114:8399/post/update', {
+          postNo: this.post.postNo,
+          title: this.post.title,
+          seq: this.$session.get('user')['seq'],
+          name: this.$session.get('user')['name'],
+          description: this.post.description,
+          thumbnail: this.post.thumbnail,
+          content: this.post.content
+        })
+        .then(response => {
+          if (response.data === 1) {
+            alert('수정이 되었습니다.')
+            router.go(-1)
+          } else {
+            alert('수정에 실패했습니다.')
+          }
+        }
+        )
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
+        .finally(() => this.loading = false)
     },
     resize () {
       if (window.innerWidth < 920 && window.innerWidth >= 538) {
