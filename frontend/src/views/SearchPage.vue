@@ -60,6 +60,8 @@
                 v-if="results"
                  :results="results"
                  :num='page'
+                 :category='category'
+                 :endpage='endpage'
                  @getPage="paging"
                 ></search-item-list>
             </v-flex>
@@ -86,7 +88,8 @@ export default {
     ],
     text: '',
     results: null,
-    page: 1
+    page: 1,
+    endpage: 1
   }),
   mounted () {
     if (this.$route.params.text === undefined && this.$route.params.category === undefined) {
@@ -99,11 +102,7 @@ export default {
       this.page = this.$route.params.page
     }
 
-    if (this.category === 0) {
-      this.getScheduleList()
-    } else if (this.category === 1) {
-      this.getPostList()
-    }
+    this.search()
   },
   methods: {
     search () {
@@ -124,14 +123,23 @@ export default {
       this.search()
     },
     getScheduleList () {
-      this.results = null
+      var query = this.text === '' ? ' ' : this.text
+      axios.get('http://192.168.31.114:8399/schedule/selectPage/' + query + '/' + this.page)
+        .then(response => {
+          this.results = response.data.list
+          this.endpage = response.data.endPage
+        }
+        )
+        .catch(function (error) {
+          console.log(error)
+        })
     },
     getPostList () {
       var query = this.text === '' ? ' ' : this.text
       axios.get('http://192.168.31.114:8399/post/selectPage/' + query + '/' + this.page)
         .then(response => {
-          this.results = response.data
-          this.results.category = this.category
+          this.results = response.data.postList
+          this.endpage = response.data.endPage
         }
         )
         .catch(function (error) {

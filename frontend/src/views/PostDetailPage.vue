@@ -13,7 +13,7 @@
         <span class="title font-weight-thin">{{post.description}}</span>
       </v-flex>
 
-      <v-flex xs12 class="text-right" v-if="this.$session.get('user')['seq'] === post.seq">
+      <v-flex xs12 class="text-right"  v-if="this.$session.get('user')['seq'] === post.seq">
         <v-btn class="font-weight-bold" color="teal accent-4" dark @click="updatePage">수정하기</v-btn>&nbsp;
         <v-btn  class="font-weight-bold" color="teal accent-4" dark @click="deletePost">삭제하기</v-btn>
       </v-flex>
@@ -58,12 +58,6 @@ export default {
         seq: ''
       },
       no: 0
-      // title: '',
-      // description: '',
-      // content: '',
-      // createDate: '',
-      // disqus_config: '',
-      // seq: ''
     }
   },
   created () {
@@ -75,11 +69,6 @@ export default {
       .then(response => {
         console.log(response.data)
         this.post = response.data
-        // this.title = response.data.title
-        // this.description = response.data.description
-        // this.content = response.data.content
-        // this.createDate = response.data.createDate
-        // this.seq = response.data.seq
       }
       )
       .catch(function (error) {

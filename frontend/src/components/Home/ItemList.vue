@@ -66,22 +66,22 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
-    } else if (this.no === '4'){
+    } else if (this.no === '4') {
       axios.get('http://192.168.31.114:8399/schedule/selectPage/ /1')
         .then(response => {
           this.results = response.data.list
-          console.log(this.results)
+          // console.log(this.results)
         }
         )
         .catch(function (error) {
           console.log(error)
         })
-    } else if (this.no === '5'){
+    } else if (this.no === '5') {
       axios.get(`//192.168.31.114:8399/post/selectBySeq/${this.$session.get('user')['seq']}`)
         .then(response => {
-          console.log(response.data)
+          // console.log(response.data)
           this.results = response.data
-          console.log(this.results)
+          // console.log(this.results)
         }
         )
         .catch(function (error) {

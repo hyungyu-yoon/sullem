@@ -1,13 +1,19 @@
 <template>
   <v-layout wrap>
     <v-flex
-      v-for="(result,i) in results.postList"
+      v-for="(result,i) in results"
       :key="i"
       xs12 sm6 md4
       pa-1
     >
-      <schedule-card v-if="results.category == 0"></schedule-card>
-      <post-card v-if="results.category == 1"
+      <schedule-card v-if="category == 0"
+        :no="result.scdNo"
+        :name="result.name"
+        :title="result.title"
+        :country="result.country"
+        :description="result.description"
+      ></schedule-card>
+      <post-card v-if="category == 1"
         :no="result.postNo"
         :name="result.name"
         :title="result.title"
@@ -19,9 +25,9 @@
     <v-flex xs12>
       <div class="text-center">
     <v-pagination
-      v-if="results.postList.length != 0"
+      v-if="results.length != 0"
       v-model="page"
-      :length="results.endPage"
+      :length="endpage"
       color="teal accent-4"
       prev-icon="fa-angle-left"
       next-icon="fa-angle-right"
@@ -42,8 +48,10 @@ export default {
     PostCard
   },
   props: {
-    results: { type: Object },
-    num: { type: Number }
+    results: { type: Array },
+    num: { type: Number },
+    category: { type: Number },
+    endpage: { type: Number }
   },
   created () {
     this.page = this.num
