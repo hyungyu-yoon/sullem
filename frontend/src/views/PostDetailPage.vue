@@ -81,7 +81,7 @@ export default {
       })
 
     this.disqus_config = function () {
-      this.page.url = 'http://localhost:8080/post/' + this.no // Replace PAGE_URL with your page's canonical URL variable
+      this.page.url = 'http://192.168.31.129:8080/post/' + this.no // Replace PAGE_URL with your page's canonical URL variable
       this.page.identifier = this.no // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     }
 
