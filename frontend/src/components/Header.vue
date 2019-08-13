@@ -28,16 +28,16 @@
         >로그인</v-btn>
         <v-btn
           class="font-weight-black"
-          v-if="this.$store.state.user !=null"
-          @click="logout"
-          text
-        >로그아웃</v-btn>
-        <v-btn
-          class="font-weight-black"
           @click="mypage"
           v-if="this.$store.state.user !=null"
           text
         >마이 페이지</v-btn>
+        <v-btn
+          class="font-weight-black"
+          v-if="this.$store.state.user !=null"
+          @click="logout"
+          text
+        >로그아웃</v-btn>
         <!-- <v-btn class="font-weight-black" @click="jsonTest" text>Json</v-btn> -->
       </v-toolbar-items>
     </v-app-bar>
