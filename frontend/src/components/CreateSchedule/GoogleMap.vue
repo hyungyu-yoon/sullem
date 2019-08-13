@@ -21,7 +21,8 @@ export default {
       infoWindow: null,
       directionsService: null,
       directionsDisplay: null,
-      markers: []
+      markers: [],
+      polylines: []
     };
   },
   methods: {
@@ -46,24 +47,6 @@ export default {
           : "Error: Your browser doesn't support geolocation."
       );
       infoWindow.open(this.map);
-    },
-    displayRoute(directionsService, directionsDisplay) {
-      directionsService.route(
-        {
-          origin: "Jeju+International+Airport",
-          destination: "Hyupjae+Beach",
-          travelMode: "TRANSIT",
-          provideRouteAlternatives: true
-        },
-        function(response, status) {
-          if (status === "OK") {
-            console.log(response);
-            directionsDisplay.setDirections(response);
-          } else {
-            window.alert("Directions request failed due to " + status);
-          }
-        }
-      );
     },
     addMarker() {
       var index = 1;
@@ -126,9 +109,19 @@ export default {
             fillOpacity: 1,
             map: this.map
           });
+          this.polylines.push(polyline)
           polyline.setMap(this.map);
         }
       }
+    },
+    deleteRoute() {
+      if (this.polylines.length > 0) {
+        for (var i = 0; i < this.polylines.length; ++i) {
+          this.polylines[i].setMap(null)
+        }
+        this.polylines = []
+      }
+
     }
   },
   mounted() {
@@ -139,6 +132,7 @@ export default {
   watch: {
     mapEvents: function() {
       this.deleteMarker();
+      this.deleteRoute()
       this.addMarker();
       this.drawRoute();
     }
