@@ -55,81 +55,125 @@ export default {
   },
   methods: {
     addEvents() {
-      var startTime = new Date(
-        this.head +
+      if (this.selectedHour == null || this.selectedMin == null) {
+        alert("입력정보를 확인하세요.");
+      } else {
+        var startTime = new Date(
+          this.head +
+            " " +
+            this.selectedHour +
+            ":" +
+            this.selectedMin +
+            ":" +
+            "00"
+        );
+        var endTime = startTime;
+        endTime.setMinutes(endTime.getMinutes() + this.duration);
+        var endYear = endTime.getFullYear();
+        var endMonth = "" + (endTime.getMonth() + 1);
+        var endDay = "" + endTime.getDate();
+        var endHour = "" + endTime.getHours();
+        var endMin = "" + endTime.getMinutes();
+        if (endMonth.length < 2) endMonth = "0" + endMonth;
+        if (endDay.length < 2) endDay = "0" + endDay;
+        if (endHour.length < 2) endHour = "0" + endHour;
+        if (endMin.length < 2) endMin = "0" + endMin;
+        endTime =
+          endYear +
+          "-" +
+          endMonth +
+          "-" +
+          endDay +
           " " +
-          this.selectedHour +
+          endHour +
           ":" +
-          this.selectedMin +
-          ":" +
-          "00"
-      );
-      var endTime = startTime;
-      endTime.setMinutes(endTime.getMinutes() + this.duration);
-      var endYear = endTime.getFullYear();
-      var endMonth = "" + (endTime.getMonth() + 1);
-      var endDay = "" + endTime.getDate();
-      var endHour = "" + endTime.getHours();
-      var endMin = "" + endTime.getMinutes();
-      if (endMonth.length < 2) endMonth = "0" + endMonth;
-      if (endDay.length < 2) endDay = "0" + endDay;
-      if (endHour.length < 2) endHour = "0" + endHour;
-      if (endMin.length < 2) endMin = "0" + endMin;
-      endTime =
-        endYear + "-" + endMonth + "-" + endDay + " " + endHour + ":" + endMin;
-      startTime = this.head + " " + this.selectedHour + ":" + this.selectedMin;
+          endMin;
+        startTime =
+          this.head + " " + this.selectedHour + ":" + this.selectedMin;
 
-      var newEvent = {
-        name: this.SpecificLocation.name,
-        details: "없음.",
-        start: startTime,
-        end: endTime,
-        color: "#80CBC4",
-        latlng: {
-          lat: this.SpecificLocation.geometry.location.lat(),
-          lng: this.SpecificLocation.geometry.location.lng()
-        },
-        imageUrl: this.SpecificLocation.photos[0].getUrl(),
-        category: this.SpecificLocation.types,
-        rating: this.SpecificLocation.rating,
-        address: this.SpecificLocation.formatted_address,
+        var newEvent = {
+          name: this.SpecificLocation.name,
+          details: "없음.",
+          start: startTime,
+          end: endTime,
+          color: "#80CBC4",
+          latlng: {
+            lat: this.SpecificLocation.geometry.location.lat(),
+            lng: this.SpecificLocation.geometry.location.lng()
+          },
+          imageUrl: this.SpecificLocation.photos[0].getUrl(),
+          category: this.SpecificLocation.types,
+          rating: this.SpecificLocation.rating,
+          address: this.SpecificLocation.formatted_address,
 
-        type: "location"
-      };
-      this.$emit("setCenter", newEvent.latlng);
+          type: "location"
+        };
 
-      var i;
-      for (i = 0; i < this.events.length; ++i) {
-        if (this.events[i].start > newEvent.start) {
-          break;
+        var i;
+        for (i = 0; i < this.events.length; ++i) {
+          if (this.events[i].start > newEvent.start) {
+            break;
+          }
         }
-      }
-      // To do
-      // 1. 새로운 이벤트의 출발시간이 이전 이벤트의 끝나는 시간과 같을 경우 중간 경로 아예 삭제
-      // 2. 새로운 이벤트의 끝나는 시간이 이후 이벤트의 시작 시간과 같을 경우 중간 경로 아예 삭제
-      // 3. 상자 크기 이쁘게
-      // 4. 상자 보더 관리하기.
-      this.events.splice(i, 0, newEvent);
-      if (i > 0) {
-        if (this.events[i - 1].type == "route") {
-          this.events[i - 1].end = this.events[i].start;
-          this.events[i - 1].overview_path = null;
-          this.events[i - 1].destination = this.events[i].latlng;
-        } else {
-          this.addRoute(i++);
+        if (i > 0 && i < this.events.length) {
+          if (
+            (this.events[i - 1].end > newEvent.start &&
+              this.events[i - 1].type == "location") ||
+            (this.events[i].start < newEvent.end &&
+              this.events[i].type == "location")
+          ) {
+            alert("입력한 시간 내에 이미 다른 스케줄이 존재합니다.");
+            return;
+          }
+        } else if (i == 0 && this.events.length > 0) {
+          if (
+            this.events[i].start < newEvent.end &&
+            this.events[i].type == "location"
+          ) {
+            alert("입력한 시간 내에 이미 다른 스케줄이 존재합니다.");
+            return;
+          }
+        } else if (i == this.events.length && this.events.length > 0) {
+          if (
+            this.events[i - 1].end > newEvent.start &&
+            this.events[i - 1].type == "location"
+          ) {
+            alert("입력한 시간 내에 이미 다른 스케줄이 존재합니다.");
+            return;
+          }
         }
-      }
 
-      if (i + 1 < this.events.length) {
-        if (this.events[i + 1].type == "route") {
-          this.events[i + 1].start = this.events[i].end;
-          this.events[i + 1].overview_path = null;
-          this.events[i + 1].origin = this.events[i].latlng;
-        } else {
-          this.addRoute(i + 1);
+        // if (i != 0 && this.events[i].start == newEvent.start) {
+        //   alert("동일한 시간대에 스케줄이 존재합니다.");
+        // }
+        this.$emit("setCenter", newEvent.latlng);
+        // To do
+        // 1. 새로운 이벤트의 출발시간이 이전 이벤트의 끝나는 시간과 같을 경우 중간 경로 아예 삭제
+        // 2. 새로운 이벤트의 끝나는 시간이 이후 이벤트의 시작 시간과 같을 경우 중간 경로 아예 삭제
+        // 3. 상자 크기 이쁘게
+        // 4. 상자 보더 관리하기.
+        this.events.splice(i, 0, newEvent);
+        if (i > 0) {
+          if (this.events[i - 1].type == "route") {
+            this.events[i - 1].end = this.events[i].start;
+            this.events[i - 1].overview_path = null;
+            this.events[i - 1].destination = this.events[i].latlng;
+          } else {
+            this.addRoute(i++);
+          }
         }
+
+        if (i + 1 < this.events.length) {
+          if (this.events[i + 1].type == "route") {
+            this.events[i + 1].start = this.events[i].end;
+            this.events[i + 1].overview_path = null;
+            this.events[i + 1].origin = this.events[i].latlng;
+          } else {
+            this.addRoute(i + 1);
+          }
+        }
+        this.resetEvents();
       }
-      this.resetEvents();
     },
     resetEvents() {
       this.dialog = false;
