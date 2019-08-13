@@ -212,6 +212,11 @@ export default {
       this.head = value;
     },
     save: function() {
+      var imageIdx = Math.floor(Math.random() * this.events.length);
+      imageIdx += imageIdx % 2 == 0 ? 0 : 1;
+
+      this.coverimageUrl = this.events[imageIdx].imageUrl;
+
       var route = {
         title: this.title,
         description: this.description,
