@@ -24,45 +24,57 @@
         <v-flex xs12 md9>
           <v-layout wrap>
 
-            <v-flex xs12 v-for="(event,i) in events" :key=i>
-              <v-flex ma-1 xs12>
-                <span class="title font-weight-bold" ma-2>
-                  <v-icon>fa-calendar-day</v-icon>&nbsp;Day {{i+1}}
-                </span>
-                <span class="subtitle-2 grey--text">{{event[0].start.substring(0,10)}}</span>
+            <v-tabs icons-and-text>
+              <v-tab @click="switchone" style="margin: auto;">tab 1 <i class="material-icons">date_range</i></v-tab>
+              <v-tab @click="switchtwo" style="margin: auto;">tab 2 <i class="material-icons">map</i></v-tab>
+            </v-tabs>
+            
+            <template v-if="this.tab">
+              <v-flex xs12 v-for="(event,i) in events" :key=i>
+                <v-flex ma-1 xs12>
+                  <span class="title font-weight-bold" ma-2>
+                    <v-icon>fa-calendar-day</v-icon>&nbsp;Day {{i+1}}
+                  </span>
+                  <span class="subtitle-2 grey--text">{{event[0].start.substring(0,10)}}</span>
+                </v-flex>
+                <v-sheet elevation="5">
+                  <v-timeline align-top dense>
+                    <v-timeline-item
+                      v-for="(data, i) in event"
+                      v-if="data.type === 'location'"
+                      :key="i"
+                      :color="getColor(data.category)"
+                      :icon="getIcon(data.category)"
+                      fill-dot
+                    >
+                      <v-card class="elevation-2" width="95%">
+                        <v-layout pa-3 wrap>
+                          <v-flex xs12>
+                            <v-icon>fa-clock</v-icon>&nbsp;
+                            <span>{{data.start.substring(11)}} ~ {{data.end.substring(11)}}</span>
+                          </v-flex>
+                          <v-flex xs12 sm6>
+                            <v-card elevation="3">
+                              <v-img height="200" :src="data.imageUrl"></v-img>
+                            </v-card>
+                          </v-flex>
+                          <v-flex xs12 sm6>
+                            <v-card-title class="font-weight-bold">{{data.name}}</v-card-title>
+                            <v-card-text>{{data.address}}</v-card-text>
+                          </v-flex>
+                        </v-layout>
+                      </v-card>
+                    </v-timeline-item>
+                  </v-timeline>
+                </v-sheet>
               </v-flex>
-              <v-sheet elevation="5">
-                <v-timeline align-top dense>
-                  <v-timeline-item
-                    v-for="(data, i) in event"
-                    v-if="data.type === 'location'"
-                    :key="i"
-                    :color="getColor(data.category)"
-                    :icon="getIcon(data.category)"
-                    fill-dot
-                  >
-                    <v-card class="elevation-2" width="95%">
-                      <v-layout pa-3 wrap>
-                        <v-flex xs12>
-                          <v-icon>fa-clock</v-icon>&nbsp;
-                          <span>{{data.start.substring(11)}} ~ {{data.end.substring(11)}}</span>
-                        </v-flex>
-                        <v-flex xs12 sm6>
-                          <v-card elevation="3">
-                            <v-img height="200" :src="data.imageUrl"></v-img>
-                          </v-card>
-                        </v-flex>
-                        <v-flex xs12 sm6>
-                          <v-card-title class="font-weight-bold">{{data.name}}</v-card-title>
-                          <v-card-text>{{data.address}}</v-card-text>
-                        </v-flex>
-                      </v-layout>
+            </template>
 
-                    </v-card>
-                  </v-timeline-item>
-                </v-timeline>
-              </v-sheet>
-            </v-flex>
+            <!-- tab2 부분 -->
+            <template v-if="!this.tab">
+
+            </template>
+            <!--  -->
 
           </v-layout>
         </v-flex>
@@ -77,7 +89,8 @@ export default {
   data: () => ({
     no: '',
     events: [],
-    results: ''
+    results: '',
+    tab: true
   }),
   created () {
     this.no = this.$route.params.no
@@ -125,7 +138,21 @@ export default {
       } else {
         return 'teal accent-4'
       }
-    }
+    },
+    switchone () {
+      this.tab = true
+    },
+
+    switchtwo () {
+      this.tab = false
+    },
   }
 }
 </script>
+
+<style>
+.v-tabs-slider-wrapper {
+  /* width: 30% !important; */
+}
+
+</style>

@@ -13,9 +13,13 @@
     </v-img>
 
     <v-container>
-      <v-tabs>
-        <v-tab @click="switchpost">내 포스트</v-tab>
-        <v-tab @click="switchsche">내 스케줄</v-tab>
+      <v-tabs icons-and-text>
+        <v-tab style="margin: auto;" @click="switchpost">내 포스트
+          <i class="material-icons">local_see</i>
+        </v-tab>
+        <v-tab style="margin: auto;" @click="switchsche">내 스케줄 
+          <i class="material-icons">event</i>
+        </v-tab>
       </v-tabs>
       <v-card v-if="this.tab">
           <v-card-title>
