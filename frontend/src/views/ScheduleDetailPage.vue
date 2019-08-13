@@ -24,8 +24,8 @@
         <v-flex xs12 md9>
           <v-layout wrap>
             <v-tabs centered grow icons-and-text>
-              <v-tab @click="switchone" style="margin: auto;">tab 1 <i class="material-icons">date_range</i></v-tab>
-              <v-tab @click="switchtwo" style="margin: auto;">tab 2 <i class="material-icons">map</i></v-tab>
+              <v-tab @click="switchone" style="margin: auto;">tab 1 <v-icon>fa-calendar-alt</v-icon></v-tab>
+              <v-tab @click="switchtwo" style="margin: auto;">tab 2 <v-icon>fa-map-marked-alt</v-icon></v-tab>
             </v-tabs>
 
             <template v-if="this.tab">

@@ -29,18 +29,21 @@
               <span>음식점</span>
             </v-tooltip>&nbsp;
           </v-flex>
-          <v-flex xs0 sm2></v-flex>
-          <v-flex xs12 sm4>
-            <v-text-field
-              solo
-              label="지역 입력"
-              prepend-inner-icon="fa-globe"
-              color="rgb(29, 233, 182)"
-              id="location"
-              placeholder
-            ></v-text-field>
-          </v-flex>
-          <v-flex xs12 sm4>
+
+            <v-flex xs8 offset-2>
+              <v-text-field
+                solo
+                label="지역 입력"
+                prepend-inner-icon="fa-globe"
+                color="rgb(29, 233, 182)"
+                id="location"
+                placeholder
+              ></v-text-field>
+            </v-flex>
+        </v-layout>
+
+        <v-divider></v-divider>
+        <v-flex style="margin-top:10px;" xs8 offset-2>
             <v-text-field
               solo
               label="장소 입력"
@@ -49,10 +52,7 @@
               id="place"
               placeholder
             ></v-text-field>
-          </v-flex>
-          <v-flex xs0 sm2></v-flex>
-        </v-layout>
-        <v-divider></v-divider>
+        </v-flex>
       </v-container>
       <v-slide-group
         v-model="model"
