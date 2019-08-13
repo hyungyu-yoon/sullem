@@ -14,6 +14,7 @@ public interface ScheduleMapper {
 	public int update(ScheduleDTO s);
 	public List<ScheduleDTO> selectAll();
 	public ScheduleDTO selectByScdNo(int scdNo);
+	public List<ScheduleDTO> selectBySeq(int seq);
 	public List<ScheduleDTO> selectByViewsTop(int per);
 	public List<ScheduleDTO> selectByKeyword(String keyword);
 	public List<ScheduleDTO> pageList(@Param("keyword")String keyword, @Param("startCol")int startCol, @Param("count")int count);

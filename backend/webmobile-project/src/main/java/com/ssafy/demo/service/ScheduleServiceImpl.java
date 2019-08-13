@@ -35,7 +35,6 @@ public class ScheduleServiceImpl implements ScheduleService{
 		schedule.setCountry(json.get("country").toString());
 		schedule.setStartDate(json.get("startDate").toString());
 		schedule.setDescription(json.get("description").toString());
-		schedule.setStartDate(json.get("startDate").toString());
 		schedule.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		schedule.setEvents(json.get("events").toString());
 		
@@ -56,7 +55,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 		schedule.setStartDate(json.get("startDate").toString());
 		schedule.setDescription(json.get("description").toString());
 		schedule.setTitle(json.get("title").toString());
-		schedule.setStartDate(json.get("startDate").toString());
+		schedule.setCreateTime(json.get("createTime").toString());
 		schedule.setUpdateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		schedule.setEvents(json.get("events").toString());
 		
@@ -127,6 +126,11 @@ public class ScheduleServiceImpl implements ScheduleService{
 	@Override
 	public int increaseViewsByScdNo(int scdNo) {
 		return repo.increaseViewsByScdNo(scdNo);
+	}
+
+	@Override
+	public List<ScheduleDTO> selectBySeq(int seq) {
+		return repo.selectBySeq(seq);
 	}
 
 	

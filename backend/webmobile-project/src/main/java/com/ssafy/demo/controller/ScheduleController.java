@@ -39,6 +39,7 @@ public class ScheduleController {
 	
 	@PostMapping("update")
 	public int update(@RequestBody String body) {
+		
 		return service.update(body);
 	}
 	
@@ -60,6 +61,14 @@ public class ScheduleController {
 	public ScheduleDTO selectByScdNo(@PathVariable int scdNo) {
 		service.increaseViewsByScdNo(scdNo);
 		return service.selectByScdNo(scdNo);
+	}
+	
+	@GetMapping("selectBySeq/{seq}")
+	public List<ScheduleDTO> selectBySeq(@PathVariable int seq){
+		System.out.println(seq);
+		List<ScheduleDTO> selectBySeqList = service.selectBySeq(seq);
+		System.out.println(selectBySeqList.toString());
+		return selectBySeqList;
 	}
 	
 	@GetMapping("selectPage/{keyword}/{p}")

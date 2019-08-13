@@ -32,6 +32,9 @@
 		delete from schedule where scdNo=#{scdNo}
 	</delete>
 	
+	<select id="selectBySeq" resultType="ScheduleDTO">
+		select * from schedule where seq=#{seq}
+	</select>
 	
 	<select id="selectByKeyword" resultType="ScheduleDTO">
 		select 
