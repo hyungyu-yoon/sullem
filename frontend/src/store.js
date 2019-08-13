@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
@@ -10,14 +10,12 @@ export default new Vuex.Store({
     FindPassword: false,
     user: null,
     AdminNav: false,
-    page: '',
-    category: '',
-    text: ''
+    page: "",
+    category: "",
+    text: "",
+    scheduleTitle: "",
+    scheduleStart: null
   },
-  mutations: {
-
-  },
-  actions: {
-
-  }
-})
+  mutations: {},
+  actions: {}
+});
