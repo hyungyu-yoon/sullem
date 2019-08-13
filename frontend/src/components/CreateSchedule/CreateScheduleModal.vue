@@ -65,10 +65,15 @@ export default {
       this.$emit("closeCreateScheduleModal");
     },
     save() {
-      this.$store.state.scheduleStart = this.startDate;
-      this.$store.state.scheduleTitle = this.title;
-      this.$emit("createNewSchedule");
-    }
+      if (this.title != "" && this.description != "" && this.startDate != "") {
+        this.$store.state.scheduleStart = this.startDate;
+        this.$store.state.scheduleTitle = this.title;
+        this.$emit("createNewSchedule");
+        
+      } else {
+        alert('입력정보를 확인하세요.')
+      }
+    },
   }
 };
 </script>

@@ -258,6 +258,7 @@ export default {
       { text: 'Actions', value: 'action', sortable: false },
     ],
     sheaders: [
+      { text: 'seq', value: 'seq'},
       { text: 'scdNo', value: 'scdNo' },
       { text: 'Title', value: 'title' },
       { text: 'Name', value: 'name' },
@@ -356,7 +357,7 @@ export default {
     switchsche () {
       axios({
         method: 'get',
-        url: '//192.168.31.114:8399/schedule/selectAll/'
+        url: `//192.168.31.114:8399/schedule/selectBySeq/${this.$session.get('user')['seq']}`
       })
         .then(response => {
         //   console.log(response['data'])
@@ -386,6 +387,7 @@ export default {
     },
 
     seditItem (item) {
+      this.schedule.seq = item['seq']
       this.schedule.createDate = item['createDate']
       this.schedule.name = item['name']
       this.schedule.likes = item['likes']

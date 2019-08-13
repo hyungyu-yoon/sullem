@@ -15,7 +15,7 @@
       <v-spacer></v-spacer>
       <v-toolbar-title v-if="this.$store.state.user !=null">{{ this.$store.state.user.name}}님</v-toolbar-title>
       <v-toolbar-items>
-        <v-btn text class="font-weight-black" @click="showCreateSchedule">
+        <v-btn v-if="this.$store.state.user !=null" text class="font-weight-black" @click="showCreateSchedule">
           새로운
           <br />여행일정
         </v-btn>
@@ -82,7 +82,11 @@ export default {
       this.$store.state.Login = true;
     },
     showCreateSchedule() {
-      this.isOpenCreateSchedule = true;
+      if (this.$store.state.user !=null) {
+        this.isOpenCreateSchedule = true;
+      } else {
+        alert('로그인 해야 이용가능합니다.')
+      }
     },
     createNewSchedule(title, startDate) {
       this.isOpenCreateSchedule = false;
