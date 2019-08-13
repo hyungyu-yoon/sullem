@@ -31,8 +31,7 @@ export default {
   data () {
     return {
       user: {
-        email: null,
-        phone: null
+        email: null
       }
     }
   },
@@ -52,7 +51,8 @@ export default {
           console.log(error)
           this.errored = true
         })
-        .finally(() => this.loading = false)
+        .finally(() => this.loading = true)
+      this.user.email = null
     }
   }
 }
