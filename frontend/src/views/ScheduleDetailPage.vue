@@ -15,10 +15,16 @@
     <v-container grid-list-md>
       <v-layout wrap>
         <v-flex md3 class="hidden-sm-and-down">
-          <v-card color="teal accent-4" dark height="250">
+          <v-card color="teal accent-4" dark>
             <v-card-title primary class="title">{{results.name}}</v-card-title>
             <v-card-text>{{results.createTime.substring(0,16)}}</v-card-text>
             <v-card-text class="title">{{ results.description }}</v-card-text>
+            <v-card-actions>
+              <v-btn @click="$router.go(-1)" color="grey lighten-3" light>목록</v-btn>
+              <v-btn v-if="seq === results.seq" @click="updatePage" color="grey lighten-3" light>수정</v-btn>
+              <v-btn v-if="seq === results.seq"  @click="deleteSchedule" color="grey lighten-3" light>삭제</v-btn>
+
+            </v-card-actions>
           </v-card>
         </v-flex>
         <v-flex xs12 md9>
@@ -93,6 +99,16 @@
                 <TimeTable :events="events[0]" :startDay="events[0][0].start.substring(0,10)" />
               </v-flex>
             </template>
+
+            <v-flex xs12 mt-2>
+        <v-sheet elevation="5">
+           <v-layout>
+            <v-flex xs12 ma-5>
+           <div id="disqus_thread"></div>
+          </v-flex>
+          </v-layout>
+        </v-sheet>
+      </v-flex>
             <!--  -->
           </v-layout>
         </v-flex>
@@ -102,76 +118,112 @@
 </template>
 
 <script>
-import axios from "axios";
-import DetailMap from "../components/ScheduleDetail/DetailMap.vue";
-import TimeTable from "../components/CreateSchedule/TimeTable.vue";
+import axios from 'axios'
+import DetailMap from '../components/ScheduleDetail/DetailMap.vue'
+import TimeTable from '../components/CreateSchedule/TimeTable.vue'
 export default {
   components: {
     DetailMap,
     TimeTable
   },
   data: () => ({
-    no: "",
+    no: '',
     events: [],
-    results: "",
-    tab: true
+    results: '',
+    tab: true,
+    seq: ''
   }),
-  created() {
-    this.no = this.$route.params.no;
+  created () {
+    if (this.$session.get('user') !== undefined) {
+      this.seq = this.$session.get('user')['seq']
+    }
+    this.no = this.$route.params.no
     axios
-      .get("http://192.168.31.114:8399/schedule/selectByNo/" + this.no)
+      .get('http://192.168.31.114:8399/schedule/selectByNo/' + this.no)
       .then(response => {
-        var data = JSON.parse(response.data.events);
-        var date = "";
-        var count = -1;
-        var results = [];
+        var data = JSON.parse(response.data.events)
+        var date = ''
+        var count = -1
+        var results = []
         for (let i = 0; i < data.length; i++) {
           if (date !== data[i].start.substring(0, 10)) {
-            count++;
-            results.push([]);
-            date = data[i].start.substring(0, 10);
-            results[count].push(data[i]);
+            count++
+            results.push([])
+            date = data[i].start.substring(0, 10)
+            results[count].push(data[i])
           } else {
-            results[count].push(data[i]);
+            results[count].push(data[i])
           }
         }
-        this.events = results;
+        this.events = results
 
-        this.results = response.data;
-        console.log(this.results);
+        this.results = response.data
+        console.log(this.results)
       })
-      .catch(function(error) {
-        console.log(error);
-      });
+      .catch(function (error) {
+        console.log(error)
+      })
+
+    this.disqus_config = function () {
+      this.page.url = 'http://localhost:8080/schedule/' + this.no // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = this.no // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    }
+
+    let recaptchaScript = document.createElement('script')
+    recaptchaScript.setAttribute(
+      'src',
+      'https://happyhacking-1.disqus.com/embed.js'
+    )
+    document.head.appendChild(recaptchaScript)
   },
   methods: {
-    getIcon(category) {
-      if (category[0] === "lodging") {
-        return "fa-bed";
-      } else if (category[0] === "restaurant") {
-        return "fa-utensils";
+    getIcon (category) {
+      if (category[0] === 'lodging') {
+        return 'fa-bed'
+      } else if (category[0] === 'restaurant') {
+        return 'fa-utensils'
       } else {
-        return "fa-camera";
+        return 'fa-camera'
       }
     },
-    getColor(category) {
-      if (category[0] === "lodging") {
-        return "red";
-      } else if (category[0] === "restaurant") {
-        return "yellow lighten-3";
+    getColor (category) {
+      if (category[0] === 'lodging') {
+        return 'red'
+      } else if (category[0] === 'restaurant') {
+        return 'yellow lighten-3'
       } else {
-        return "teal accent-4";
+        return 'teal accent-4'
       }
     },
-    switchone() {
-      this.tab = true;
+    switchone () {
+      this.tab = true
     },
 
-    switchtwo() {
-      this.tab = false;
+    switchtwo () {
+      this.tab = false
+    },
+    deleteSchedule () {
+      if (confirm('일정을 정말로 삭제하시겠습니까?')) {
+        axios.delete('http://192.168.31.114:8399/schedule/delete/' + this.no)
+          .then(response => {
+            console.log(response.data)
+            if (response.data === 1) {
+              this.$router.go(-1)
+            } else {
+              alert('삭제에 실패했습니다.')
+            }
+          }
+          )
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
+    },
+    updatePage () {
+
     }
   }
-};
+}
 </script>
 
 <style>

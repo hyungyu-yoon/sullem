@@ -24,10 +24,9 @@
           >관리자 페이지</v-btn>
         </template>
         <v-btn v-if="this.$store.state.user !=null" text class="font-weight-black" @click="showCreateSchedule">
-          새로운
-          <br />여행일정
+          일정등록
         </v-btn>
-        <v-btn v-if="this.$store.state.user !=null" text class="font-weight-black" @click="$router.push({name:'postWriter'})">새로운 <br/>여행후기</v-btn>
+        <v-btn v-if="this.$store.state.user !=null" text class="font-weight-black" @click="$router.push({name:'postWriter'})">후기등록</v-btn>
         <v-btn
           class="font-weight-black"
           v-if="this.$store.state.user == null"
@@ -39,7 +38,7 @@
           @click="mypage"
           v-if="this.$store.state.user !=null"
           text
-        >마이 페이지</v-btn>
+        >MyPage</v-btn>
         <v-btn
           class="font-weight-black"
           v-if="this.$store.state.user !=null"
@@ -84,12 +83,17 @@
         </v-list-item>
         <v-list-item  v-if="this.$store.state.user !=null" @click="showCreateSchedule" >
           <v-list-item-content>
-            <v-list-item-title>새로운 여행일정</v-list-item-title>
+            <v-list-item-title>일정등록</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item v-if="this.$store.state.user !=null" @click="$router.push({name:'postWriter'})">
           <v-list-item-content>
-            <v-list-item-title>새로운 여행후기</v-list-item-title>
+            <v-list-item-title>후기등록</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="this.$store.state.user !=null" @click="mypage">
+          <v-list-item-content>
+            <v-list-item-title>MyPage</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
