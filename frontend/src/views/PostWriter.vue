@@ -2,7 +2,8 @@
   <v-container grid-list-md>
     <v-layout wrap>
       <v-flex xs12>
-        <v-btn @click="postUpload" style="float:right">등록</v-btn>
+        <v-btn @click="postUpload" style="float:right" v-if="$route.params.post === undifiend">등록</v-btn>
+        <v-btn @click="updatePost" style="float:right" v-else>수정</v-btn>
       </v-flex>
       <v-flex xs12>
         <v-sheet elevation="3" height="745px" v-resize="resize">
@@ -24,7 +25,7 @@
           ></v-text-field>
           </v-flex>
           <v-flex xs12>
-          <vue-editor id="editor" :style="{height: height}" useCustomImageHandler @imageAdded="handleImageAdded" v-model="post.editorData"> </vue-editor>
+          <vue-editor id="editor" :style="{height: height}" useCustomImageHandler @imageAdded="handleImageAdded" v-model="post.content"> </vue-editor>
 
           </v-flex>
         </v-layout>
@@ -48,14 +49,19 @@ export default {
     return {
       post: {
         title: '',
-        editorData: '',
+        content: '',
         thumbnail: '',
         description: ''
       },
       height: '510px'
     }
   },
-
+  mounted () {
+    if (this.$route.params.post !== undefined) {
+      this.post = this.$route.params.post
+    }
+    console.log(this.$route.params.post)
+  },
   methods: {
     handleImageAdded: function (file, Editor, cursorLocation, resetUploader) {
       // An example of using FormData
@@ -95,7 +101,7 @@ export default {
           name: this.$session.get('user')['name'],
           description: this.post.description,
           thumbnail: this.post.thumbnail,
-          content: this.post.editorData
+          content: this.post.content
         })
         .then(response => (
           console.log(response),
@@ -107,6 +113,9 @@ export default {
           this.errored = true
         })
         .finally(() => this.loading = false)
+    },
+    updatePost () {
+      alert('test')
     },
     resize () {
       if (window.innerWidth < 920 && window.innerWidth >= 538) {
