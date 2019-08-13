@@ -8,9 +8,12 @@
             @click="$router.push({name:'home'})"
           >Sullem</span>
         </a>
-        <span
-          class="font-weight-bold subtitle-1 teal--text text--accent-4 hidden-xs-only"
-        >설렘이 함께하는 당신의 여행</span>
+        <a>
+          <span
+            class="font-weight-bold subtitle-1 teal--text text--accent-4 hidden-xs-only"
+            @click="$router.push({name:'home'})"
+          >설렘이 함께하는 당신의 여행</span>
+        </a>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-title v-if="this.$store.state.user !=null">{{ this.$store.state.user.name}}님</v-toolbar-title>
