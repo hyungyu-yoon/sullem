@@ -13,6 +13,7 @@
     "@vue/cli": "^3.9.3",
     "axios": "^0.19.0",
     "core-js": "^2.6.5",
+    "material-design-icons": "^3.0.1",
     "vue": "^2.6.10",
     "vue-canvasvideo": "^1.0.0",
     "vue-router": "^3.0.3",

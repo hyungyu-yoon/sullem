@@ -52,7 +52,11 @@ public class PostController {
 		return service.insert(post);
 	}
 	
-	
+	@PostMapping("update")
+	public int update(@RequestBody PostDTO post) {
+		System.out.println("update");
+		return service.update(post);
+	}
 	@GetMapping("selectPage/{title}/{p}")
 	public PostPageDTO selectPage(@PathVariable String p,@PathVariable String title){
 		PostPageDTO pp = service.makePagePost(title,p,6);

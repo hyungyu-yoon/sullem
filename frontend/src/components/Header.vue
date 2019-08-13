@@ -19,7 +19,7 @@
           새로운
           <br />여행일정
         </v-btn>
-        <v-btn text class="font-weight-black" @click="$router.push({name:'postWriter'})">여행후기</v-btn>
+        <v-btn v-if="this.$store.state.user !=null" text class="font-weight-black" @click="$router.push({name:'postWriter'})">새로운 <br/>여행후기</v-btn>
         <v-btn
           class="font-weight-black"
           v-if="this.$store.state.user == null"
@@ -97,7 +97,8 @@ export default {
       alert('logout')
       this.$session.destroy()
       this.$store.state.user = null
-      this.$router.push('/home')
+      // this.$router.push('/home')
+      this.$router.go(0)
     },
     jsonTest () {
       console.log(this.data)

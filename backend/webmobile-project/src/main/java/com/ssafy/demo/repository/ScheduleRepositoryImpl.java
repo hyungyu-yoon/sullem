@@ -1,5 +1,6 @@
 package com.ssafy.demo.repository;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -84,6 +85,18 @@ public class ScheduleRepositoryImpl implements ScheduleRepository{
 	public int increaseViewsByScdNo(int scdNo) {
 		ScheduleMapper mapper = template.getMapper(ScheduleMapper.class);
 		return mapper.increaseViewsByScdNo(scdNo);
+	}
+
+
+	@Override
+	public List<ScheduleDTO> selectBySeq(int seq) {
+		ScheduleMapper mapper = template.getMapper(ScheduleMapper.class);
+		try {
+			return mapper.selectBySeq(seq);
+		}catch(Exception e) {
+			return new LinkedList();
+		}
+		
 	}
 	
 	

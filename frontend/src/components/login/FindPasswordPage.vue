@@ -11,9 +11,6 @@
                 <v-flex xs12>
                   <v-text-field v-model="user.email" label="Email*" required></v-text-field>
                 </v-flex>
-                <v-flex xs12>
-                  <v-text-field v-model="user.phone" label="phone(010-0000-0000)*" required></v-text-field>
-                </v-flex>
               </v-layout>
             </v-container>
             <small>*indicates required field</small>

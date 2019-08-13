@@ -96,4 +96,9 @@ public class PostServiceImpl implements PostService{
 	public List<PostDTO> selectBySeq(int seq) {
 		return repo.selectBySeq(seq);
 	}
+
+	@Override
+	public int update(PostDTO post) {
+		return repo.update(post);
+	}
 }

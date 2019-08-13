@@ -61,11 +61,13 @@ export default {
     async login () {
       var user = await this.loginWithEmail()
       // console.log(user)
-      if (user != null && user.data != '') {
+      if (user !== null && user.data !== '') {
         this.$store.state.user = user.data
         this.$session.start()
         this.$session.set('user', this.$store.state.user)
+        this.$session.set('seq', user.data.seq)
         alert(this.$session.get('user').name + '님 로그인에 성공하셨습니다.')
+        this.$router.go(0)
         this.cancel()
       } else {
         alert('회원정보가 일치하지 않습니다.')
