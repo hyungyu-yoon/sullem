@@ -1,19 +1,40 @@
 <template>
-  <v-card>
+<v-hover v-slot:default="{ hover }">
+  <v-card   :elevation="hover ? 5 : 0"
+   max-height="300px"
+   @click="$router.push({name:'schedule', params:{no:no}})"
+   outlined
+  >
     <v-img
       class="white--text"
       height="200px"
-      src="../assets/banner.jpg"
+      :src="country"
     >
-      <v-card-title class="align-end fill-height text-wrap">I'm a title</v-card-title>
     </v-img>
-    <v-card-title>asdasd</v-card-title>
-    <v-card-text>asdasdasdasdas</v-card-text>
+    <v-card-title class="text-truncate body-1 font-weight-bold">{{title}}</v-card-title>
+    <v-card-text class="body-2 font-weight-medium ma-0">
+      {{description}}
+    </v-card-text>
   </v-card>
+</v-hover>
 </template>
 
 <script>
 export default {
+  props: {
+    no: { type: Number },
+    name: { type: String },
+    title: { type: String },
+    description: { type: String },
+    createDate: { type: String },
+    country: { type: String }
+  },
+  mounted () {
 
+  }
 }
 </script>
+
+<style>
+
+</style>
