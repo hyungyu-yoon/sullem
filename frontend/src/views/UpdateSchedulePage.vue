@@ -23,7 +23,7 @@ import TimeTable from "../components/CreateSchedule/TimeTable.vue";
 import Place from "../components/CreateSchedule/Place.vue";
 import axios from "axios";
 export default {
-  name: "CreateSchedulePage",
+  name: "UpdateSchedulePage",
   components: {
     ScheduleImage,
     GoogleMap,
@@ -32,14 +32,16 @@ export default {
   },
   data() {
     return {
-      title: this.$store.state.scheduleTitle,
-      description: this.$store.state.scheduleDescription,
-      coverimageUrl:
-        "http://tourimage.interpark.com/BBS/Tour/FckUpload/201703/discovery_20170323_6362582542356180960.jpg",
+      no: "",
+      results: "",
+      seq: "",
+      title: "",
+      description: "",
+      coverimageUrl: "",
       map: null,
       events: [],
-      setStart: this.$store.state.scheduleStart,
-      head: this.$store.state.scheduleStart
+      setStart: "",
+      head: ""
     };
   },
   methods: {
@@ -61,7 +63,7 @@ export default {
       var route = {
         title: this.title,
         description: this.description,
-        seq: this.$session.get("user")["seq"],
+        seq: this.seq,
         name: this.$session.get("user")["name"],
         startDate: this.setStart,
         country: this.coverimageUrl,
@@ -79,6 +81,57 @@ export default {
 
       this.$router.push("/home");
     }
+  },
+  created() {
+    if (this.$session.get("user") !== undefined) {
+      this.seq = this.$session.get("user")["seq"];
+    }
+    this.no = this.$route.params.no;
+    axios
+      .get("http://192.168.31.114:8399/schedule/selectByNo/" + this.no)
+      .then(response => {
+        var data = JSON.parse(response.data.events);
+        var date = "";
+        var count = -1;
+        var results = [];
+        for (let i = 0; i < data.length; i++) {
+          if (date !== data[i].start.substring(0, 10)) {
+            count++;
+            results.push([]);
+            date = data[i].start.substring(0, 10);
+            results[count].push(data[i]);
+          } else {
+            results[count].push(data[i]);
+          }
+        }
+        this.events = results;
+
+        this.results = response.data;
+        this.events = results;
+        this.results = response.data;
+        this.title = this.results.title;
+        this.description = this.results.description;
+        this.name = this.results.name;
+        this.startDate = this.results.setStart;
+        this.head = this.results.setStart;
+        this.coverimageUrl = this.results.country;
+        console.log(this.results);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+    // this.disqus_config = function() {
+    //   this.page.url = "http://192.168.31.129:8080/schedule/" + this.no; // Replace PAGE_URL with your page's canonical URL variable
+    //   this.page.identifier = this.no; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    // };
+
+    // let recaptchaScript = document.createElement("script");
+    // recaptchaScript.setAttribute(
+    //   "src",
+    //   "https://happyhacking-1.disqus.com/embed.js"
+    // );
+    // document.head.appendChild(recaptchaScript);
   },
   beforeDestroy() {
     this.save();
