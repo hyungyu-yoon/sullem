@@ -60,7 +60,13 @@ export default {
     } else if (this.no === '3') {
       axios.get('http://192.168.31.114:8399/post/selectPage/ /1')
         .then(response => {
-          this.results = response.data.postList
+          if (response.data.postList.length > 6) {
+            this.results = response.data.postList.slice(0, 6)
+          } else {
+            this.results = response.data.postList
+          }
+
+          console.log(this.results)
         }
         )
         .catch(function (error) {
@@ -69,8 +75,11 @@ export default {
     } else if (this.no === '4') {
       axios.get('http://192.168.31.114:8399/schedule/selectPage/ /1')
         .then(response => {
-          this.results = response.data.list
-          // console.log(this.results)
+          if (response.data.list.length > 6) {
+            this.results = response.data.list.slice(0, 6)
+          } else {
+            this.results = response.data.list
+          }
         }
         )
         .catch(function (error) {

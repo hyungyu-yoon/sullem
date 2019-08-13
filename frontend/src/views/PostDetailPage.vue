@@ -12,9 +12,11 @@
       <v-flex xs12 ml-8 mr-8 mb-4>
         <span class="title font-weight-thin">{{post.description}}</span>
       </v-flex>
-      <v-flex xs12 class="text-right"  v-if="this.$session.get('seq') === post.seq">
-        <v-btn class="font-weight-bold" color="teal accent-4" dark @click="updatePage">수정하기</v-btn>&nbsp;
-        <v-btn  class="font-weight-bold" color="teal accent-4" dark @click="deletePost">삭제하기</v-btn>
+      <v-flex xs12 class="text-right" mb-1>
+        <v-btn class="font-weight-bold" color="teal accent-4" dark @click="$router.go(-1)">목록으로</v-btn>&nbsp;
+        <v-btn v-if="this.$session.get('user')['seq'] === post.seq" class="font-weight-bold" color="teal accent-4" dark @click="updatePage">수정하기</v-btn>&nbsp;
+        <v-btn v-if="this.$session.get('user')['seq'] === post.seq"  class="font-weight-bold" color="teal accent-4" dark @click="deletePost">삭제하기</v-btn>
+
       </v-flex>
       <v-flex xs12>
         <v-sheet elevation="5">
