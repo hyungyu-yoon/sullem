@@ -15,7 +15,7 @@
       <v-spacer></v-spacer>
       <v-toolbar-title v-if="this.$store.state.user !=null">{{ this.$store.state.user.name}}님</v-toolbar-title>
       <v-toolbar-items>
-        <v-btn text class="font-weight-black" @click="showCreateSchedule">
+        <v-btn v-if="this.$store.state.user !=null" text class="font-weight-black" @click="showCreateSchedule">
           새로운
           <br />여행일정
         </v-btn>
@@ -28,11 +28,16 @@
         >로그인</v-btn>
         <v-btn
           class="font-weight-black"
+          @click="mypage"
+          v-if="this.$store.state.user !=null"
+          text
+        >마이 페이지</v-btn>
+        <v-btn
+          class="font-weight-black"
           v-if="this.$store.state.user !=null"
           @click="logout"
           text
         >로그아웃</v-btn>
-        <v-btn class="font-weight-black" @click="mypage" v-if="this.$store.state.user !=null" text>마이 페이지</v-btn>
         <!-- <v-btn class="font-weight-black" @click="jsonTest" text>Json</v-btn> -->
       </v-toolbar-items>
     </v-app-bar>
@@ -48,12 +53,12 @@
 </template>
 
 <script>
-import LoginPage from '@/components/login/LoginPage.vue';
-import AccountPage from '@/components/login/AccountPage.vue';
-import FindPasswordPage from '@/components/login/FindPasswordPage.vue';
-import CreateScheduleModal from '@/components/CreateSchedule/CreateScheduleModal.vue';
+import LoginPage from '@/components/login/LoginPage.vue'
+import AccountPage from '@/components/login/AccountPage.vue'
+import FindPasswordPage from '@/components/login/FindPasswordPage.vue'
+import CreateScheduleModal from '@/components/CreateSchedule/CreateScheduleModal.vue'
 
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   name: 'Header',
@@ -76,10 +81,16 @@ export default {
     showLogin () {
       this.$store.state.Login = true
     },
+
     showCreateSchedule () {
-      this.isOpenCreateSchedule = true
+      if (this.$store.state.user != null) {
+        this.isOpenCreateSchedule = true
+      } else {
+        alert('로그인 해야 이용가능합니다.')
+      }
     },
     createNewSchedule (title, startDate) {
+      this.isOpenCreateSchedule = false
       this.$router.push('/createschedule')
     },
     async logout () {
@@ -98,7 +109,7 @@ export default {
           this.errored = true
         })
 
-        .finally(() => this.loading = false)
+        .finally(() => (this.loading = false))
     },
     mypage () {
       this.$router.push('/mypage')
