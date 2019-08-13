@@ -15,6 +15,14 @@
       <v-spacer></v-spacer>
       <v-toolbar-title v-if="this.$store.state.user !=null">{{ this.$store.state.user.name}}님</v-toolbar-title>
       <v-toolbar-items class="hidden-sm-and-down">
+        <template v-if="this.$store.state.user !=null">
+          <v-btn
+            class="font-weight-black"
+            v-if="this.$store.state.user['type'] == 'admin'"
+            @click="adminpage"
+            text
+          >관리자 페이지</v-btn>
+        </template>
         <v-btn v-if="this.$store.state.user !=null" text class="font-weight-black" @click="showCreateSchedule">
           새로운
           <br />여행일정
@@ -123,6 +131,7 @@ export default {
     }
   },
   mounted () {
+    console.log(this.$store.state.user)
     this.$store.state.user = this.$session.get('user')
   },
   methods: {
@@ -162,7 +171,10 @@ export default {
     },
     mypage () {
       this.$router.push('/mypage')
-    }
+    },
+    adminpage () {
+      this.$router.push('/admin')
+    },
   }
 }
 </script>
