@@ -13,7 +13,7 @@
     </v-img>
 
     <v-container>
-      <v-tabs icons-and-text>
+      <v-tabs centered grow icons-and-text>
         <v-tab style="margin: auto;" @click="switchpost">내 포스트
           <i class="material-icons">local_see</i>
         </v-tab>
