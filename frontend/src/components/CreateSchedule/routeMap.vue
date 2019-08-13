@@ -94,10 +94,16 @@ export default {
             distance: route.legs[0].steps[i].distance.text,
             duration: route.legs[0].steps[i].duration.text,
             travel_mode: route.legs[0].steps[i].travel_mode,
-            instructions: route.legs[0].steps[i].instructions
+            instructions: route.legs[0].steps[i].instructions,
+            icon:
+              route.legs[0].steps[i].travel_mode === "TRANSIT"
+                ? "fa-bus"
+                : route.legs[0].steps[i].travel_mode === "WALKING"
+                ? "fa-walking"
+                : "fa-car"
           });
         }
-        // console.log(step);
+        console.log(step);
 
         self.$emit("sendRoute", route, self.activeBtn, step);
       }

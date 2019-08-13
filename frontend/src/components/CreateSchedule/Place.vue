@@ -75,7 +75,12 @@
                   style="text-shadow: 2px 2px 8px black;"
                 >{{ result.name }}</v-card-title>-->
                 <DetailModal :SpecificLocation="result" />
-                <EventModal :SpecificLocation="result" :events="events" :head="head" />
+                <EventModal
+                  :SpecificLocation="result"
+                  :events="events"
+                  :head="head"
+                  @setCenter="setCenter"
+                />
               </v-layout>
             </v-img>
           </v-card>
@@ -179,10 +184,13 @@ export default {
     sendData() {
       this.$emit("sendPlace");
     },
+    setCenter(latlng) {
+      this.map.setCenter(latlng);
+      this.map.setZoom(13);
+    },
     callback(results, status) {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         this.results = results;
-        console.log(results);
         this.model = true;
       }
     }
