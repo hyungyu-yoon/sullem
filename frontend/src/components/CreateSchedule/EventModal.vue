@@ -96,6 +96,8 @@ export default {
 
         type: "location"
       };
+      this.$emit("setCenter", newEvent.latlng);
+
       var i;
       for (i = 0; i < this.events.length; ++i) {
         if (this.events[i].start > newEvent.start) {

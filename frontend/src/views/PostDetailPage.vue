@@ -12,9 +12,11 @@
       <v-flex xs12 ml-8 mr-8 mb-4>
         <span class="title font-weight-thin">{{post.description}}</span>
       </v-flex>
-      <v-flex xs12 class="text-right"  v-if="this.$session.get('seq') === post.seq">
-        <v-btn class="font-weight-bold" color="teal accent-4" dark @click="updatePage">수정하기</v-btn>&nbsp;
-        <v-btn  class="font-weight-bold" color="teal accent-4" dark @click="deletePost">삭제하기</v-btn>
+      <v-flex xs12 class="text-right" mb-1>
+        <v-btn class="font-weight-bold" color="teal accent-4" dark @click="$router.go(-1)">목록으로</v-btn>&nbsp;
+        <v-btn v-if="seq === post.seq" class="font-weight-bold" color="teal accent-4" dark @click="updatePage">수정하기</v-btn>&nbsp;
+        <v-btn v-if="seq === post.seq"  class="font-weight-bold" color="teal accent-4" dark @click="deletePost">삭제하기</v-btn>
+
       </v-flex>
       <v-flex xs12>
         <v-sheet elevation="5">
@@ -64,9 +66,9 @@ export default {
 
   },
   mounted () {
-    // if(this.$session.get('user') != undefined){
-    //   this.seq = this.$session.get('user')['seq']
-    // }
+    if(this.$session.get('user') != undefined){
+      this.seq = this.$session.get('user')['seq']
+    }
     this.no = this.$route.params.no
     axios.get('http://192.168.31.114:8399/post/detailPost/' + this.no)
       .then(response => {

@@ -14,7 +14,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-title v-if="this.$store.state.user !=null">{{ this.$store.state.user.name}}님</v-toolbar-title>
-      <v-toolbar-items>
+      <v-toolbar-items class="hidden-sm-and-down">
         <v-btn v-if="this.$store.state.user !=null" text class="font-weight-black" @click="showCreateSchedule">
           새로운
           <br />여행일정
@@ -40,7 +40,54 @@
         >로그아웃</v-btn>
         <!-- <v-btn class="font-weight-black" @click="jsonTest" text>Json</v-btn> -->
       </v-toolbar-items>
+      <v-app-bar-nav-icon class="hidden-md-and-up" @click.stop="drawer = !drawer">
+    </v-app-bar-nav-icon>
+
     </v-app-bar>
+<v-navigation-drawer
+    v-model="drawer"
+    fixed
+    temporary
+    right
+  >
+   <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="title" >
+            <span class="teal--text text--accent-4 font-weight-bold">SULLEM</span>
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+  <v-divider></v-divider>
+
+  <v-list
+        dense
+        nav
+      >
+      <v-list-item v-if="this.$store.state.user ==null" @click="showLogin">
+          <v-list-item-content>
+            <v-list-item-title>Login</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="this.$store.state.user !=null" @click="logout">
+          <v-list-item-content>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item  v-if="this.$store.state.user !=null" @click="showCreateSchedule" >
+          <v-list-item-content>
+            <v-list-item-title>새로운 여행일정</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="this.$store.state.user !=null" @click="$router.push({name:'postWriter'})">
+          <v-list-item-content>
+            <v-list-item-title>새로운 여행후기</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+      </v-list>
+  </v-navigation-drawer>
+
     <LoginPage></LoginPage>
     <AccountPage></AccountPage>
     <FindPasswordPage></FindPasswordPage>
@@ -71,7 +118,8 @@ export default {
   data () {
     return {
       data: '',
-      isOpenCreateSchedule: false
+      isOpenCreateSchedule: false,
+      drawer: null
     }
   },
   mounted () {

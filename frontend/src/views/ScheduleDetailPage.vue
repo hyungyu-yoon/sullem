@@ -23,13 +23,13 @@
         </v-flex>
         <v-flex xs12 md9>
           <v-layout wrap>
-            <v-tabs centered grow icons-and-text>
-              <v-tab @click="switchone" style="margin: auto;">tab 1 <v-icon>fa-calendar-alt</v-icon></v-tab>
-              <v-tab @click="switchtwo" style="margin: auto;">tab 2 <v-icon>fa-map-marked-alt</v-icon></v-tab>
+            <v-tabs centered grow icons-and-text color="teal accent-4">
+              <v-tab @click="switchone" style="margin: auto;">스케쥴 <v-icon>fa-calendar-alt</v-icon></v-tab>
+              <v-tab @click="switchtwo" style="margin: auto;">경로 <v-icon>fa-map-marked-alt</v-icon></v-tab>
             </v-tabs>
 
             <template v-if="this.tab">
-              <v-flex xs12 v-for="(event,i) in events" :key=i>
+              <v-flex xs12 v-for="(event,i) in events" :key="i">
                 <v-flex ma-1 xs12>
                   <span class="title font-weight-bold" ma-2>
                     <v-icon>fa-calendar-day</v-icon>&nbsp;Day {{i+1}}
@@ -60,7 +60,21 @@
                           <v-flex xs12 sm6>
                             <v-card-title class="font-weight-bold">{{data.name}}</v-card-title>
                             <v-card-text>{{data.address}}</v-card-text>
+                            <v-card-text>
+                            <v-rating
+                              v-model="data.rating"
+                              readonly
+                              size="15"
+                              color="yellow"
+                              background-color="yellow"
+                              half-increments
+
+                              empty-icon
+                              dense
+                            ></v-rating>
+                            </v-card-text>
                           </v-flex>
+
                         </v-layout>
                       </v-card>
                     </v-timeline-item>
