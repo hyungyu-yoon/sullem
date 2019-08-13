@@ -21,13 +21,13 @@
                 <v-list dense>
                     <v-list-item @click.stop="left = !left" @click="memclick">
                         <v-list-item-action>
-                            <v-icon>Member</v-icon>
+                            <h1>Member</h1>
                         </v-list-item-action>
                     </v-list-item>
                     <br>
                     <v-list-item @click.stop="left = !left" @click="scheclick">
                         <v-list-item-action>
-                            <v-icon>Schedule</v-icon>
+                            <h1>Schedule</h1>
                         </v-list-item-action>
                     </v-list-item>
                 </v-list>
