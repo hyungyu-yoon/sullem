@@ -61,7 +61,7 @@ export default {
     async login () {
       var user = await this.loginWithEmail()
       // console.log(user)
-      if (user != null && user.data != '') {
+      if (user !== null && user.data !== '') {
         this.$store.state.user = user.data
         this.$session.start()
         this.$session.set('user', this.$store.state.user)

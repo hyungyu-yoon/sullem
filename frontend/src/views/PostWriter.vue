@@ -57,6 +57,7 @@ export default {
     }
   },
   mounted () {
+    console.log(this.$store.state.Login)
     if (this.$route.params.post !== undefined) {
       this.post = this.$route.params.post
     }
