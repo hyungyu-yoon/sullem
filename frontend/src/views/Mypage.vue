@@ -6,13 +6,8 @@
       gradient="rgba(255,255,255,.25), rgba(255,255,255,.5)"
     >
       <v-layout align-center justify-center fill-height>
-        <v-flex xs4 md2>
-            <h1 style="margin: auto;">MyPage</h1>
-
-        </v-flex>
-        &nbsp;
-        <v-flex xs6 md4 lg3>
-
+        <v-flex class="text-center"  xs4 md2>
+            <h1>MyPage</h1>
         </v-flex>
       </v-layout>
     </v-img>
@@ -360,7 +355,7 @@ export default {
         url: `//192.168.31.114:8399/schedule/selectBySeq/${this.$session.get('user')['seq']}`
       })
         .then(response => {
-        //   console.log(response['data'])
+          // console.log(response['data'])
           this.schedules = response['data']
           // this.schedules.push(response['data'][0])
         })
