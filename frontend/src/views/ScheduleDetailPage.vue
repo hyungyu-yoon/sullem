@@ -23,9 +23,9 @@
         </v-flex>
         <v-flex xs12 md9>
           <v-layout wrap>
-            <v-tabs centered grow icons-and-text>
-              <v-tab @click="switchone" style="margin: auto;">tab 1 <i class="material-icons">date_range</i></v-tab>
-              <v-tab @click="switchtwo" style="margin: auto;">tab 2 <i class="material-icons">map</i></v-tab>
+            <v-tabs centered grow icons-and-text color="teal accent-4">
+              <v-tab @click="switchone" style="margin: auto;">스케쥴 <i class="material-icons">date_range</i></v-tab>
+              <v-tab @click="switchtwo" style="margin: auto;">경로 <i class="material-icons">map</i></v-tab>
             </v-tabs>
 
             <template v-if="this.tab">
