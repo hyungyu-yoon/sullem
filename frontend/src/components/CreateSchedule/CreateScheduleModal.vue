@@ -68,12 +68,12 @@ export default {
       if (this.title != "" && this.description != "" && this.startDate != "") {
         this.$store.state.scheduleStart = this.startDate;
         this.$store.state.scheduleTitle = this.title;
+        this.$store.state.scheduleDescription = this.description;
         this.$emit("createNewSchedule");
-        
       } else {
-        alert('입력정보를 확인하세요.')
+        alert("입력정보를 확인하세요.");
       }
-    },
+    }
   }
 };
 </script>
