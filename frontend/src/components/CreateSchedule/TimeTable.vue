@@ -38,7 +38,7 @@
         >
           <v-card color="grey lighten-4" min-width="350px" flat>
             <v-toolbar :color="selectedEvent.color" dark>
-              <v-btn icon>
+              <v-btn @click="deleteRoute" icon>
                 <v-icon>fa-trash-alt</v-icon>
               </v-btn>
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
@@ -48,7 +48,7 @@
               <StepsTimeLine v-if="selectedEvent.panel" :steps="selectedEvent.panel"></StepsTimeLine>
             </v-card-text>
             <v-card-actions>
-              <v-btn text color="secondary" @click="selectedOpen = false">Cancel</v-btn>
+              <v-btn text color="secondary" @click="selectedOpen = false">확인</v-btn>
             </v-card-actions>
           </v-card>
         </v-menu>
@@ -184,6 +184,13 @@ export default {
       this.$nextTick(() => {
         this.modalOpen = true;
       });
+    },
+    deleteRoute() {
+      this.selectedOpen = false;
+      console.log(this.selectedEvent);
+      this.selectedEvent.color = "transparent";
+      this.selectedEvent.name = "길찾기";
+      this.selectedEvent.overview_path = "길찾기";
     }
   },
   mounted() {
