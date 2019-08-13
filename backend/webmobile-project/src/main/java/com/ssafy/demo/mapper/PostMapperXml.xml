@@ -11,6 +11,12 @@
 		SELECT * FROM POST WHERE postNo=#{postNo}
 	</select>
 	
+	<update id="update" parameterType="PostDTO">
+		update post
+		set title=#{title}, description=#{description}, updateDate=#{updateDate}, content=#{content}, thumbnail=#{thumnail} 
+		where postNo=#{postNo}
+		
+	</update>
 	<delete id="delete" parameterType="int">
 		delete from post where postNo=#{postNo}
 	</delete>

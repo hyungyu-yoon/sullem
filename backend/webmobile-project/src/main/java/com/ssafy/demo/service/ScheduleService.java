@@ -9,6 +9,7 @@ public interface ScheduleService {
 	public int insert(String s);
 	public int update(String s);
 	public int delete(int scdNo);
+	public List<ScheduleDTO> selectBySeq(int seq);
 	public List<ScheduleDTO> selectAll();
 	public ScheduleDTO selectByScdNo(int scdNo);
 	public List<ScheduleDTO> selectByViewsTop(int per);

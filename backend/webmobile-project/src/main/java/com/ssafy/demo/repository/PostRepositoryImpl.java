@@ -1,6 +1,7 @@
 package com.ssafy.demo.repository;
 
 import java.lang.annotation.Annotation;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -77,7 +78,17 @@ public class PostRepositoryImpl implements PostRepository{
 	@Override
 	public List<PostDTO> selectBySeq(int seq) {
 		PostMapper mapper = template.getMapper(PostMapper.class);
-		return mapper.selectBySeq(seq);
+		try {
+			return mapper.selectBySeq(seq);
+		} catch(Exception e) {
+			return new LinkedList<>();
+		}
+	}
+
+	@Override
+	public int update(PostDTO post) {
+		PostMapper mapper = template.getMapper(PostMapper.class);
+		return mapper.update(post);
 	}
 
 	

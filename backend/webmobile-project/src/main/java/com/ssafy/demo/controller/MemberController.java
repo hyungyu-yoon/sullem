@@ -3,6 +3,7 @@ package com.ssafy.demo.controller;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -72,9 +73,13 @@ public class MemberController {
 	}
 
 	@GetMapping("select_email/{email}")
-	public MemberDTO selectBySeq(@PathVariable String email) {
-		return service.selectByEmail(email);
-		
+	public MemberDTO selectByEmail(@PathVariable String email) {
+		try {
+			return service.selectByEmail(email);
+		} catch(Exception e) {
+			System.out.println(e);
+			return null;
+		}
 	}
 	@PostMapping("update")
 	public MemberDTO update(@RequestBody MemberDTO member) {
@@ -87,7 +92,12 @@ public class MemberController {
 	
 	@GetMapping("search_name/{name}")
 	public List<MemberDTO> searchByName(@PathVariable String name){
-		return service.searchByName(name);
+		try {
+			return service.searchByName(name);
+		} catch(Exception e) {
+			return null;
+
+		}
 	}
 	
 	@GetMapping("search_email/{email}")
