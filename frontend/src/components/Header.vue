@@ -50,15 +50,13 @@
     temporary
     right
   >
-  <v-toolbar flat>
-    <v-list>
-      <v-list-tile>
-        <v-list-tile-title class="title">
-          <strong>Menu</strong>
-        </v-list-tile-title>
-      </v-list-tile>
-    </v-list>
-  </v-toolbar>
+   <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="title" >
+            <span class="teal--text text--accent-4 font-weight-bold">SULLEM</span>
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
 
   <v-divider></v-divider>
 
