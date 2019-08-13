@@ -51,7 +51,7 @@ export default {
       this.$store.state.Login = false
       this.$store.state.Account = true
     },
-    showFindPassword() {
+    showFindPassword () {
       this.$store.state.Login = false
       this.$store.state.FindPassword = true
     },

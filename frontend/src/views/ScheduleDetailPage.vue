@@ -75,30 +75,13 @@
 import axios from 'axios'
 export default {
   data: () => ({
-    lorem: `Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.`,
-    items: [
-      {
-        color: 'red lighten-2',
-        icon: 'fa-camera'
-      },
-      {
-        color: 'purple darken-1',
-        icon: 'fa-utensils'
-      },
-      {
-        color: 'green lighten-1',
-        icon: 'fa-camera'
-      },
-      {
-        color: 'indigo',
-        icon: 'fa-bed'
-      }
-    ],
+    no: '',
     events: [],
     results: ''
   }),
   created () {
-    axios.get('http://192.168.31.114:8399/schedule/selectByNo/1')
+    this.no = this.$route.params.no
+    axios.get('http://192.168.31.114:8399/schedule/selectByNo/' + this.no)
       .then(response => {
         var data = JSON.parse(response.data.events)
         var date = ''
