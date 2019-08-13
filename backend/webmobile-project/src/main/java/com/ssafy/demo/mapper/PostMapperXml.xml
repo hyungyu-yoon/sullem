@@ -13,7 +13,7 @@
 	
 	<update id="update" parameterType="PostDTO">
 		update post
-		set title=#{title}, description=#{description}, updateDate=#{updateDate}, content=#{content}, thumbnail=#{thumnail} 
+		set title=#{title}, description=#{description}, updateDate=#{updateDate}, content=#{content}, thumbnail=#{thumbnail} 
 		where postNo=#{postNo}
 		
 	</update>
