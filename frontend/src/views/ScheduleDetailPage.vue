@@ -99,6 +99,16 @@
                 <TimeTable :events="events[0]" :startDay="events[0][0].start.substring(0,10)" />
               </v-flex>
             </template>
+
+            <v-flex xs12 mt-2>
+        <v-sheet elevation="5">
+           <v-layout>
+            <v-flex xs12 ma-5>
+           <div id="disqus_thread"></div>
+          </v-flex>
+          </v-layout>
+        </v-sheet>
+      </v-flex>
             <!--  -->
           </v-layout>
         </v-flex>
@@ -153,6 +163,18 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
+
+    this.disqus_config = function () {
+      this.page.url = 'http://localhost:8080/schedule/' + this.no // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = this.no // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    }
+
+    let recaptchaScript = document.createElement('script')
+    recaptchaScript.setAttribute(
+      'src',
+      'https://happyhacking-1.disqus.com/embed.js'
+    )
+    document.head.appendChild(recaptchaScript)
   },
   methods: {
     getIcon (category) {
