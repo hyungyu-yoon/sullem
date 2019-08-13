@@ -2,7 +2,7 @@
   <v-layout justify-center>
     <v-dialog v-model="dialog" width="600px">
       <template v-slot:activator="{ on }">
-        <v-btn v-on="on">{{ SpecificLocation.name }}</v-btn>
+        <v-btn color="transparent" depressed v-on="on">{{ SpecificLocation.name }}</v-btn>
       </template>
       <v-card>
         <v-card-title class="headline">{{ SpecificLocation.name }}</v-card-title>
@@ -22,8 +22,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="dialog = false">Disagree</v-btn>
-          <v-btn color="green darken-1" text @click="dialog = false">Agree</v-btn>
+          <v-btn color="green darken-1" text @click="dialog = false">확인</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

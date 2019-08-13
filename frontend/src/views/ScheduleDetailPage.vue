@@ -7,7 +7,7 @@
     >
       <v-layout class="text-center" align-center justify-center fill-height>
         <v-flex xs12>
-          <span class="display-3 font-weight-bold" >{{results.title}}</span>
+          <span class="display-3 font-weight-bold">{{results.title}}</span>
         </v-flex>
       </v-layout>
     </v-img>
@@ -24,15 +24,22 @@
         <v-flex xs12 md9>
           <v-layout wrap>
             <v-tabs centered grow icons-and-text color="teal accent-4">
-              <v-tab @click="switchone" style="margin: auto;">스케쥴 <i class="material-icons">date_range</i></v-tab>
-              <v-tab @click="switchtwo" style="margin: auto;">경로 <i class="material-icons">map</i></v-tab>
+              <v-tab @click="switchone" style="margin: auto;">
+                스케쥴
+                <i class="material-icons">date_range</i>
+              </v-tab>
+              <v-tab @click="switchtwo" style="margin: auto;">
+                경로
+                <i class="material-icons">map</i>
+              </v-tab>
             </v-tabs>
 
             <template v-if="this.tab">
-              <v-flex xs12 v-for="(event,i) in events" :key=i>
+              <v-flex xs12 v-for="(event,i) in events" :key="i">
                 <v-flex ma-1 xs12>
                   <span class="title font-weight-bold" ma-2>
-                    <v-icon>fa-calendar-day</v-icon>&nbsp;Day {{i+1}}
+                    <v-icon>fa-calendar-day</v-icon>
+                    &nbsp;Day {{i+1}}
                   </span>
                   <span class="subtitle-2 grey--text">{{event[0].start.substring(0,10)}}</span>
                 </v-flex>
@@ -71,10 +78,14 @@
 
             <!-- tab2 부분 -->
             <template v-if="!this.tab">
-
+              <v-flex xs12>
+                <DetailMap style="width:auto" :mapEvents="events[0]" />
+              </v-flex>
+              <v-flex xs12>
+                <TimeTable :events="events[0]" :startDay="events[0][0].start.substring(0,10)" />
+              </v-flex>
             </template>
             <!--  -->
-
           </v-layout>
         </v-flex>
       </v-layout>
@@ -83,75 +94,80 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
+import DetailMap from "../components/ScheduleDetail/DetailMap.vue";
+import TimeTable from "../components/CreateSchedule/TimeTable.vue";
 export default {
+  components: {
+    DetailMap,
+    TimeTable
+  },
   data: () => ({
-    no: '',
+    no: "",
     events: [],
-    results: '',
+    results: "",
     tab: true
   }),
-  created () {
-    this.no = this.$route.params.no
-    axios.get('http://192.168.31.114:8399/schedule/selectByNo/' + this.no)
+  created() {
+    this.no = this.$route.params.no;
+    axios
+      .get("http://192.168.31.114:8399/schedule/selectByNo/" + this.no)
       .then(response => {
-        var data = JSON.parse(response.data.events)
-        var date = ''
-        var count = -1
-        var results = []
+        var data = JSON.parse(response.data.events);
+        var date = "";
+        var count = -1;
+        var results = [];
         for (let i = 0; i < data.length; i++) {
           if (date !== data[i].start.substring(0, 10)) {
-            count++
-            results.push([])
-            date = data[i].start.substring(0, 10)
-            results[count].push(data[i])
+            count++;
+            results.push([]);
+            date = data[i].start.substring(0, 10);
+            results[count].push(data[i]);
           } else {
-            results[count].push(data[i])
+            results[count].push(data[i]);
           }
         }
-        this.events = results
+        this.events = results;
 
-        this.results = response.data
-        console.log(this.results)
-      }
-      )
-      .catch(function (error) {
-        console.log(error)
+        this.results = response.data;
+        console.log(this.results);
       })
+      .catch(function(error) {
+        console.log(error);
+      });
   },
   methods: {
-    getIcon (category) {
-      if (category[0] === 'lodging') {
-        return 'fa-bed'
-      } else if (category[0] === 'restaurant') {
-        return 'fa-utensils'
+    getIcon(category) {
+      if (category[0] === "lodging") {
+        return "fa-bed";
+      } else if (category[0] === "restaurant") {
+        return "fa-utensils";
       } else {
-        return 'fa-camera'
+        return "fa-camera";
       }
     },
-    getColor (category) {
-      if (category[0] === 'lodging') {
-        return 'red'
-      } else if (category[0] === 'restaurant') {
-        return 'yellow lighten-3'
+    getColor(category) {
+      if (category[0] === "lodging") {
+        return "red";
+      } else if (category[0] === "restaurant") {
+        return "yellow lighten-3";
       } else {
-        return 'teal accent-4'
+        return "teal accent-4";
       }
     },
-    switchone () {
-      this.tab = true
+    switchone() {
+      this.tab = true;
     },
 
-    switchtwo () {
-      this.tab = false
+    switchtwo() {
+      this.tab = false;
     }
   }
-}
+};
 </script>
 
 <style>
 .v-tabs-slider-wrapper {
   /* width: 30% !important; */
 }
-
 </style>
