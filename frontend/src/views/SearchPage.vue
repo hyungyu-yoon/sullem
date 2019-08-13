@@ -110,6 +110,9 @@ export default {
       this.$store.state.category = this.category
       this.$store.state.text = this.text
 
+      this.page = this.page === '' ? 1 : this.page
+      this.category = this.category === '' ? 0 : this.category
+
       if (this.category === 0) {
         this.getScheduleList()
       } else if (this.category === 1) {
