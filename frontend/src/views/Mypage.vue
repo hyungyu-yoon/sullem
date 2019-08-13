@@ -13,11 +13,11 @@
     </v-img>
 
     <v-container>
-      <v-tabs centered grow icons-and-text>
+      <v-tabs centered grow icons-and-text color="teal accent-4">
         <v-tab style="margin: auto;" @click="switchpost">내 포스트
           <v-icon>fa-camera</v-icon>
         </v-tab>
-        <v-tab style="margin: auto;" @click="switchsche">내 스케줄 
+        <v-tab style="margin: auto;" @click="switchsche">내 스케줄
           <v-icon>fa-calendar-alt</v-icon>
         </v-tab>
       </v-tabs>
@@ -31,6 +31,7 @@
               label="Search"
               single-line
               hide-details
+              color="teal accent-4"
           ></v-text-field>
           </v-card-title>
           <v-data-table
@@ -82,7 +83,7 @@
                 @click="openItem(item)"
               >
                 fas fa-book-open
-              </v-icon>    
+              </v-icon>
               <v-icon
                 small
                 class="mr-2"
@@ -100,7 +101,7 @@
 
           </v-data-table>
           <div class="text-center pt-2">
-          <v-pagination v-model="page" :length="pageCount"></v-pagination>
+          <v-pagination v-model="page" :length="pageCount" color="teal accent-4"></v-pagination>
           <v-text-field
               :value="itemsPerPage"
               label="Items per page"
@@ -108,6 +109,7 @@
               min="-1"
               max="15"
               @input="itemsPerPage = parseInt($event, 10)"
+               color="teal accent-4"
           ></v-text-field>
           </div>
       </v-card>
@@ -122,6 +124,7 @@
               label="Search"
               single-line
               hide-details
+              color="teal accent-4"
           ></v-text-field>
           </v-card-title>
           <v-data-table
@@ -134,38 +137,7 @@
           class="elevation-1"
           @page-count="pageCount = $event"
           >
-            <template v-slot:top>
-                <v-divider
-                  class="mx-4"
-                  inset
-                  vertical
-                ></v-divider>
-                <v-spacer></v-spacer>
-                <v-dialog v-model="dialog" max-width="500px">
-                  <v-card>
-                    <v-card-text>
-                      <v-container grid-list-md>
-                        <v-layout wrap>
-                          <v-flex xs12>
-                            <v-text-field v-model="schedule.title" label="Title*" required></v-text-field>
-                          </v-flex>
-                          <v-flex xs12>
-                            <v-text-field v-model="schedule.description" label="Description*" required></v-text-field>
-                          </v-flex>
-                        </v-layout>
-                      </v-container>
-                      <small>*indicates required field</small>
-                    </v-card-text>
-                    <!-- edit 부분 -->
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                      <v-btn color="blue darken-1" text @click="seditSave">Save</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                  <!-- edit 끝 -->
-                </v-dialog>
-            </template>
+
             <template v-slot:item.action="{ item }">
               <v-icon
                 small
@@ -173,7 +145,7 @@
                 @click="sopenItem(item)"
               >
                 fas fa-book-open
-              </v-icon>    
+              </v-icon>
               <v-icon
                 small
                 class="mr-2"
@@ -199,6 +171,7 @@
               min="-1"
               max="15"
               @input="itemsPerPage = parseInt($event, 10)"
+              color="teal accent-4"
           ></v-text-field>
           </div>
       </v-card>
@@ -210,67 +183,67 @@
 import ItemList from '@/components/Home/ItemList.vue'
 import router from '@/router'
 import axios from 'axios'
-import { async } from 'q';
+import { async } from 'q'
 
 export default {
   data () {
     return {
-    tab: true,
-    posts: [],
-    post: {
-      createDate: null,
-      description: null,
-      likes: null,
-      name: null,
-      postNo: null,
-      thumbnail: null,
-      title: null,
-      views: null,
-    },
-    schedule: {
-    //   country: null,
-      createTime: null,
-      description: null,
-      likes: null,
-      name: null,
-      scdNo: null,
-      seq: null,
-      title: null,
-      views: null,
-    },
-    dialog: false,
-    drawer: false,
-    left: false,
-    page: 1,
-    pageCount: 0,
-    itemsPerPage: 10,
-    search: '',
-    headers: [
-      { text: 'seq', value: 'seq'},
-      { text: 'PostNo', value: 'postNo' },
-      { text: 'Title', value: 'title' },
-      { text: 'Name', value: 'name' },
-      { text: 'Description', value: 'description' },
-      { text: 'CreateDate', value: 'createDate'},
-      { text: 'Likes', value: 'likes' },
-      { text: 'Views', value: 'views'},
-      { text: 'Actions', value: 'action', sortable: false },
-    ],
-    sheaders: [
-      { text: 'seq', value: 'seq'},
-      { text: 'scdNo', value: 'scdNo' },
-      { text: 'Title', value: 'title' },
-      { text: 'Name', value: 'name' },
-      { text: 'Description', value: 'description' },
-      { text: 'CreateTime', value: 'createTime'},
-      { text: 'Likes', value: 'likes' },
-      { text: 'Views', value: 'views'},
-      { text: 'Actions', value: 'action', sortable: false },
-    ],
-    schedules: [],
+      tab: true,
+      posts: [],
+      post: {
+        createDate: null,
+        description: null,
+        likes: null,
+        name: null,
+        postNo: null,
+        thumbnail: null,
+        title: null,
+        views: null
+      },
+      schedule: {
+        //   country: null,
+        createTime: null,
+        description: null,
+        likes: null,
+        name: null,
+        scdNo: null,
+        seq: null,
+        title: null,
+        views: null
+      },
+      dialog: false,
+      drawer: false,
+      left: false,
+      page: 1,
+      pageCount: 0,
+      itemsPerPage: 10,
+      search: '',
+      headers: [
+        { text: 'seq', value: 'seq' },
+        { text: 'PostNo', value: 'postNo' },
+        { text: 'Title', value: 'title' },
+        { text: 'Name', value: 'name' },
+        { text: 'Description', value: 'description' },
+        { text: 'CreateDate', value: 'createDate' },
+        { text: 'Likes', value: 'likes' },
+        { text: 'Views', value: 'views' },
+        { text: 'Actions', value: 'action', sortable: false }
+      ],
+      sheaders: [
+        { text: 'seq', value: 'seq' },
+        { text: 'scdNo', value: 'scdNo' },
+        { text: 'Title', value: 'title' },
+        { text: 'Name', value: 'name' },
+        { text: 'Description', value: 'description' },
+        { text: 'CreateTime', value: 'createTime' },
+        { text: 'Likes', value: 'likes' },
+        { text: 'Views', value: 'views' },
+        { text: 'Actions', value: 'action', sortable: false }
+      ],
+      schedules: []
     }
   },
-  components: {ItemList},
+  components: { ItemList },
   created () {
     // console.log(this.$session.get('user'))
     if (this.$session.get('user') === undefined) {
@@ -293,7 +266,7 @@ export default {
           // this.posts.push(response['data'][0])
         })
     },
-    
+
     openItem: function (item) {
       router.push({ path: `post/${item['postNo']}` })
     },
@@ -305,50 +278,52 @@ export default {
       if (con_test) {
         await axios({
           method: 'delete',
-        url: `//192.168.31.114:8399/post/delete/${item['postNo']}` })
-        .then(response => {
-          console.log('delete!')
-        })
-      this.selectAll()
+          url: `//192.168.31.114:8399/post/delete/${item['postNo']}` })
+          .then(response => {
+            console.log('delete!')
+          })
+        this.selectAll()
       }
     },
 
     editItem (item) {
-      this.post.createDate = item['createDate']
-      this.post.name = item['name']
-      this.post.likes = item['likes']
-      this.post.postNo = item['postNo']
-      this.post.thumbnail = item['thumbnail']
-      this.post.title = item['title']
-      this.post.description = item['description']
-      this.post.views = item['views']
-      this.dialog = true
+      if (confirm('게시물을 수정하시겠습니까?')) {
+        let no = item.postNo
+        axios.get('http://192.168.31.114:8399/post/detailPost/' + no)
+          .then(response => {
+            this.$router.push({ name: 'postWriter', params: { no: no, post: response.data } })
+          }
+          )
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
     },
 
     editSave: async function () {
-       await axios
-            .post('//192.168.31.114:8399/post/update', {
-              title: this.post.title,
-              description: this.post.description,
-            })
-            .then(response => (
-              alert('업데이트 성공 ^^'),
-              // console.log(response.data),
-              // console.log(this.$session.get('post')['type']),
-              this.close(),
-              this.selectAll()
-            )
-            )
-            .catch(error => {
-              console.log(error)
-              this.errored = true
-            })
-            .finally(() => this.loading = false)
+      await axios
+        .post('//192.168.31.114:8399/post/update', {
+          title: this.post.title,
+          description: this.post.description
+        })
+        .then(response => (
+          alert('업데이트 성공 ^^'),
+          // console.log(response.data),
+          // console.log(this.$session.get('post')['type']),
+          this.close(),
+          this.selectAll()
+        )
+        )
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
+        .finally(() => this.loading = false)
     },
     close () {
       this.dialog = false
     },
-    
+
     switchpost () {
       this.tab = true
     },
@@ -377,11 +352,11 @@ export default {
       if (con_test) {
         await axios({
           method: 'delete',
-        url: `//192.168.31.114:8399/schedule/delete/${item['scdNo']}` })
-        .then(response => {
-          console.log('delete!')
-        })
-      this.switchsche()
+          url: `//192.168.31.114:8399/schedule/delete/${item['scdNo']}` })
+          .then(response => {
+            console.log('delete!')
+          })
+        this.switchsche()
       }
     },
 
@@ -399,25 +374,25 @@ export default {
     },
 
     seditSave: async function () {
-       await axios
-            .schedule('//192.168.31.114:8399/schedule/update', {
-              title: this.schedule.title,
-              description: this.schedule.description,
-            })
-            .then(response => (
-              alert('업데이트 성공 ^^'),
-              // console.log(response.data),
-              // console.log(this.$session.get('schedule')['type']),
-              this.close(),
-              this.switchsche()
-            )
-            )
-            .catch(error => {
-              console.log(error)
-              this.errored = true
-            })
-            .finally(() => this.loading = false)
-    },
+      await axios
+        .schedule('//192.168.31.114:8399/schedule/update', {
+          title: this.schedule.title,
+          description: this.schedule.description
+        })
+        .then(response => (
+          alert('업데이트 성공 ^^'),
+          // console.log(response.data),
+          // console.log(this.$session.get('schedule')['type']),
+          this.close(),
+          this.switchsche()
+        )
+        )
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
+        .finally(() => this.loading = false)
+    }
   }
 }
 </script>

@@ -66,7 +66,7 @@ export default {
 
   },
   mounted () {
-    if(this.$session.get('user') != undefined){
+    if (this.$session.get('user') != undefined) {
       this.seq = this.$session.get('user')['seq']
     }
     this.no = this.$route.params.no
@@ -94,19 +94,21 @@ export default {
   },
   methods: {
     deletePost () {
-      axios.delete('http://192.168.31.114:8399/post/delete/' + this.no)
-        .then(response => {
-          console.log(response.data)
-          if (response.data === 1) {
-            this.$router.go(-1)
-          } else {
-            alert('삭제에 실패했습니다.')
+      if (confirm('포스트를 정말로 삭제하시겠습니까?')) {
+        axios.delete('http://192.168.31.114:8399/post/delete/' + this.no)
+          .then(response => {
+            console.log(response.data)
+            if (response.data === 1) {
+              this.$router.go(-1)
+            } else {
+              alert('삭제에 실패했습니다.')
+            }
           }
-        }
-        )
-        .catch(function (error) {
-          console.log(error)
-        })
+          )
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
     },
     updatePage () {
       this.$router.push({ name: 'postWriter', params: { no: this.no, post: this.post } })
