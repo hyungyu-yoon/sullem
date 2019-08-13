@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import SearchItemList from '../components/SearchItemList.vue'
+import SearchItemList from '../components/Search/SearchItemList.vue'
 import axios from 'axios'
 export default {
   components: {
