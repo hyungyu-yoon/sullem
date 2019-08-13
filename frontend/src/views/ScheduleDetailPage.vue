@@ -23,12 +23,11 @@
         </v-flex>
         <v-flex xs12 md9>
           <v-layout wrap>
-
             <v-tabs centered grow icons-and-text>
               <v-tab @click="switchone" style="margin: auto;">tab 1 <i class="material-icons">date_range</i></v-tab>
               <v-tab @click="switchtwo" style="margin: auto;">tab 2 <i class="material-icons">map</i></v-tab>
             </v-tabs>
-            
+
             <template v-if="this.tab">
               <v-flex xs12 v-for="(event,i) in events" :key=i>
                 <v-flex ma-1 xs12>
@@ -145,7 +144,7 @@ export default {
 
     switchtwo () {
       this.tab = false
-    },
+    }
   }
 }
 </script>
