@@ -9,7 +9,10 @@
         <place :map="map" :events="events" :head="head" />
       </v-layout>
       <v-flex xs11 lg12>
-        <v-btn style="background-color: aquamarine; margin-left: 90%; margin-bottom: 10px;" @click="save">작성하기</v-btn>
+        <v-btn
+          style="background-color: aquamarine; margin-left: 90%; margin-bottom: 10px;"
+          @click="save"
+        >수정하기</v-btn>
       </v-flex>
       <v-layout>
         <TimeTable v-on:changeHead="deliverHead" :startDay="setStart" :events="events" />

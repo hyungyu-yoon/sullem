@@ -2,7 +2,13 @@
   <v-layout justify-center>
     <v-dialog v-model="dialog" width="600px">
       <template v-slot:activator="{ on }">
-        <v-btn color="transparent" depressed v-on="on">{{ SpecificLocation.name }}</v-btn>
+        <v-btn
+          color="transparent"
+          depressed
+          v-on="on"
+          width="200px"
+          style="overflow:hidden;"
+        >{{ SpecificLocation.name }}</v-btn>
       </template>
       <v-card>
         <v-card-title class="headline">{{ SpecificLocation.name }}</v-card-title>
