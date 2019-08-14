@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ScheduleImage :coverImage="coverimageUrl" />
+    <ScheduleImage :coverImage="coverimageUrl" :title="title" :description="description" />
     <v-container>
       <v-layout>
         <GoogleMap :mapEvents="events" v-on:sendMap="deliverMap" />
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import ScheduleImage from "../components/CreateSchedule/ScheduleImageCover.vue";
+import ScheduleImage from "../components/UpdateSchedule/ScheduleImageCover.vue";
 import GoogleMap from "../components/CreateSchedule/GoogleMap.vue";
 import TimeTable from "../components/CreateSchedule/TimeTable.vue";
 import Place from "../components/CreateSchedule/Place.vue";
@@ -67,11 +67,12 @@ export default {
         name: this.$session.get("user")["name"],
         startDate: this.setStart,
         country: this.coverimageUrl,
-        events: this.events
+        events: this.events,
+        scdNo: this.no
       };
 
       axios
-        .post("http://192.168.31.114:8399/schedule/update" + this.no, route)
+        .post("http://192.168.31.114:8399/schedule/update", route)
         .then(response => (console.log(response.date), this.cancel()))
         .catch(error => {
           console.log(error);
@@ -85,11 +86,8 @@ export default {
   beforeCreate() {
     if (this.$session.get("user") !== undefined) {
       this.seq = this.$session.get("user")["seq"];
-      // console.log("sequence", this.seq);
     }
-    console.log("no1", this.no);
     this.no = this.$route.params.no;
-    console.log("no2", this.no);
     axios
       .get("http://192.168.31.114:8399/schedule/selectByNo/" + this.no)
       .then(response => {
@@ -106,8 +104,14 @@ export default {
         console.log(error);
       });
   },
-  beforeDestroy() {
-    this.save();
+  mounted() {
+    if (this.$session.get("user") !== undefined) {
+      this.seq = this.$session.get("user")["seq"];
+    }
+    this.no = Number(this.$route.params.no);
   }
+  // beforeDestroy() {
+  //   this.save();
+  // }
 };
 </script>
