@@ -59,7 +59,7 @@ public class PostController {
 	}
 	@GetMapping("selectPage/{title}/{p}")
 	public PostPageDTO selectPage(@PathVariable String p,@PathVariable String title){
-		PostPageDTO pp = service.makePagePost(title,p,12);
+		PostPageDTO pp = service.makePagePost(title,p,9);
 		System.out.println(pp);
 		return pp;
 	}

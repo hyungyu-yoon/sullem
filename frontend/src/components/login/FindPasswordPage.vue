@@ -51,7 +51,7 @@ export default {
           console.log(error)
           this.errored = true
         })
-        .finally(() => this.loading = true)
+        .finally(() => this.loading = false)
       this.user.email = null
     }
   }

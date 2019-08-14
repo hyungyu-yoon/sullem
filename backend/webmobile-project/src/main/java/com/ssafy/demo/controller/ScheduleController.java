@@ -75,7 +75,7 @@ public class ScheduleController {
 	@GetMapping("selectPage/{keyword}/{p}")
 	public SchedulePageDTO selectPage(@PathVariable String p,@PathVariable String keyword){
 		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+":: title:"+keyword+"/p:"+p);
-		SchedulePageDTO pp = service.makePageSchedule(keyword,p,12);
+		SchedulePageDTO pp = service.makePageSchedule(keyword,p,9);
 		System.out.println(pp);
 		return pp;
 	}
