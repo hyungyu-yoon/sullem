@@ -41,18 +41,14 @@ export default {
     },
     findPassword () {
       axios
-        .get('http://192.168.31.114:8399/member/findPassword/'+this.user.email)
-        .then(response => (
-          alert(response.data),
-          this.cancel()
-        )
-        )
+        .get('http://192.168.31.114:8399/member/findPassword/' + this.user.email)
         .catch(error => {
           console.log(error)
           this.errored = true
         })
-        .finally(() => this.loading = false)
       this.user.email = null
+      alert('전송되었습니다.')
+      this.cancel()
     }
   }
 }
