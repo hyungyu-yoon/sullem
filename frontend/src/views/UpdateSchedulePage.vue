@@ -43,7 +43,6 @@ export default {
       setStart: "2019-01-01",
       head: "2019-01-01"
     };
-    
   },
   methods: {
     deliverEvents(passed) {
@@ -72,7 +71,7 @@ export default {
       };
 
       axios
-        .post("http://192.168.31.114:8399/schedule/update", route)
+        .post("http://192.168.31.114:8399/schedule/update" + this.no, route)
         .then(response => (console.log(response.date), this.cancel()))
         .catch(error => {
           console.log(error);
@@ -86,53 +85,26 @@ export default {
   beforeCreate() {
     if (this.$session.get("user") !== undefined) {
       this.seq = this.$session.get("user")["seq"];
+      // console.log("sequence", this.seq);
     }
+    console.log("no1", this.no);
     this.no = this.$route.params.no;
+    console.log("no2", this.no);
     axios
       .get("http://192.168.31.114:8399/schedule/selectByNo/" + this.no)
       .then(response => {
         var data = JSON.parse(response.data.events);
-        var date = "";
-        var count = -1;
-        var results = [];
-        for (let i = 0; i < data.length; i++) {
-          if (date !== data[i].start.substring(0, 10)) {
-            count++;
-            results.push([]);
-            date = data[i].start.substring(0, 10);
-            results[count].push(data[i]);
-          } else {
-            results[count].push(data[i]);
-          }
-        }
-
-        this.events = this.results['events'];
-        // console.log(response.data)
+        this.setStart = response.data.startDate;
+        this.head = response.data.startDate;
+        this.events = data;
         this.results = response.data;
-        console.log(this.results['title'])
-        this.title = this.results['title'];
-        this.description = this.results['description'];
-        this.name = this.results['name'];
-        this.setStart = this.results['Startdata'];
-        this.head = this.results['Startdata'];
-        this.coverimageUrl = this.results['country'];
-        console.log(this.results);
+        this.title = this.results["title"];
+        this.description = this.results["description"];
+        this.coverimageUrl = this.results["country"];
       })
       .catch(function(error) {
         console.log(error);
       });
-
-    // this.disqus_config = function() {
-    //   this.page.url = "http://192.168.31.129:8080/schedule/" + this.no; // Replace PAGE_URL with your page's canonical URL variable
-    //   this.page.identifier = this.no; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    // };
-
-    // let recaptchaScript = document.createElement("script");
-    // recaptchaScript.setAttribute(
-    //   "src",
-    //   "https://happyhacking-1.disqus.com/embed.js"
-    // );
-    // document.head.appendChild(recaptchaScript);
   },
   beforeDestroy() {
     this.save();

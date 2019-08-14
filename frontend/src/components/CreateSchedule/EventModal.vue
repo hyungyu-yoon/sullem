@@ -115,6 +115,33 @@ export default {
             break;
           }
         }
+        if (i > 0 && i < this.events.length) {
+          if (
+            (this.events[i - 1].end > newEvent.start &&
+              this.events[i - 1].type == "location") ||
+            (this.events[i].start < newEvent.end &&
+              this.events[i].type == "location")
+          ) {
+            alert("입력한 시간 내에 이미 다른 스케줄이 존재합니다.");
+            return;
+          }
+        } else if (i == 0 && this.events.length > 0) {
+          if (
+            this.events[i].start < newEvent.end &&
+            this.events[i].type == "location"
+          ) {
+            alert("입력한 시간 내에 이미 다른 스케줄이 존재합니다.");
+            return;
+          }
+        } else if (i == this.events.length && this.events.length > 0) {
+          if (
+            this.events[i - 1].end > newEvent.start &&
+            this.events[i - 1].type == "location"
+          ) {
+            alert("입력한 시간 내에 이미 다른 스케줄이 존재합니다.");
+            return;
+          }
+        }
 
         // if (i != 0 && this.events[i].start == newEvent.start) {
         //   alert("동일한 시간대에 스케줄이 존재합니다.");
