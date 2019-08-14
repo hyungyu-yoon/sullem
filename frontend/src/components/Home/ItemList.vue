@@ -66,7 +66,7 @@ export default {
             this.results = response.data.postList
           }
 
-          console.log(this.results)
+          // console.log(this.results)
         }
         )
         .catch(function (error) {
