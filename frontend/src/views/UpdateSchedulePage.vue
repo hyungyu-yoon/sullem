@@ -71,7 +71,7 @@ export default {
       };
 
       axios
-        .post("http://192.168.31.114:8399/schedule/insert", route)
+        .post("http://192.168.31.114:8399/schedule/update", route)
         .then(response => (console.log(response.date), this.cancel()))
         .catch(error => {
           console.log(error);
