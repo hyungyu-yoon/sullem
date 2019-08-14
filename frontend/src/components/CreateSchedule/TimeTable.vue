@@ -225,6 +225,9 @@ export default {
   watch: {
     start: function() {
       this.$emit("changeHead", this.start);
+    },
+    startDay: function() {
+      this.setToday();
     }
   }
 };
