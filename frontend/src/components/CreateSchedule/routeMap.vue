@@ -67,6 +67,13 @@ export default {
             self.$emit("noResult", true);
             directionsDisplay.setDirections(response);
             // window.alert("Directions request failed due to " + status);
+            this.$notify({
+              group: "foo",
+              title: "Error message",
+              text: "경로정보가 없습니다.",
+              type: "warn",
+              duration: 2000
+            });
           }
         }
       );

@@ -71,7 +71,14 @@ export default {
         this.$store.state.scheduleDescription = this.description;
         this.$emit("createNewSchedule");
       } else {
-        alert("입력정보를 확인하세요.");
+        // alert("입력정보를 확인하세요.");
+        this.$notify({
+          group: "foo",
+          title: "Error message",
+          text: "입력정보를 확인하세요.",
+          type: "error",
+          duration: 2000
+        });
       }
     }
   }

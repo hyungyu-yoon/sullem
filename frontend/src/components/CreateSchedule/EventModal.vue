@@ -56,7 +56,14 @@ export default {
   methods: {
     addEvents() {
       if (this.selectedHour == null || this.selectedMin == null) {
-        alert("입력정보를 확인하세요.");
+        // alert("입력정보를 확인하세요.");
+        this.$notify({
+          group: "foo",
+          title: "Error message",
+          text: "입력정보를 확인하세요.",
+          type: "error",
+          duration: 2000
+        });
       } else {
         var startTime = new Date(
           this.head +
@@ -122,7 +129,14 @@ export default {
             (this.events[i].start < newEvent.end &&
               this.events[i].type == "location")
           ) {
-            alert("입력한 시간 내에 이미 다른 스케줄이 존재합니다.");
+            // alert("입력한 시간 내에 이미 다른 스케줄이 존재합니다.");
+            this.$notify({
+              group: "foo",
+              title: "Error message",
+              text: "입력한 시간 내에 이미 다른 스케줄이 존재합니다.",
+              type: "error",
+              duration: 2000
+            });
             return;
           }
         } else if (i == 0 && this.events.length > 0) {
@@ -130,7 +144,14 @@ export default {
             this.events[i].start < newEvent.end &&
             this.events[i].type == "location"
           ) {
-            alert("입력한 시간 내에 이미 다른 스케줄이 존재합니다.");
+            // alert("입력한 시간 내에 이미 다른 스케줄이 존재합니다.");
+            this.$notify({
+              group: "foo",
+              title: "Error message",
+              text: "입력한 시간 내에 이미 다른 스케줄이 존재합니다.",
+              type: "error",
+              duration: 2000
+            });
             return;
           }
         } else if (i == this.events.length && this.events.length > 0) {
@@ -138,7 +159,14 @@ export default {
             this.events[i - 1].end > newEvent.start &&
             this.events[i - 1].type == "location"
           ) {
-            alert("입력한 시간 내에 이미 다른 스케줄이 존재합니다.");
+            // alert("입력한 시간 내에 이미 다른 스케줄이 존재합니다.");
+            this.$notify({
+              group: "foo",
+              title: "Error message",
+              text: "입력한 시간 내에 이미 다른 스케줄이 존재합니다.",
+              type: "error",
+              duration: 2000
+            });
             return;
           }
         }

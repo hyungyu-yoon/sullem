@@ -47,7 +47,14 @@ export default {
         this.event.panel = this.panel;
         this.$emit("save");
       } else {
-        window.alert("저장 할 경로가 없습니다.");
+        // window.alert("저장 할 경로가 없습니다.");
+        this.$notify({
+          group: "foo",
+          title: "Error message",
+          text: "저장할 경로가 없습니다.",
+          type: "error",
+          duration: 2000
+        });
       }
       this.sendClose();
     },
