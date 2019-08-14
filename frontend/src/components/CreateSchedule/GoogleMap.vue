@@ -22,7 +22,8 @@ export default {
       directionsService: null,
       directionsDisplay: null,
       markers: [],
-      polylines: []
+      polylines: [],
+      count: 0
     };
   },
   methods: {
@@ -109,7 +110,7 @@ export default {
             fillOpacity: 1,
             map: this.map
           });
-          this.polylines.push(polyline)
+          this.polylines.push(polyline);
           polyline.setMap(this.map);
         }
       }
@@ -117,11 +118,10 @@ export default {
     deleteRoute() {
       if (this.polylines.length > 0) {
         for (var i = 0; i < this.polylines.length; ++i) {
-          this.polylines[i].setMap(null)
+          this.polylines[i].setMap(null);
         }
-        this.polylines = []
+        this.polylines = [];
       }
-
     }
   },
   mounted() {
@@ -131,8 +131,13 @@ export default {
   },
   watch: {
     mapEvents: function() {
+      if (this.count == 0) {
+        this.map.setCenter(this.mapEvents[0].latlng);
+        this.map.setZoom(13);
+        this.count += 1;
+      }
       this.deleteMarker();
-      this.deleteRoute()
+      this.deleteRoute();
       this.addMarker();
       this.drawRoute();
     }
