@@ -6,7 +6,7 @@
           <span
             class="headline font-weight-bold teal--text text--accent-4"
             @click="$router.push({name:'home'})"
-          >Sullem </span>
+          >Sullem</span>
         </a>
         <a>
           <span
@@ -119,73 +119,86 @@
 </template>
 
 <script>
-import LoginPage from '@/components/login/LoginPage.vue'
-import AccountPage from '@/components/login/AccountPage.vue'
-import FindPasswordPage from '@/components/login/FindPasswordPage.vue'
-import CreateScheduleModal from '@/components/CreateSchedule/CreateScheduleModal.vue'
+import LoginPage from "@/components/login/LoginPage.vue";
+import AccountPage from "@/components/login/AccountPage.vue";
+import FindPasswordPage from "@/components/login/FindPasswordPage.vue";
+import CreateScheduleModal from "@/components/CreateSchedule/CreateScheduleModal.vue";
 
-import axios from 'axios'
+import axios from "axios";
 
 export default {
-  name: 'Header',
+  name: "Header",
   components: {
     LoginPage,
     AccountPage,
     FindPasswordPage,
     CreateScheduleModal
   },
-  data () {
+  data() {
     return {
-      data: '',
+      data: "",
       isOpenCreateSchedule: false,
       drawer: null
-    }
+    };
   },
-  mounted () {
-    console.log(this.$store.state.user)
-    this.$store.state.user = this.$session.get('user')
+  mounted() {
+    console.log(this.$store.state.user);
+    this.$store.state.user = this.$session.get("user");
   },
   methods: {
-    showLogin () {
-      this.$store.state.Login = true
+    showLogin() {
+      this.$store.state.Login = true;
     },
 
-    showCreateSchedule () {
+    showCreateSchedule() {
       if (this.$store.state.user != null) {
-        this.isOpenCreateSchedule = true
+        this.isOpenCreateSchedule = true;
       } else {
-        alert('로그인 해야 이용가능합니다.')
+        // alert('로그인 해야 이용가능합니다.')
+        this.$notify({
+          group: "foo",
+          title: "Login required",
+          text: "로그인 해야 이용가능합니다.",
+          type: "warn",
+          duration: 2000
+        });
       }
     },
-    createNewSchedule (title, startDate) {
-      this.isOpenCreateSchedule = false
-      this.$router.push('/createschedule')
+    createNewSchedule(title, startDate) {
+      this.isOpenCreateSchedule = false;
+      this.$router.push("/createschedule");
     },
-    async logout () {
-      alert('logout')
-      this.$session.destroy()
-      this.$store.state.user = null
+    async logout() {
+      // alert("logout");
+      this.$notify({
+        group: "foo",
+        title: "Logout",
+        text: "로그아웃 성공",
+        duration: 2000
+      });
+      this.$session.destroy();
+      this.$store.state.user = null;
       // this.$router.push('/home')
-      this.$router.go(0)
+      this.$router.go(0);
     },
-    jsonTest () {
-      console.log(this.data)
+    jsonTest() {
+      console.log(this.data);
       axios
-        .post('http://192.168.31.114:8399/schedule/insert/', this.data)
+        .post("http://192.168.31.114:8399/schedule/insert/", this.data)
         .then(response => console.log(response.data))
         .catch(error => {
-          console.log(error)
-          this.errored = true
+          console.log(error);
+          this.errored = true;
         })
 
-        .finally(() => (this.loading = false))
+        .finally(() => (this.loading = false));
     },
-    mypage () {
-      this.$router.push('/mypage')
+    mypage() {
+      this.$router.push("/mypage");
     },
-    adminpage () {
-      this.$router.push('/admin')
+    adminpage() {
+      this.$router.push("/admin");
     }
   }
-}
+};
 </script>
