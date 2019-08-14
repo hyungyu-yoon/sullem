@@ -14,9 +14,9 @@ export default new Vuex.Store({
     page: "",
     category: "",
     text: "",
-    scheduleTitle: "1",
-    scheduleStart: "2019-08-13",
-    scheduleDescription: "1"
+    scheduleTitle: "",
+    scheduleStart: null,
+    scheduleDescription: ""
   },
   mutations: {},
   actions: {}
