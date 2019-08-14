@@ -186,16 +186,23 @@ export default {
       });
     },
     deleteRoute() {
+      var deleteIndex = this.events.indexOf(this.selectedEvent);
       if (this.selectedEvent.type == "route") {
-        this.selectedOpen = false;
-        this.selectedEvent.color = "transparent";
-        this.selectedEvent.name = "길찾기";
-        this.selectedEvent.overview_path = null;
-        this.selectedEvent.panel = null;
-        this.selectedEvent.latlng = null;
+        var newRoute = {
+          name: "길찾기",
+          origin: this.events[deleteIndex].origin,
+          destination: this.events[deleteIndex].destination,
+          overview_path: null,
+          panel: null,
+          start: this.events[deleteIndex].start,
+          end: this.events[deleteIndex].end,
+          color: "transparent",
+          latlng: null,
+          type: "route"
+        };
+        this.events.splice(deleteIndex, 0, newRoute);
+        this.events.splice(deleteIndex + 1, 1);
       } else {
-        // console.log(this.events.indexOf(this.selectedEvent));
-        var deleteIndex = this.events.indexOf(this.selectedEvent);
         this.events.splice(deleteIndex, 1);
         if (this.events.length >= 1) {
           if (deleteIndex == 0) {
