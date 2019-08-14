@@ -133,7 +133,8 @@ export default {
     events: [],
     results: '',
     tab: true,
-    seq: ''
+    seq: '',
+    disqus_config: ''
   }),
   created () {
     if (this.$session.get('user') !== undefined) {
@@ -222,8 +223,8 @@ export default {
       }
     },
     updatePage () {
-      console.log(this.no)  
-      router.push({ path: `update/${this.no}`})
+      console.log(this.no)
+      router.push({ path: `update/${this.no}` })
     }
   }
 }
