@@ -57,6 +57,12 @@ export default {
       height: '510px'
     }
   },
+  beforeCreate () {
+    if (this.$session.get('user') === undefined) {
+      alert('로그인이 필요합니다.')
+      this.$router.push({ name: 'home' })
+    }
+  },
   mounted () {
     // console.log(this.$store.state.Login)
     if (this.$route.params.post !== undefined) {

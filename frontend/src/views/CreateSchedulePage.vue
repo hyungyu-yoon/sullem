@@ -47,6 +47,12 @@ export default {
       head: this.$store.state.scheduleStart
     }
   },
+  beforeCreate () {
+    if (this.$session.get('user') === undefined) {
+      alert('로그인이 필요합니다.')
+      this.$router.push({ name: 'home' })
+    }
+  },
   methods: {
     deliverEvents (passed) {
       this.events = passed
