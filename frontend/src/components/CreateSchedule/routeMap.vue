@@ -2,7 +2,7 @@
   <v-layout justify-space-between>
     <div id="map" style="width: 600px"></div>
     <div>
-      <div>
+      <div row>
         <v-btn @click="activeBtn = 'TRANSIT'">
           <v-icon :color="activeBtn === 'TRANSIT' ? '#1DE9B6' : ''">fa-bus</v-icon>
         </v-btn>
@@ -15,7 +15,7 @@
       </div>
       <div
         id="directionsPanel"
-        style="float:left;width:100%;height: 500px; display: inline; overflow: auto"
+        style="float:left;width:300px;height: 500px; display: inline; overflow: auto"
       ></div>
     </div>
   </v-layout>
@@ -51,6 +51,7 @@ export default {
       this.infoWindow = new google.maps.InfoWindow();
     },
     displayRoute(directionsService, directionsDisplay) {
+      var self = this;
       directionsService.route(
         {
           origin: this.mapEvent.origin,
@@ -60,10 +61,12 @@ export default {
         },
         function(response, status) {
           if (status === "OK") {
-            console.log(response);
+            self.$emit("noResult", false);
             directionsDisplay.setDirections(response);
           } else {
-            window.alert("Directions request failed due to " + status);
+            self.$emit("noResult", true);
+            directionsDisplay.setDirections(response);
+            // window.alert("Directions request failed due to " + status);
           }
         }
       );
@@ -103,7 +106,7 @@ export default {
                 : "fa-car"
           });
         }
-        console.log(step);
+        // console.log(step);
 
         self.$emit("sendRoute", route, self.activeBtn, step);
       }

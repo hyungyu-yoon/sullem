@@ -4,7 +4,7 @@
       <v-card>
         <v-card-title class="headline">경로 찾기</v-card-title>
         <v-card-text>
-          <RouteMap :mapEvent="event" @sendRoute="saveRoute" />
+          <RouteMap :mapEvent="event" @sendRoute="saveRoute" @noResult="isNoResult" />
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -31,7 +31,8 @@ export default {
     return {
       route: null,
       travelmode: null,
-      panel: null
+      panel: null,
+      noResult: false
     };
   },
   methods: {
@@ -39,17 +40,24 @@ export default {
       this.$emit("close");
     },
     save() {
-      this.event.overview_path = this.route.overview_polyline;
-      this.event.name = this.travelmode;
-      this.event.color = "#F48FB1";
-      this.event.panel = this.panel;
-      this.$emit("save");
+      if (!this.noResult) {
+        this.event.overview_path = this.route.overview_polyline;
+        this.event.name = this.travelmode;
+        this.event.color = "#F48FB1";
+        this.event.panel = this.panel;
+        this.$emit("save");
+      } else {
+        window.alert("저장 할 경로가 없습니다.");
+      }
       this.sendClose();
     },
     saveRoute(routeSend, travelmode, steps) {
       this.route = routeSend;
       this.travelmode = travelmode;
       this.panel = steps;
+    },
+    isNoResult(value) {
+      this.noResult = value;
     }
   }
 };
