@@ -19,71 +19,71 @@
 </template>
 
 <script>
-import ScheduleImage from "../components/CreateSchedule/ScheduleImageCover.vue";
-import GoogleMap from "../components/CreateSchedule/GoogleMap.vue";
-import TimeTable from "../components/CreateSchedule/TimeTable.vue";
-import Place from "../components/CreateSchedule/Place.vue";
-import axios from "axios";
+import ScheduleImage from '../components/CreateSchedule/ScheduleImageCover.vue'
+import GoogleMap from '../components/CreateSchedule/GoogleMap.vue'
+import TimeTable from '../components/CreateSchedule/TimeTable.vue'
+import Place from '../components/CreateSchedule/Place.vue'
+import axios from 'axios'
 export default {
-  name: "CreateSchedulePage",
+  name: 'CreateSchedulePage',
   components: {
     ScheduleImage,
     GoogleMap,
     TimeTable,
     Place
   },
-  data() {
+  data () {
     return {
       title: this.$store.state.scheduleTitle,
       description: this.$store.state.scheduleDescription,
       coverimageUrl:
-        "http://tourimage.interpark.com/BBS/Tour/FckUpload/201703/discovery_20170323_6362582542356180960.jpg",
+        'http://tourimage.interpark.com/BBS/Tour/FckUpload/201703/discovery_20170323_6362582542356180960.jpg',
       map: null,
       events: [],
       setStart: this.$store.state.scheduleStart,
       head: this.$store.state.scheduleStart
-    };
+    }
   },
   methods: {
-    deliverEvents(passed) {
-      this.events = passed;
+    deliverEvents (passed) {
+      this.events = passed
     },
-    deliverMap(mapPassed) {
-      this.map = mapPassed;
+    deliverMap (mapPassed) {
+      this.map = mapPassed
     },
-    deliverHead(value) {
-      this.head = value;
+    deliverHead (value) {
+      this.head = value
     },
-    save() {
-      var imageIdx = Math.floor(Math.random() * this.events.length);
-      imageIdx += imageIdx % 2 == 0 ? 0 : 1;
+    async save () {
+      var imageIdx = Math.floor(Math.random() * this.events.length)
+      imageIdx += imageIdx % 2 == 0 ? 0 : 1
 
-      this.coverimageUrl = this.events[imageIdx].imageUrl;
+      this.coverimageUrl = this.events[imageIdx].imageUrl
 
       var route = {
         title: this.title,
         description: this.description,
-        seq: this.$session.get("user")["seq"],
-        name: this.$session.get("user")["name"],
+        seq: this.$session.get('user')['seq'],
+        name: this.$session.get('user')['name'],
         startDate: this.setStart,
         country: this.coverimageUrl,
         events: this.events
-      };
+      }
 
-      axios
-        .post("http://192.168.31.114:8399/schedule/insert", route)
+      await axios
+        .post('http://192.168.31.114:8399/schedule/insert', route)
         .then(response => (console.log(response.date), this.cancel()))
         .catch(error => {
-          console.log(error);
-          this.errored = true;
+          console.log(error)
+          this.errored = true
         })
-        .finally(() => (this.loading = false));
+        .finally(() => (this.loading = false))
 
-      this.$router.push("/home");
+      this.$router.push('/home')
     }
-  },
-  beforeDestroy() {
-    this.save();
   }
-};
+  // beforeDestroy() {
+  //   this.save();
+  // }
+}
 </script>
