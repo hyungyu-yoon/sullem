@@ -12,6 +12,7 @@ import PostDetailPage from './views/PostDetailPage.vue'
 import AdminPost from './views/AdminPost.vue'
 import AdminSchedule from './views/AdminSchedule.vue'
 import MyPage from './views/Mypage.vue'
+import ScheduleUpdatePage from './views/UpdateSchedulePage'
 
 Vue.use(Router)
 
@@ -86,6 +87,11 @@ export default new Router({
       path: '/post/:no',
       name: 'post',
       component: PostDetailPage
+    },
+    {
+      path: '/schedule/update/:no',
+      name: 'scheduleupdate',
+      component: ScheduleUpdatePage
     }
   ]
 })

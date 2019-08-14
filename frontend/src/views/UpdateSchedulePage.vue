@@ -40,9 +40,10 @@ export default {
       coverimageUrl: "",
       map: null,
       events: [],
-      setStart: "",
-      head: ""
+      setStart: "2019-01-01",
+      head: "2019-01-01"
     };
+    
   },
   methods: {
     deliverEvents(passed) {
@@ -82,7 +83,7 @@ export default {
       this.$router.push("/home");
     }
   },
-  created() {
+  beforeCreate() {
     if (this.$session.get("user") !== undefined) {
       this.seq = this.$session.get("user")["seq"];
     }
@@ -104,17 +105,17 @@ export default {
             results[count].push(data[i]);
           }
         }
-        this.events = results;
 
+        this.events = this.results['events'];
+        // console.log(response.data)
         this.results = response.data;
-        this.events = results;
-        this.results = response.data;
-        this.title = this.results.title;
-        this.description = this.results.description;
-        this.name = this.results.name;
-        this.startDate = this.results.setStart;
-        this.head = this.results.setStart;
-        this.coverimageUrl = this.results.country;
+        console.log(this.results['title'])
+        this.title = this.results['title'];
+        this.description = this.results['description'];
+        this.name = this.results['name'];
+        this.setStart = this.results['Startdata'];
+        this.head = this.results['Startdata'];
+        this.coverimageUrl = this.results['country'];
         console.log(this.results);
       })
       .catch(function(error) {

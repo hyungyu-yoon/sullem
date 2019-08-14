@@ -19,6 +19,12 @@
             disable-resize-watcher
             >
                 <v-list dense>
+                    <v-list-item @click.stop="left = !left" @click="home">
+                        <v-list-item-action>
+                            <h1>Home</h1>
+                        </v-list-item-action>
+                    </v-list-item>
+                    <br>
                     <v-list-item @click.stop="left = !left" @click="memclick">
                         <v-list-item-action>
                             <h1>Member</h1>
@@ -182,6 +188,9 @@ export default {
     },
     scheclick: function () {
       router.push({ path: 'adminschedule' })
+    },
+    home: function () {
+      router.push({ path: 'home'})
     },
 
     deleteItem: async function (item) {

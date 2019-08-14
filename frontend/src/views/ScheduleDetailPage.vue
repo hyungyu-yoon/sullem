@@ -121,6 +121,8 @@
 import axios from 'axios'
 import DetailMap from '../components/ScheduleDetail/DetailMap.vue'
 import TimeTable from '../components/CreateSchedule/TimeTable.vue'
+import router from '@/router'
+
 export default {
   components: {
     DetailMap,
@@ -220,7 +222,8 @@ export default {
       }
     },
     updatePage () {
-
+      console.log(this.no)  
+      router.push({ path: `update/${this.no}`})
     }
   }
 }
