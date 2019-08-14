@@ -40,7 +40,7 @@ public class ScheduleController {
 	
 	@PostMapping("update")
 	public int update(@RequestBody String body) {
-		
+		System.out.println("update");
 		return service.update(body);
 	}
 	

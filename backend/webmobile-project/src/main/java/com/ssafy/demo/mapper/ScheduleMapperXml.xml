@@ -24,7 +24,7 @@
 	
 	<update id="update" parameterType="ScheduleDTO">
 		update schedule 
-		set title=#{title}, description=#{description}, startDate=#{startDate}, events=#{events}, updateTime=#{updateTIme}
+		set title=#{title}, description=#{description}, startDate=#{startDate}, events=#{events}, updateTime=#{updateTime}
 		where scdNo=#{scdNo}
 	</update>
 	

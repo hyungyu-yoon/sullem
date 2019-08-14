@@ -64,7 +64,6 @@ public class ScheduleServiceImpl implements ScheduleService{
 		schedule.setStartDate(json.get("startDate").toString());
 		schedule.setDescription(json.get("description").toString());
 		schedule.setTitle(json.get("title").toString());
-		schedule.setCreateTime(json.get("createTime").toString());
 		schedule.setUpdateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		schedule.setEvents(json.get("events").toString());
 		
