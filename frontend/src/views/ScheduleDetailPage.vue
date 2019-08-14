@@ -224,7 +224,14 @@ export default {
             if (response.data === 1) {
               this.$router.go(-1);
             } else {
-              alert("삭제에 실패했습니다.");
+              // alert("삭제에 실패했습니다.");
+              this.$notify({
+                group: "foo",
+                title: "Error message",
+                text: "삭제에 실패했습니다.",
+                type: "error",
+                duration: 2000
+              });
             }
           })
           .catch(function(error) {
