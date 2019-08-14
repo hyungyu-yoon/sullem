@@ -57,6 +57,19 @@ export default {
       height: "510px"
     };
   },
+  beforeCreate() {
+    if (this.$session.get("user") === undefined) {
+      // alert("로그인이 필요합니다.");
+      this.$notify({
+        group: "foo",
+        title: "Login required",
+        text: "로그인이 필요합니다.",
+        type: "warn",
+        duration: 2000
+      });
+      this.$router.push({ name: "home" });
+    }
+  },
   mounted() {
     // console.log(this.$store.state.Login)
     if (this.$route.params.post !== undefined) {
