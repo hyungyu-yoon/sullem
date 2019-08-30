@@ -12,7 +12,7 @@
         <v-btn
           style="background-color: aquamarine; margin-left: 90%; margin-bottom: 10px;"
           @click="save"
-        >수정하기</v-btn>
+        >저장</v-btn>
       </v-flex>
       <v-layout>
         <TimeTable v-on:changeHead="deliverHead" :startDay="setStart" :events="events" />
