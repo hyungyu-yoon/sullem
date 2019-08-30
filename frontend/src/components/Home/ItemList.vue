@@ -42,6 +42,7 @@ export default {
     if (this.no === '1') {
       axios.get('http://192.168.31.114:8399/post/selectTopPost')
         .then(response => {
+          console.log(response)
           this.results = response.data
         }
         )

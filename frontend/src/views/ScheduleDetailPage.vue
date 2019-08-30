@@ -4,10 +4,12 @@
       :src="results.country"
       aspect-ratio="3.0"
       gradient="rgba(255,255,255,.25), rgba(255,255,255,.5)"
+      v-resize="resize"
+      v-bind:style="{height:newHeight}"
     >
       <v-layout class="text-center" align-center justify-center fill-height>
         <v-flex xs12>
-          <span class="display-3 font-weight-bold">{{results.title}}</span>
+          <span class="display-2 font-weight-bold white--text" style="text-shadow: 2px 2px 8px black;">{{results.title}}</span>
         </v-flex>
       </v-layout>
     </v-img>
@@ -126,10 +128,10 @@
 </template>
 
 <script>
-import axios from "axios";
-import DetailMap from "../components/ScheduleDetail/DetailMap.vue";
-import TimeTable from "../components/CreateSchedule/TimeTable.vue";
-import router from "@/router";
+import axios from 'axios'
+import DetailMap from '../components/ScheduleDetail/DetailMap.vue'
+import TimeTable from '../components/CreateSchedule/TimeTable.vue'
+import router from '@/router'
 
 export default {
   components: {
@@ -137,114 +139,119 @@ export default {
     TimeTable
   },
   data: () => ({
-    no: "",
+    no: '',
     events: [],
-    results: "",
+    results: '',
     tab: true,
-    seq: "",
-    disqus_config: "",
-    event_data: []
+    seq: '',
+    disqus_config: '',
+    event_data: [],
+    newHeight: null
   }),
-  created() {
-    if (this.$session.get("user") !== undefined) {
-      this.seq = this.$session.get("user")["seq"];
+  created () {
+    if (this.$session.get('user') !== undefined) {
+      this.seq = this.$session.get('user')['seq']
     }
-    this.no = this.$route.params.no;
+    this.no = this.$route.params.no
     axios
-      .get("http://192.168.31.114:8399/schedule/selectByNo/" + this.no)
+      .get('http://192.168.31.114:8399/schedule/selectByNo/' + this.no)
       .then(response => {
-        var data = JSON.parse(response.data.events);
-        var date = "";
-        var count = -1;
-        var results = [];
+        var data = JSON.parse(response.data.events)
+        var date = ''
+        var count = -1
+        var results = []
         for (let i = 0; i < data.length; i++) {
           if (date !== data[i].start.substring(0, 10)) {
-            count++;
-            results.push([]);
-            date = data[i].start.substring(0, 10);
-            results[count].push(data[i]);
+            count++
+            results.push([])
+            date = data[i].start.substring(0, 10)
+            results[count].push(data[i])
           } else {
-            results[count].push(data[i]);
+            results[count].push(data[i])
           }
         }
-        this.events = results;
-        this.event_data = data;
+        this.events = results
+        this.event_data = data
 
-        this.results = response.data;
-        console.log(this.results);
+        this.results = response.data
+        console.log(this.results)
       })
-      .catch(function(error) {
-        console.log(error);
-      });
+      .catch(function (error) {
+        console.log(error)
+      })
 
-    this.disqus_config = function() {
-      this.page.url = "http://192.168.31.129:8080/schedule/" + this.no; // Replace PAGE_URL with your page's canonical URL variable
-      this.page.identifier = this.no; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
+    this.disqus_config = function () {
+      this.page.url = 'http://192.168.31.129:8080/schedule/' + this.no // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = this.no // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    }
 
-    let recaptchaScript = document.createElement("script");
+    let recaptchaScript = document.createElement('script')
     recaptchaScript.setAttribute(
-      "src",
-      "https://happyhacking-1.disqus.com/embed.js"
-    );
-    document.head.appendChild(recaptchaScript);
+      'src',
+      'https://happyhacking-1.disqus.com/embed.js'
+    )
+    document.head.appendChild(recaptchaScript)
   },
   methods: {
-    getIcon(category) {
-      if (category[0] === "lodging") {
-        return "fa-bed";
-      } else if (category[0] === "restaurant") {
-        return "fa-utensils";
+    getIcon (category) {
+      if (category[0] === 'lodging') {
+        return 'fa-bed'
+      } else if (category[0] === 'restaurant') {
+        return 'fa-utensils'
       } else {
-        return "fa-camera";
+        return 'fa-camera'
       }
     },
-    getColor(category) {
-      if (category[0] === "lodging") {
-        return "red";
-      } else if (category[0] === "restaurant") {
-        return "yellow lighten-3";
+    getColor (category) {
+      if (category[0] === 'lodging') {
+        return 'red'
+      } else if (category[0] === 'restaurant') {
+        return 'yellow lighten-3'
       } else {
-        return "teal accent-4";
+        return 'teal accent-4'
       }
     },
-    switchone() {
-      this.tab = true;
+    switchone () {
+      this.tab = true
     },
 
-    switchtwo() {
-      this.tab = false;
+    switchtwo () {
+      this.tab = false
     },
-    deleteSchedule() {
-      if (confirm("일정을 정말로 삭제하시겠습니까?")) {
+    deleteSchedule () {
+      if (confirm('일정을 정말로 삭제하시겠습니까?')) {
         axios
-          .delete("http://192.168.31.114:8399/schedule/delete/" + this.no)
+          .delete('http://192.168.31.114:8399/schedule/delete/' + this.no)
           .then(response => {
-            console.log(response.data);
+            console.log(response.data)
             if (response.data === 1) {
-              this.$router.go(-1);
+              this.$router.go(-1)
             } else {
               // alert("삭제에 실패했습니다.");
               this.$notify({
-                group: "foo",
-                title: "Error message",
-                text: "삭제에 실패했습니다.",
-                type: "error",
+                group: 'foo',
+                title: 'Error message',
+                text: '삭제에 실패했습니다.',
+                type: 'error',
                 duration: 2000
-              });
+              })
             }
           })
-          .catch(function(error) {
-            console.log(error);
-          });
+          .catch(function (error) {
+            console.log(error)
+          })
       }
     },
-    updatePage() {
-      console.log(this.no);
-      router.push({ path: `update/${this.no}` });
+    updatePage () {
+      console.log(this.no)
+      router.push({ path: `update/${this.no}` })
+    },
+    resize () {
+      this.newHeight =
+        window.innerWidth < 600 ? window.innerHeight - 56 + 'px' : null
     }
   }
-};
+}
 </script>
 
 <style>
