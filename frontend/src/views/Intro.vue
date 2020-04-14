@@ -28,7 +28,7 @@ export default {
   },
   data () {
     return {
-      video: `vid${Math.ceil(Math.random() * 4)}_Trim.mp4` // 랜덤비디오 개수
+      video: `vid2_Trim.mp4` // 랜덤비디오 개수
     }
   },
   methods: {
